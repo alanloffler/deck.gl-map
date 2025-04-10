@@ -1,5 +1,39 @@
 @import "tailwindcss";
 
-body {
-    padding: 20px;
+@layer base {
+    @font-face {
+        font-family: "InterVariable";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("assets/fonts/InterVariable.woff2") format("woff2");
+    }
+
+    @font-face {
+        font-family: "InterVariable";
+        font-style: italic;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("assets/fonts/InterVariable-Italic.woff2") format("woff2");
+    }
+
+    html {
+        font-family: "InterVariable", sans-serif;
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    body {
+        @apply p-6;
+        @apply bg-slate-50;
+    }
+}
+
+@layer utilities {
+    .font-variant-cv02 {
+        font-feature-settings: "cv02";
+    }
+
+    .font-variant-cv03 {
+        font-feature-settings: "cv03";
+    }
 }
