@@ -8,9 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "./components/ui/card";
+import { MapPin } from "lucide-react";
+import type { IInfo } from "./interfaces/info.interface";
 
 export default function App() {
-  const [info, setInfo] = useState(undefined);
+  const [info, setInfo] = useState<IInfo | undefined>(undefined);
 
   return (
     <main className="flex flex-row gap-6">
@@ -30,7 +32,17 @@ export default function App() {
         <CardContent>
           <div className="text-base font-normal">
             {info ? (
-              <p>{info}</p>
+              <div className="flex flex-col text-sm space-y-2">
+                <span className="font-semibold text-base">{info.name}</span>
+                <div className="flex items-center space-x-3">
+                  <MapPin size={17} strokeWidth={2} />
+                  <span>{info.position && info.position[0]}</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <MapPin size={17} strokeWidth={2} />
+                  <span>{info.position && info.position[1]}</span>
+                </div>
+              </div>
             ) : (
               <p>Realiza la selección de algún elemento del mapa</p>
             )}
