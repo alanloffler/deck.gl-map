@@ -2,7 +2,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { DeckProps } from "@deck.gl/core";
 import { Map, useControl } from "react-map-gl/maplibre";
 import { MapboxOverlay } from "@deck.gl/mapbox";
-import { ScatterplotLayer } from "@deck.gl/layers";
+import { PathLayer, ScatterplotLayer } from "@deck.gl/layers";
 import { Dispatch } from "react";
 
 function DeckGLOverlay(props: DeckProps) {
@@ -26,6 +26,48 @@ export function MyMap({ setInfo }: IProps) {
       beforeId: "watername_ocean",
       pickable: true,
       onClick: (item) => setInfo(item.object.name),
+    }),
+    new PathLayer({
+      id: "deckgl-paths",
+      data: [
+        {
+          name: "Red principal",
+          path: [
+            [-54.56696333042627, -25.97305329916473],
+            [-54.56500377505447, -25.972640965079822],
+          ],
+          color: "#ed1c24",
+        },
+      ],
+      getColor: (d) => {
+        const hex = d.color;
+        return hex.match(/[0-9a-f]{2}/g).map((x: string) => parseInt(x, 16));
+      },
+      getPath: (d) => d.path,
+      getWidth: 2,
+      pickable: true,
+      onClick: (item) => setInfo(item.object.name),
+    }),
+    new PathLayer({
+      id: "deckgl-paths-secondary",
+      data: [
+        {
+          name: "Red secundaria",
+          path: [
+            [-54.565458, -25.972745],
+            [-54.565458, -25.972906],
+          ],
+          color: "#0099ff",
+        },
+      ],
+      getColor: (d) => {
+        const hex = d.color;
+        return hex.match(/[0-9a-f]{2}/g).map((x: string) => parseInt(x, 16));
+      },
+      getPath: (d) => d.path,
+      getWidth: 1,
+      pickable: true,
+      onClick: (item) => setInfo(item.coordinate),
     }),
   ];
 
