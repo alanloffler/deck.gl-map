@@ -3,6 +3,7 @@ import { DeckProps } from "@deck.gl/core";
 import { Map, useControl } from "react-map-gl/maplibre";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { ScatterplotLayer } from "@deck.gl/layers";
+import { Dispatch } from "react";
 
 function DeckGLOverlay(props: DeckProps) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
@@ -10,7 +11,11 @@ function DeckGLOverlay(props: DeckProps) {
   return null;
 }
 
-export function MyMap() {
+interface IProps {
+  setInfo: Dispatch<any>;
+}
+
+export function MyMap({ setInfo }: IProps) {
   const layers = [
     new ScatterplotLayer({
       id: "deckgl-circle",
@@ -20,6 +25,7 @@ export function MyMap() {
       getRadius: 10,
       beforeId: "watername_ocean",
       pickable: true,
+      onClick: (item) => setInfo(item.object.name),
     }),
   ];
 
