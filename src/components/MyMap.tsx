@@ -4,6 +4,7 @@ import { Map, useControl } from "react-map-gl/maplibre";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { PathLayer, ScatterplotLayer } from "@deck.gl/layers";
 import { Dispatch } from "react";
+import { cn } from "@/lib/utils";
 
 function DeckGLOverlay(props: DeckProps) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
@@ -12,10 +13,11 @@ function DeckGLOverlay(props: DeckProps) {
 }
 
 interface IProps {
+  className?: string;
   setInfo: Dispatch<any>;
 }
 
-export function MyMap({ setInfo }: IProps) {
+export function MyMap({ className, setInfo }: IProps) {
   const layers = [
     new ScatterplotLayer({
       id: "deckgl-circle",
@@ -72,7 +74,7 @@ export function MyMap({ setInfo }: IProps) {
   ];
 
   return (
-    <main className="w-full h-[500px]">
+    <main className={cn("w-full h-[500px]", className)}>
       <Map
         initialViewState={{
           longitude: -54.565368,
