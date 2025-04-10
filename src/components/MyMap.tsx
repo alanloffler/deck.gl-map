@@ -1,9 +1,12 @@
 import "maplibre-gl/dist/maplibre-gl.css";
-import { DeckProps } from "@deck.gl/core";
+import type { Dispatch, SetStateAction } from "react";
+import { Color, DeckProps } from "@deck.gl/core";
 import { Map, useControl } from "react-map-gl/maplibre";
 import { MapboxOverlay } from "@deck.gl/mapbox";
 import { PathLayer, ScatterplotLayer } from "@deck.gl/layers";
-import { Dispatch } from "react";
+import { PickingInfo } from "deck.gl";
+
+import type { IPathData } from "@/interfaces/path-data.interface";
 import { cn } from "@/lib/utils";
 
 function DeckGLOverlay(props: DeckProps) {
@@ -14,7 +17,7 @@ function DeckGLOverlay(props: DeckProps) {
 
 interface IProps {
   className?: string;
-  setInfo: Dispatch<any>;
+  setInfo: Dispatch<SetStateAction<any>>;
 }
 
 export function MyMap({ className, setInfo }: IProps) {
@@ -27,9 +30,15 @@ export function MyMap({ className, setInfo }: IProps) {
       getRadius: 10,
       beforeId: "watername_ocean",
       pickable: true,
-      onClick: (item) => setInfo(item.object.name),
+      onClick: (item: PickingInfo<IPathData>) => {
+        console.log(item.coordinate);
+        setInfo({
+          name: item.object?.name,
+          coordinate: item.coordinate,
+        });
+      },
     }),
-    new PathLayer({
+    new PathLayer<IPathData>({
       id: "deckgl-paths",
       data: [
         {
@@ -41,11 +50,14 @@ export function MyMap({ className, setInfo }: IProps) {
           color: "#ed1c24",
         },
       ],
-      getColor: (d) => {
+      getColor: (d: IPathData) => {
         const hex = d.color;
-        return hex.match(/[0-9a-f]{2}/g).map((x: string) => parseInt(x, 16));
+        const transformed = hex
+          .match(/[0-9a-f]{2}/g)
+          ?.map((x: string) => parseInt(x, 16));
+        return transformed as unknown as Color[];
       },
-      getPath: (d) => d.path,
+      getPath: (d: IPathData) => d.path,
       getWidth: 2,
       pickable: true,
       onClick: (item) => setInfo(item.object.name),
@@ -84,7 +96,9 @@ export function MyMap({ className, setInfo }: IProps) {
         mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
       >
         <DeckGLOverlay
-          getTooltip={({ object }) => object && object.name}
+          getTooltip={({ object }: PickingInfo<IPathData>) =>
+            object ? object.name : null
+          }
           layers={layers}
         />
       </Map>
