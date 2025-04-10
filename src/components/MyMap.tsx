@@ -8,6 +8,8 @@ import { PickingInfo } from "deck.gl";
 
 import type { IPathData } from "@/interfaces/path-data.interface";
 import { cn } from "@/lib/utils";
+import { IScatterplotData } from "@/interfaces/scatterplot-data.interface";
+import { IInfo } from "@/interfaces/info.interface";
 
 function DeckGLOverlay(props: DeckProps) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
@@ -17,35 +19,33 @@ function DeckGLOverlay(props: DeckProps) {
 
 interface IProps {
   className?: string;
-  setInfo: Dispatch<SetStateAction<any>>;
+  setInfo: Dispatch<SetStateAction<IInfo | undefined>>;
 }
 
 export function MyMap({ className, setInfo }: IProps) {
   const layers = [
-    new ScatterplotLayer({
-      id: "deckgl-circle",
+    new ScatterplotLayer<IScatterplotData>({
+      id: "scatterplot-layer",
       data: [{ name: "Coop. Wanda", position: [-54.565368, -25.972807] }],
-      getPosition: (d) => d.position,
       getFillColor: [255, 0, 0, 100],
+      getPosition: (d) => d.position,
       getRadius: 10,
-      beforeId: "watername_ocean",
       pickable: true,
-      onClick: (item: PickingInfo<IPathData>) => {
-        console.log(item.coordinate);
+      onClick: (item: PickingInfo<IScatterplotData>) => {
         setInfo({
           name: item.object?.name,
-          coordinate: item.coordinate,
+          position: item.object?.position,
         });
       },
     }),
     new PathLayer<IPathData>({
-      id: "deckgl-paths",
+      id: "path-layer-primary",
       data: [
         {
           name: "Red principal",
-          path: [
-            [-54.56696333042627, -25.97305329916473],
-            [-54.56500377505447, -25.972640965079822],
+          position: [
+            [-54.566963, -25.973053],
+            [-54.565003, -25.97264],
           ],
           color: "#ed1c24",
         },
@@ -57,13 +57,16 @@ export function MyMap({ className, setInfo }: IProps) {
           ?.map((x: string) => parseInt(x, 16));
         return transformed as unknown as Color[];
       },
-      getPath: (d: IPathData) => d.path,
+      getPath: (d: IPathData) => d.position,
       getWidth: 2,
       pickable: true,
-      onClick: (item) => setInfo(item.object.name),
+      onClick: (item) =>
+        setInfo({
+          name: item.object.name,
+        }),
     }),
     new PathLayer({
-      id: "deckgl-paths-secondary",
+      id: "path-layer-secondary",
       data: [
         {
           name: "Red secundaria",
@@ -74,14 +77,20 @@ export function MyMap({ className, setInfo }: IProps) {
           color: "#0099ff",
         },
       ],
-      getColor: (d) => {
+      getColor: (d: IPathData) => {
         const hex = d.color;
-        return hex.match(/[0-9a-f]{2}/g).map((x: string) => parseInt(x, 16));
+        const transformed = hex
+          .match(/[0-9a-f]{2}/g)
+          ?.map((x: string) => parseInt(x, 16));
+        return transformed as unknown as Color[];
       },
       getPath: (d) => d.path,
       getWidth: 1,
       pickable: true,
-      onClick: (item) => setInfo(item.coordinate),
+      onClick: (item) =>
+        setInfo({
+          name: item.object.name,
+        }),
     }),
   ];
 
