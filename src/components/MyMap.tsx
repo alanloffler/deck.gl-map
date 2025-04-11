@@ -49,8 +49,9 @@ function calculateHaversineDistance(
       Math.sin(deltaLonRad / 2);
 
   const angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const meters = earthRadius * angularDistance;
 
-  return earthRadius * angularDistance;
+  return Math.round((meters + Number.EPSILON) * 100) / 100;
 }
 
 export function MyMap({ className, setInfo }: IProps) {
