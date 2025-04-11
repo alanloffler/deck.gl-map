@@ -55,8 +55,12 @@ export default function App() {
                 {info.mts && (
                   <div className="flex items-center space-x-3">
                     <Ruler size={17} strokeWidth={2} />
-                    {/* <span>{Math.ceil(info.mts)}</span> */}
-                    <span>{info.mts}</span>
+                    <span>
+                      {Intl.NumberFormat("es-AR", {
+                        maximumFractionDigits: 2,
+                      }).format(info.mts)}{" "}
+                      metros
+                    </span>
                   </div>
                 )}
               </div>
