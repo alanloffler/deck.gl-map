@@ -22,6 +22,10 @@ interface IProps {
   setInfo: Dispatch<SetStateAction<IInfo | undefined>>;
 }
 
+function arrayToRGBA(arr: number[]): string {
+  return `rgba(${arr[0]}, ${arr[1]}, ${arr[2]}, ${arr[3] / 255})`;
+}
+
 export function MyMap({ className, setInfo }: IProps) {
   const layers = [
     new ScatterplotLayer<IScatterplotData>({
@@ -33,6 +37,7 @@ export function MyMap({ className, setInfo }: IProps) {
       pickable: true,
       onClick: (item: PickingInfo<IScatterplotData>) => {
         setInfo({
+          color: arrayToRGBA([255, 0, 0, 100]),
           name: item.object?.name,
           position: item.object?.position,
         });
@@ -60,10 +65,13 @@ export function MyMap({ className, setInfo }: IProps) {
       getPath: (d: IPathData) => d.position,
       getWidth: 2,
       pickable: true,
-      onClick: (item) =>
+      onClick: (item) => {
+        console.log(item);
         setInfo({
           name: item.object.name,
-        }),
+          color: "#ed1c24",
+        });
+      },
     }),
     new PathLayer({
       id: "path-layer-secondary",
@@ -91,6 +99,7 @@ export function MyMap({ className, setInfo }: IProps) {
         setInfo({
           name: item.object.name,
         }),
+        
     }),
   ];
 
