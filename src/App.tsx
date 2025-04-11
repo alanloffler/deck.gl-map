@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { MapPin, Ruler } from "lucide-react";
 import "./App.css";
-import { MyMap } from "./components/MyMap";
 import {
   Card,
   CardContent,
@@ -8,7 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "./components/ui/card";
-import { MapPin, Ruler } from "lucide-react";
+import { MyMap } from "./components/MyMap";
+import { useState } from "react";
 import type { IInfo } from "./interfaces/info.interface";
 
 export default function App() {
