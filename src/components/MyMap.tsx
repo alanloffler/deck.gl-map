@@ -10,6 +10,7 @@ import type { IPathData } from "@/interfaces/path-data.interface";
 import { cn } from "@/lib/utils";
 import { IScatterplotData } from "@/interfaces/scatterplot-data.interface";
 import { IInfo } from "@/interfaces/info.interface";
+import { calculatePickingColors } from "node_modules/@deck.gl/layers/dist/geojson-layer/geojson-binary";
 
 function DeckGLOverlay(props: DeckProps) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
@@ -24,6 +25,32 @@ interface IProps {
 
 function arrayToRGBA(arr: number[]): string {
   return `rgba(${arr[0]}, ${arr[1]}, ${arr[2]}, ${arr[3] / 255})`;
+}
+
+function calculateHaversineDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+): number {
+  const earthRadius = 6371e3;
+
+  const startLatRad = (lat1 * Math.PI) / 180;
+  const endLatRad = (lat2 * Math.PI) / 180;
+
+  const deltaLatRad = ((lat2 - lat1) * Math.PI) / 180;
+  const deltaLonRad = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(deltaLatRad / 2) * Math.sin(deltaLatRad / 2) +
+    Math.cos(startLatRad) *
+      Math.cos(endLatRad) *
+      Math.sin(deltaLonRad / 2) *
+      Math.sin(deltaLonRad / 2);
+
+  const angularDistance = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return earthRadius * angularDistance;
 }
 
 export function MyMap({ className, setInfo }: IProps) {
@@ -68,6 +95,12 @@ export function MyMap({ className, setInfo }: IProps) {
       onClick: (item) => {
         console.log(item);
         setInfo({
+          mts: calculateHaversineDistance(
+            item.object.position[0][0],
+            item.object.position[0][1],
+            item.object.position[1][0],
+            item.object.position[1][1],
+          ),
           name: item.object.name,
           color: "#ed1c24",
         });
@@ -99,7 +132,6 @@ export function MyMap({ className, setInfo }: IProps) {
         setInfo({
           name: item.object.name,
         }),
-        
     }),
   ];
 
