@@ -10,7 +10,6 @@ import type { IPathData } from "@/interfaces/path-data.interface";
 import { cn } from "@/lib/utils";
 import { IScatterplotData } from "@/interfaces/scatterplot-data.interface";
 import { IInfo } from "@/interfaces/info.interface";
-import { calculatePickingColors } from "node_modules/@deck.gl/layers/dist/geojson-layer/geojson-binary";
 
 function DeckGLOverlay(props: DeckProps) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
@@ -137,7 +136,7 @@ export function MyMap({ className, setInfo }: IProps) {
   ];
 
   return (
-    <main className={cn("w-full h-[500px]", className)}>
+    <main className={cn("h-[500px] w-full", className)}>
       <Map
         initialViewState={{
           longitude: -54.565368,
