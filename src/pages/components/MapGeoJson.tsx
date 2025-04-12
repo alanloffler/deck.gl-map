@@ -19,12 +19,14 @@ export function MapGeoJson() {
     getFillColor: [160, 160, 180, 200],
     getLineColor: (f: Feature<Geometry, PropertiesType>) => {
       const defaultColor: [number, number, number, number] = [0, 0, 0, 255];
-      const hex = f.properties.color;
+
+      const hex: string = f.properties.color;
+      if (!hex) return defaultColor;
+
       const rgbMatch = hex.match(/[0-9a-f]{2}/g);
+      if (!rgbMatch) return defaultColor;
 
-      if (!hex || !rgbMatch) return defaultColor;
-
-      const rgb = rgbMatch.map((x) => parseInt(x, 16));
+      const rgb: number[] = rgbMatch.map((x) => parseInt(x, 16));
 
       if (rgb.length === 3) {
         return [rgb[0], rgb[1], rgb[2], 255];
