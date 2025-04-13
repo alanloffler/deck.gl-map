@@ -1,5 +1,5 @@
+import type { LayersList } from "deck.gl";
 import { GoogleMapsOverlay } from "@deck.gl/google-maps";
-import { type LayersList } from "deck.gl";
 import { useEffect, useMemo } from "react";
 import { useMap } from "@vis.gl/react-google-maps";
 
