@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MapGeoJson } from "./components/MapGeoJson";
+import { GMap } from "./components/GMap";
 
 export function GoogleMap() {
   return (
@@ -16,7 +16,10 @@ export function GoogleMap() {
           <CardDescription>Visualización de conexiones</CardDescription>
         </CardHeader>
         <CardContent>
-          <MapGeoJson />
+          <div className="h-[500px] w-full">
+            <GMap />
+          </div>
+          {/* <MapGeoJson /> */}
         </CardContent>
       </Card>
       <Card className="w-full md:w-1/3">
