@@ -7,21 +7,26 @@
   @apply !rounded-full !p-5;
 }
 
-.gm-style-mtc > button {
-  @apply !h-7 !space-x-1 !rounded-sm !border-none !px-2 !py-1 !text-xs !shadow-none hover:!bg-slate-100;
-}
 .gm-style-mtc-bbw {
   @apply rounded-lg !bg-white !p-1;
 }
+
+.gm-style-mtc > button {
+  @apply !h-7 !space-x-1 !rounded-sm !border-none !px-2 !py-1 !text-xs !shadow-none hover:!bg-slate-100;
+}
+
 .gm-style-mtc > ul {
   @apply !mt-2 !rounded-sm !bg-white !p-1;
 }
+
 .gm-style-mtc > ul > li {
   @apply !rounded-sm !text-xs hover:!bg-slate-100;
 }
+
 .gm-svpc {
   @apply !rounded-sm;
 }
+
 .gm-svpc > div > img {
   @apply !h-[25px];
 }
