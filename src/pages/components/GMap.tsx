@@ -5,16 +5,17 @@ import { useEffect, useState } from "react";
 
 import { DeckGlOverlay } from "./DeckGlOverlay";
 
-const DATA_URL =
-  "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json";
-
+// const DATA_URL =
+//   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json";
+import watterData from "../../data/data.json";
 export function GMap() {
   const [data, setData] = useState<GeoJSON | null>(null);
 
   useEffect(() => {
-    fetch(DATA_URL)
-      .then((res) => res.json())
-      .then((data) => setData(data as GeoJSON));
+    setData(watterData as GeoJSON);
+    // fetch(DATA_URL)
+    //   .then((res) => res.json())
+    //   .then((data) => setData(data as GeoJSON));
   }, []);
 
   function getDeckGlLayers(data: GeoJSON | null) {
