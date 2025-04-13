@@ -23,7 +23,10 @@ export function GMap() {
         defaultCenter={{ lat: 37.74, lng: -122.4 }}
         defaultZoom={11}
         gestureHandling={"greedy"}
-        disableDefaultUI={true}
+        disableDefaultUI={false}
+        colorScheme="LIGHT"
+        fullscreenControl
+        mapTypeControl
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
       </Map>
