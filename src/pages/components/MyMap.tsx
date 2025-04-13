@@ -1,15 +1,19 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Dispatch, SetStateAction } from "react";
-import { Color, DeckProps } from "@deck.gl/core";
+import {
+  type Color,
+  type DeckProps,
+  type PickingInfo,
+  PathLayer,
+  ScatterplotLayer,
+} from "deck.gl";
 import { Map, useControl } from "react-map-gl/maplibre";
 import { MapboxOverlay } from "@deck.gl/mapbox";
-import { PathLayer, ScatterplotLayer } from "@deck.gl/layers";
-import { PickingInfo } from "deck.gl";
 
+import type { IInfo } from "@/interfaces/info.interface";
 import type { IPathData } from "@/interfaces/path-data.interface";
+import type { IScatterplotData } from "@/interfaces/scatterplot-data.interface";
 import { cn } from "@/lib/utils";
-import { IScatterplotData } from "@/interfaces/scatterplot-data.interface";
-import { IInfo } from "@/interfaces/info.interface";
 
 function DeckGLOverlay(props: DeckProps) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
