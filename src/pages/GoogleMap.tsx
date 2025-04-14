@@ -18,10 +18,12 @@ import {
 import { GMap } from "./components/GMap";
 import { useState } from "react";
 import type { IDetails } from "../interfaces/details.interface";
+import { Label } from "@/components/ui/label";
 
 export function GoogleMap() {
   const [details, setDetails] = useState<IDetails | null>(null);
   const [clickableIcons, setClickableIcons] = useState<boolean>(false);
+  const [colorScheme, setColorScheme] = useState<string>("LIGHT");
 
   return (
     <main className="flex flex-col gap-6 md:flex-row">
@@ -36,22 +38,27 @@ export function GoogleMap() {
               <Settings2 size={17} strokeWidth={2} />
               <span className="text-sm font-medium">Controles</span>
             </div>
-            <div className="flex items-center">
-              <Select>
-                <SelectTrigger className="w-[180px]">
+            <div className="flex items-center space-x-3">
+              <Label className="font-normal text-slate-500">Tema</Label>
+              <Select defaultValue={colorScheme} onValueChange={setColorScheme}>
+                <SelectTrigger className="bg-card w-fit">
                   <SelectValue placeholder="Tema" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectItem value="LIGHT">Claro</SelectItem>
-                    <SelectItem value="dark">Oscuro</SelectItem>
+                    <SelectItem value="DARK">Oscuro</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
           </section>
           <div className="h-[500px] w-full">
-            <GMap setDetails={setDetails} clickableIcons={clickableIcons} />
+            <GMap
+              setDetails={setDetails}
+              clickableIcons={clickableIcons}
+              colorScheme={colorScheme || "FOLLOW_SYSTEM"}
+            />
           </div>
         </CardContent>
       </Card>
