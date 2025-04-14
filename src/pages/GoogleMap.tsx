@@ -27,6 +27,9 @@ export function GoogleMap() {
   );
   const [details, setDetails] = useState<IDetails | null>(null);
   const [mapKey, setMapKey] = useState<string>("mapKey");
+  const [mapTypeId, setMapTypeId] = useState<string>(
+    localStorage.getItem("mapTypeId") ?? "roadmap",
+  );
 
   useEffect(() => {
     setMapKey(crypto.randomUUID());
@@ -45,29 +48,55 @@ export function GoogleMap() {
               <Settings2 size={17} strokeWidth={2} />
               <span className="text-sm font-medium">Controles</span>
             </div>
-            <div className="flex items-center space-x-3">
-              <Label className="font-normal text-slate-500">Tema</Label>
-              <Select
-                defaultValue={colorScheme}
-                onValueChange={(item) => {
-                  setColorScheme(item);
-                  localStorage.setItem("colorScheme", item);
-                }}
-              >
-                <SelectTrigger className="bg-card w-fit" size="sm">
-                  <SelectValue placeholder="Tema" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="LIGHT" size="sm">
-                      Claro
-                    </SelectItem>
-                    <SelectItem value="DARK" size="sm">
-                      Oscuro
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+            <div className="flex flex-row items-center space-x-3">
+              <div className="flex items-center space-x-3">
+                <Label className="font-normal text-slate-500">Tema</Label>
+                <Select
+                  defaultValue={colorScheme}
+                  onValueChange={(item) => {
+                    setColorScheme(item);
+                    localStorage.setItem("colorScheme", item);
+                  }}
+                >
+                  <SelectTrigger className="bg-card w-fit" size="sm">
+                    <SelectValue placeholder="Tema" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="LIGHT" size="sm">
+                        Claro
+                      </SelectItem>
+                      <SelectItem value="DARK" size="sm">
+                        Oscuro
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Label className="font-normal text-slate-500">Tipo</Label>
+                <Select
+                  defaultValue={mapTypeId}
+                  onValueChange={(item) => {
+                    setMapTypeId(item);
+                    localStorage.setItem("mapTypeId", item);
+                  }}
+                >
+                  <SelectTrigger className="bg-card w-fit" size="sm">
+                    <SelectValue placeholder="Tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="roadmap" size="sm">
+                        Mapa
+                      </SelectItem>
+                      <SelectItem value="satellite" size="sm">
+                        Satelite
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </section>
           <div className="h-[450px] w-full">
@@ -75,6 +104,7 @@ export function GoogleMap() {
               clickableIcons={clickableIcons}
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
               key={mapKey}
+              mapTypeId={mapTypeId}
               setDetails={setDetails}
             />
           </div>
