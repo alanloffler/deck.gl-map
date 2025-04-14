@@ -183,30 +183,20 @@ export function GoogleMap() {
           <CardTitle>Datos de la selección</CardTitle>
         </CardHeader>
         <CardContent className="h-full">
-          <section className="flex h-full flex-col">
+          <section className="flex flex-col">
             {details && (
               <section>
                 <div className="flex items-center space-x-3 text-base font-semibold">
                   <span>{details.name}</span>
                   <span
-                    className={`h-1.5 w-7 rounded-sm bg-[${details.color}]`}
+                    className="h-1.5 w-7 rounded-sm"
+                    style={{ background: details.color }}
                   ></span>
                 </div>
               </section>
             )}
-            <section className="mt-auto pt-8 md:pt-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  onCheckedChange={() => setClickableIcons(!clickableIcons)}
-                />
-                <label
-                  htmlFor="terms"
-                  className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Elementos interactivos
-                </label>
-              </div>
+            <section className="sr-only mt-auto pt-8 md:pt-4">
+              Card footer
             </section>
           </section>
         </CardContent>
