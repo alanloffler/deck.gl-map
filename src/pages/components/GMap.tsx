@@ -11,11 +11,12 @@ import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 
 interface IProps {
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
+  clickableIcons: boolean;
 }
 
 import watter from "../../data/watter.json";
 
-export function GMap({ setDetails }: IProps) {
+export function GMap({ setDetails, clickableIcons }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export function GMap({ setDetails }: IProps) {
         colorScheme="LIGHT"
         fullscreenControl
         mapTypeControl
-        clickableIcons={false}
+        clickableIcons={clickableIcons}
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
       </Map>
