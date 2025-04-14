@@ -65,11 +65,11 @@ export function GMap({ setDetails, clickableIcons }: IProps) {
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
         gestureHandling={"greedy"}
-        disableDefaultUI={false}
+        disableDefaultUI={true}
         colorScheme="LIGHT"
         fullscreenControl
-        mapTypeControl
         clickableIcons={clickableIcons}
+        // mapTypeId={mapTypeId}
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
       </Map>
