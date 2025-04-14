@@ -13,6 +13,7 @@ interface IProps {
   clickableIcons: boolean;
   colorScheme: string;
   mapTypeId: string;
+  poiVisibility: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
 }
 
@@ -21,8 +22,9 @@ import watter from "../../data/watter.json";
 export function GMap({
   clickableIcons,
   colorScheme,
-  setDetails,
   mapTypeId,
+  poiVisibility,
+  setDetails,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
@@ -68,15 +70,22 @@ export function GMap({
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
-        // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
         clickableIcons={clickableIcons}
         colorScheme={colorScheme as ColorScheme}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
-        disableDefaultUI={false}
+        disableDefaultUI={true}
         fullscreenControl
         gestureHandling={"greedy"}
         mapTypeId={mapTypeId}
+        streetViewControl
+        styles={[
+          {
+            featureType: "poi",
+            elementType: "labels",
+            stylers: [{ visibility: poiVisibility }],
+          },
+        ]}
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
       </Map>
