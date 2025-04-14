@@ -6,8 +6,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { GMap } from "./components/GMap";
+import { useState } from "react";
+import type { IDetails } from "../interfaces/details.interface";
 
 export function GoogleMap() {
+  const [details, setDetails] = useState<IDetails | null>(null);
+
   return (
     <main className="flex flex-col gap-6 md:flex-row">
       <Card className="w-full md:w-2/3">
@@ -17,7 +21,7 @@ export function GoogleMap() {
         </CardHeader>
         <CardContent>
           <div className="h-[500px] w-full">
-            <GMap />
+            <GMap setDetails={setDetails} />
           </div>
           {/* <MapGeoJson /> */}
         </CardContent>
@@ -26,7 +30,7 @@ export function GoogleMap() {
         <CardHeader>
           <CardTitle>Datos de la selección</CardTitle>
         </CardHeader>
-        <CardContent>Contenido de la selección acá</CardContent>
+        <CardContent>Details {details?.name}</CardContent>
       </Card>
     </main>
   );
