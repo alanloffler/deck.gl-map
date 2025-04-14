@@ -1,4 +1,4 @@
-import { Settings2 } from "lucide-react";
+import { Map, MapPin, Milestone } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -26,12 +26,15 @@ export function GoogleMap() {
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
   const [details, setDetails] = useState<IDetails | null>(null);
+  const [interactive, setInteractive] = useState<"on" | "off">(
+    (localStorage.getItem("interactive") as "on" | "off") ?? "off",
+  );
   const [mapKey, setMapKey] = useState<string>("mapKey");
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
-  const [interactive, setInteractive] = useState<"on" | "off">(
-    (localStorage.getItem("interactive") as "on" | "off") ?? "off",
+  const [streetNames, setStreetNames] = useState<"on" | "off">(
+    (localStorage.getItem("streetNames") as "on" | "off") ?? "on",
   );
 
   useEffect(() => {
@@ -50,18 +53,31 @@ export function GoogleMap() {
     }
   }
 
+  function handleStreetNames(event: boolean): void {
+    if (event === true) {
+      setStreetNames("on");
+      localStorage.setItem("streetNames", "on");
+    }
+    if (event === false) {
+      setStreetNames("off");
+      localStorage.setItem("streetNames", "off");
+    }
+  }
+
   return (
     <main className="flex flex-col gap-6 md:flex-row">
       <Card className="w-full md:w-2/3">
         <CardHeader>
           <CardTitle>Redes de agua potable</CardTitle>
-          <CardDescription>Visualización de conexiones</CardDescription>
+          <CardDescription className="text-sm">
+            Visualización de conexiones
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent>
           <section className="flex justify-between rounded-md bg-slate-100 px-3 py-2">
             <div className="hidden items-center space-x-3 lg:flex">
-              <Settings2 size={17} strokeWidth={2} />
-              <span className="text-sm font-medium">Controles</span>
+              <Map size={17} strokeWidth={2} />
+              <span className="text-sm font-medium">Mapa</span>
             </div>
             <div className="flex flex-row items-center space-x-3">
               <div className="flex items-center space-x-3">
@@ -115,6 +131,24 @@ export function GoogleMap() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+          </section>
+          <section className="flex justify-end py-3">
+            <div className="flex space-x-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  className="bg-card"
+                  id="terms"
+                  defaultChecked={streetNames === "on" ? true : false}
+                  onCheckedChange={handleStreetNames}
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  <Milestone size={17} strokeWidth={2} />
+                </label>
+              </div>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
@@ -124,14 +158,14 @@ export function GoogleMap() {
                 />
                 <label
                   htmlFor="terms"
-                  className="font-base text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Interactivo
+                  <MapPin size={17} strokeWidth={2} />
                 </label>
               </div>
             </div>
           </section>
-          <div className="h-[450px] w-full">
+          <div className="h-[450px] w-full bg-slate-50">
             <GMap
               clickableIcons={clickableIcons}
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
@@ -139,6 +173,7 @@ export function GoogleMap() {
               key={mapKey}
               mapTypeId={mapTypeId}
               setDetails={setDetails}
+              streetNames={streetNames}
             />
           </div>
         </CardContent>
