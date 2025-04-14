@@ -30,10 +30,18 @@ export function GoogleMap() {
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
+  const [poiVisibility, setPoiVisibility] = useState<"on" | "off">("on");
 
   useEffect(() => {
     setMapKey(crypto.randomUUID());
   }, [colorScheme]);
+
+  function handleInteractivity(event: boolean): void {
+    setClickableIcons(event);
+    if (event === true) {
+      setPoiVisibility("on");
+    } else setPoiVisibility("off");
+  }
 
   return (
     <main className="flex flex-col gap-6 md:flex-row">
@@ -44,7 +52,7 @@ export function GoogleMap() {
         </CardHeader>
         <CardContent className="space-y-6">
           <section className="flex justify-between rounded-md bg-slate-100 px-3 py-2">
-            <div className="flex items-center space-x-3">
+            <div className="hidden items-center space-x-3 lg:flex">
               <Settings2 size={17} strokeWidth={2} />
               <span className="text-sm font-medium">Controles</span>
             </div>
@@ -97,6 +105,19 @@ export function GoogleMap() {
                   </SelectContent>
                 </Select>
               </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  className="bg-card"
+                  id="terms"
+                  onCheckedChange={handleInteractivity}
+                />
+                <label
+                  htmlFor="terms"
+                  className="font-base text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Interactivo
+                </label>
+              </div>
             </div>
           </section>
           <div className="h-[450px] w-full">
@@ -105,6 +126,7 @@ export function GoogleMap() {
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
               key={mapKey}
               mapTypeId={mapTypeId}
+              poiVisibility={poiVisibility}
               setDetails={setDetails}
             />
           </div>
