@@ -10,14 +10,20 @@ import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 // ("https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json");
 
 interface IProps {
-  setDetails: Dispatch<SetStateAction<IDetails | null>>;
   clickableIcons: boolean;
   colorScheme: string;
+  mapTypeId: string;
+  setDetails: Dispatch<SetStateAction<IDetails | null>>;
 }
 
 import watter from "../../data/watter.json";
 
-export function GMap({ setDetails, clickableIcons, colorScheme }: IProps) {
+export function GMap({
+  clickableIcons,
+  colorScheme,
+  setDetails,
+  mapTypeId,
+}: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
   useEffect(() => {
@@ -63,14 +69,14 @@ export function GMap({ setDetails, clickableIcons, colorScheme }: IProps) {
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
         // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
+        clickableIcons={clickableIcons}
+        colorScheme={colorScheme as ColorScheme}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
-        gestureHandling={"greedy"}
-        disableDefaultUI={true}
-        colorScheme={colorScheme as ColorScheme}
-        clickableIcons={clickableIcons}
+        disableDefaultUI={false}
         fullscreenControl
-        // mapTypeId={mapTypeId}
+        gestureHandling={"greedy"}
+        mapTypeId={mapTypeId}
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
       </Map>
