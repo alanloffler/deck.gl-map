@@ -30,7 +30,9 @@ export function GoogleMap() {
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
-  const [poiVisibility, setPoiVisibility] = useState<"on" | "off">("on");
+  const [interactive, setInteractive] = useState<"on" | "off">(
+    (localStorage.getItem("interactive") as "on" | "off") ?? "off",
+  );
 
   useEffect(() => {
     setMapKey(crypto.randomUUID());
@@ -39,8 +41,13 @@ export function GoogleMap() {
   function handleInteractivity(event: boolean): void {
     setClickableIcons(event);
     if (event === true) {
-      setPoiVisibility("on");
-    } else setPoiVisibility("off");
+      setInteractive("on");
+      localStorage.setItem("interactive", "on");
+    }
+    if (event === false) {
+      setInteractive("off");
+      localStorage.setItem("interactive", "off");
+    }
   }
 
   return (
@@ -98,7 +105,10 @@ export function GoogleMap() {
                       <SelectItem value="roadmap" size="sm">
                         Mapa
                       </SelectItem>
-                      <SelectItem value="satellite" size="sm">
+                      <SelectItem
+                        value={interactive ? "hybrid" : "satellite"}
+                        size="sm"
+                      >
                         Satelite
                       </SelectItem>
                     </SelectGroup>
@@ -109,6 +119,7 @@ export function GoogleMap() {
                 <Checkbox
                   className="bg-card"
                   id="terms"
+                  defaultChecked={interactive === "on" ? true : false}
                   onCheckedChange={handleInteractivity}
                 />
                 <label
@@ -124,9 +135,9 @@ export function GoogleMap() {
             <GMap
               clickableIcons={clickableIcons}
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
+              interactive={interactive}
               key={mapKey}
               mapTypeId={mapTypeId}
-              poiVisibility={poiVisibility}
               setDetails={setDetails}
             />
           </div>
