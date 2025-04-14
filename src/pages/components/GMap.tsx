@@ -62,7 +62,7 @@ export function GMap({ setDetails, clickableIcons, colorScheme }: IProps) {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
-        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
+        // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
         gestureHandling={"greedy"}
