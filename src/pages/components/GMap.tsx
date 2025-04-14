@@ -15,6 +15,7 @@ interface IProps {
   interactive: string;
   mapTypeId: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
+  streetNames: string;
 }
 
 import watter from "../../data/watter.json";
@@ -25,6 +26,7 @@ export function GMap({
   interactive,
   mapTypeId,
   setDetails,
+  streetNames,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
@@ -74,7 +76,7 @@ export function GMap({
         colorScheme={colorScheme as ColorScheme}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
-        disableDefaultUI={false}
+        disableDefaultUI={true}
         fullscreenControl
         gestureHandling={"greedy"}
         mapTypeId={mapTypeId}
@@ -88,7 +90,7 @@ export function GMap({
           {
             featureType: "road",
             elementType: "labels",
-            stylers: [{ visibility: interactive }],
+            stylers: [{ visibility: streetNames }],
           },
         ]}
       >
