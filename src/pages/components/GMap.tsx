@@ -12,8 +12,8 @@ import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 interface IProps {
   clickableIcons: boolean;
   colorScheme: string;
+  interactive: string;
   mapTypeId: string;
-  poiVisibility: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
 }
 
@@ -22,8 +22,8 @@ import watter from "../../data/watter.json";
 export function GMap({
   clickableIcons,
   colorScheme,
+  interactive,
   mapTypeId,
-  poiVisibility,
   setDetails,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
@@ -74,7 +74,7 @@ export function GMap({
         colorScheme={colorScheme as ColorScheme}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
-        disableDefaultUI={true}
+        disableDefaultUI={false}
         fullscreenControl
         gestureHandling={"greedy"}
         mapTypeId={mapTypeId}
@@ -83,7 +83,12 @@ export function GMap({
           {
             featureType: "poi",
             elementType: "labels",
-            stylers: [{ visibility: poiVisibility }],
+            stylers: [{ visibility: interactive }],
+          },
+          {
+            featureType: "road",
+            elementType: "labels",
+            stylers: [{ visibility: interactive }],
           },
         ]}
       >
