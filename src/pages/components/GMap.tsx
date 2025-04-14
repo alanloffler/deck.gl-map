@@ -68,6 +68,7 @@ export function GMap({ setDetails }: IProps) {
         colorScheme="LIGHT"
         fullscreenControl
         mapTypeControl
+        clickableIcons={false}
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
       </Map>
