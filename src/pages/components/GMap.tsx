@@ -47,7 +47,10 @@ export function GMap({ setDetails }: IProps) {
         getElevation: 30,
         pickable: true,
         onClick: (item: PickingInfo<IGeoJsonData>) => {
-          setDetails({ name: item.object?.properties.name });
+          setDetails({
+            name: item.object?.properties.name,
+            color: item.object?.properties.color,
+          });
           console.log(item);
         },
       }),
