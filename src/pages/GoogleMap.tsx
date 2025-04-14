@@ -1,3 +1,4 @@
+import { Settings2 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -6,6 +7,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { GMap } from "./components/GMap";
 import { useState } from "react";
 import type { IDetails } from "../interfaces/details.interface";
@@ -21,7 +30,26 @@ export function GoogleMap() {
           <CardTitle>Redes de agua potable</CardTitle>
           <CardDescription>Visualización de conexiones</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-6">
+          <section className="flex justify-between rounded-md bg-slate-100 px-3 py-2">
+            <div className="flex items-center space-x-3">
+              <Settings2 size={17} strokeWidth={2} />
+              <span className="text-sm font-medium">Controles</span>
+            </div>
+            <div className="flex items-center">
+              <Select>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Tema" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="apple">Claro</SelectItem>
+                    <SelectItem value="banana">Oscuro</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </section>
           <div className="h-[500px] w-full">
             <GMap setDetails={setDetails} clickableIcons={clickableIcons} />
           </div>
