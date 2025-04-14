@@ -23,14 +23,24 @@ export function GoogleMap() {
           <div className="h-[500px] w-full">
             <GMap setDetails={setDetails} />
           </div>
-          {/* <MapGeoJson /> */}
         </CardContent>
       </Card>
       <Card className="w-full md:w-1/3">
         <CardHeader>
           <CardTitle>Datos de la selección</CardTitle>
         </CardHeader>
-        <CardContent>Details {details?.name}</CardContent>
+        <CardContent>
+          {details && (
+            <section>
+              <div className="flex items-center space-x-3 text-base font-semibold">
+                <span>{details.name}</span>
+                <span
+                  className={`h-1.5 w-7 rounded-sm bg-[${details.color}]`}
+                ></span>
+              </div>
+            </section>
+          )}
+        </CardContent>
       </Card>
     </main>
   );
