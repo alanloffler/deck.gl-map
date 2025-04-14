@@ -43,8 +43,8 @@ export function GoogleMap() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="apple">Claro</SelectItem>
-                    <SelectItem value="banana">Oscuro</SelectItem>
+                    <SelectItem value="LIGHT">Claro</SelectItem>
+                    <SelectItem value="dark">Oscuro</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
