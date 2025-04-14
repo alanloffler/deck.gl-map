@@ -1,5 +1,5 @@
 import type { Feature, GeoJSON } from "geojson";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { APIProvider, Map, type ColorScheme } from "@vis.gl/react-google-maps";
 import { type PickingInfo, GeoJsonLayer } from "deck.gl";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { DeckGlOverlay } from "./DeckGlOverlay";
@@ -12,11 +12,12 @@ import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 interface IProps {
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
   clickableIcons: boolean;
+  colorScheme: string;
 }
 
 import watter from "../../data/watter.json";
 
-export function GMap({ setDetails, clickableIcons }: IProps) {
+export function GMap({ setDetails, clickableIcons, colorScheme }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
   useEffect(() => {
@@ -66,9 +67,9 @@ export function GMap({ setDetails, clickableIcons }: IProps) {
         defaultZoom={16}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
-        colorScheme="LIGHT"
-        fullscreenControl
+        colorScheme={colorScheme as ColorScheme}
         clickableIcons={clickableIcons}
+        fullscreenControl
         // mapTypeId={mapTypeId}
       >
         <DeckGlOverlay layers={getDeckGlLayers(data)} />
