@@ -49,13 +49,17 @@ export function GoogleMap() {
                   localStorage.setItem("colorScheme", item);
                 }}
               >
-                <SelectTrigger className="bg-card w-fit">
+                <SelectTrigger className="bg-card w-fit" size="sm">
                   <SelectValue placeholder="Tema" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="LIGHT">Claro</SelectItem>
-                    <SelectItem value="DARK">Oscuro</SelectItem>
+                    <SelectItem value="LIGHT" size="sm">
+                      Claro
+                    </SelectItem>
+                    <SelectItem value="DARK" size="sm">
+                      Oscuro
+                    </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
