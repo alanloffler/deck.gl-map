@@ -15,15 +15,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { GMap } from "./components/GMap";
 import { useState } from "react";
 import type { IDetails } from "../interfaces/details.interface";
-import { Label } from "@/components/ui/label";
 
 export function GoogleMap() {
   const [details, setDetails] = useState<IDetails | null>(null);
   const [clickableIcons, setClickableIcons] = useState<boolean>(false);
-  const [colorScheme, setColorScheme] = useState<string>("LIGHT");
+  const [colorScheme, setColorScheme] = useState<string>(
+    localStorage.getItem("colorScheme") ?? "LIGHT",
+  );
 
   return (
     <main className="flex flex-col gap-6 md:flex-row">
@@ -40,7 +42,13 @@ export function GoogleMap() {
             </div>
             <div className="flex items-center space-x-3">
               <Label className="font-normal text-slate-500">Tema</Label>
-              <Select defaultValue={colorScheme} onValueChange={setColorScheme}>
+              <Select
+                defaultValue={colorScheme}
+                onValueChange={(item) => {
+                  setColorScheme(item);
+                  localStorage.setItem("colorScheme", item);
+                }}
+              >
                 <SelectTrigger className="bg-card w-fit">
                   <SelectValue placeholder="Tema" />
                 </SelectTrigger>
@@ -53,7 +61,7 @@ export function GoogleMap() {
               </Select>
             </div>
           </section>
-          <div className="h-[500px] w-full">
+          <div className="h-[450px] w-full">
             <GMap
               setDetails={setDetails}
               clickableIcons={clickableIcons}
