@@ -17,15 +17,20 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { GMap } from "./components/GMap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { IDetails } from "../interfaces/details.interface";
 
 export function GoogleMap() {
-  const [details, setDetails] = useState<IDetails | null>(null);
   const [clickableIcons, setClickableIcons] = useState<boolean>(false);
   const [colorScheme, setColorScheme] = useState<string>(
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
+  const [details, setDetails] = useState<IDetails | null>(null);
+  const [mapKey, setMapKey] = useState<string>("mapKey");
+
+  useEffect(() => {
+    setMapKey(crypto.randomUUID());
+  }, [colorScheme]);
 
   return (
     <main className="flex flex-col gap-6 md:flex-row">
@@ -67,9 +72,10 @@ export function GoogleMap() {
           </section>
           <div className="h-[450px] w-full">
             <GMap
-              setDetails={setDetails}
               clickableIcons={clickableIcons}
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
+              key={mapKey}
+              setDetails={setDetails}
             />
           </div>
         </CardContent>
