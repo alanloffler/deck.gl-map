@@ -1,0 +1,8 @@
+[
+  {
+    "id": "001",
+    "position": { lat: , lng: },
+    "type": "pin",
+    "zIndex": 1
+  }
+]
