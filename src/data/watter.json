@@ -5,7 +5,12 @@
       "type": "Feature",
       "properties": {
         "name": "Red principal",
-        "color": "#0099ff"
+        "color": "#0099ff",
+        "section": {
+          "id": "RP/001",
+          "street": "Avenida República Argentina",
+          "district": "Centro"
+        }
       },
       "geometry": {
         "type": "MultiLineString",
