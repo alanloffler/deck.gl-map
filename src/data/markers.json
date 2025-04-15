@@ -1,7 +1,7 @@
 [
   {
     "id": "001",
-    "position": { lat: , lng: },
+    "position": { "lat": -25.9728451087578, "lng": -54.56535390077224 },
     "type": "pin",
     "zIndex": 1
   }
