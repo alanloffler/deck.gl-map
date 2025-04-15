@@ -65,6 +65,10 @@
 }
 
 @theme inline {
+  /* Custom styles init */
+  --text-xsm: 0.813rem;
+  --text-xsm--line-height: calc(1.125 / 0.813);
+  /* Custom styles end */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
