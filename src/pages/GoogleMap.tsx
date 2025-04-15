@@ -1,4 +1,4 @@
-import { Map, MapPin, Milestone } from "lucide-react";
+import { Map, MapPin, Milestone, Ruler } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -185,13 +185,36 @@ export function GoogleMap() {
         <CardContent className="h-full">
           <section className="flex flex-col">
             {details && (
-              <section>
+              <section className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-3 text-base font-semibold">
                   <span>{details.name}</span>
                   <span
                     className="h-1.5 w-7 rounded-sm"
                     style={{ background: details.color }}
                   ></span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="ml-1 w-3">#</span>
+                  <span className="text-sm font-medium">
+                    {details.section?.id}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Milestone size={17} strokeWidth={2} />
+                  <div className="text-xsm flex flex-col">
+                    <span>{details.section?.street},</span>
+                    <span>{details.section?.district}</span>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Ruler size={17} strokeWidth={2} />
+                  <span className="text-xsm">
+                    {details.distance &&
+                      new Intl.NumberFormat("es-AR", {
+                        maximumFractionDigits: 2,
+                      }).format(details.distance)}{" "}
+                    metros de longitud
+                  </span>
                 </div>
               </section>
             )}
