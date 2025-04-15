@@ -2,6 +2,7 @@ import type { Feature, GeoJSON } from "geojson";
 import { APIProvider, Map, type ColorScheme } from "@vis.gl/react-google-maps";
 import { type PickingInfo, GeoJsonLayer } from "deck.gl";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { distance } from "@turf/distance";
 import { DeckGlOverlay } from "./DeckGlOverlay";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
@@ -59,11 +60,17 @@ export function GMap({
         getElevation: 30,
         pickable: true,
         onClick: (item: PickingInfo<IGeoJsonData>) => {
+          const dist = distance(
+            [-54.57118702316389, -25.97701522743678],
+            [-54.56932570611937, -25.975259925641254],
+            { units: "kilometers" },
+          );
           setDetails({
-            name: item.object?.properties.name,
             color: item.object?.properties.color,
+            distance: dist * 1000,
+            name: item.object?.properties.name,
+            section: item.object?.properties.section,
           });
-          console.log(item);
         },
       }),
     ];
