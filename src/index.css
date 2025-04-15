@@ -179,7 +179,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply text-foreground bg-slate-50;
+  }
+
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
   }
 }
