@@ -6,6 +6,11 @@ export interface IGeoJsonData {
   properties: {
     name: string;
     color: string;
+    section: {
+      district: string;
+      id: string;
+      street: string;
+    };
   };
   type: string;
 }
