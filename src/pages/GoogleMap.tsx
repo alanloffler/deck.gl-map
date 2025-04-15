@@ -224,7 +224,12 @@ export function GoogleMap() {
               : "translate-x-0 opacity-100",
           )}
         >
-          <Button className="rounded-full p-1" onClick={handleClose}>
+          <Button
+            className="text-foreground absolute top-2 right-2 rounded-full bg-slate-200 p-1 hover:bg-slate-200/80"
+            onClick={handleClose}
+            size="miniIcon"
+            variant="secondary"
+          >
             <X size={17} strokeWidth={2} />
           </Button>
           <CardHeader>
