@@ -1,4 +1,4 @@
-import { Map, MapPin, Milestone, Ruler, X } from "lucide-react";
+import { Map, MapPin, MapPinHouse, Milestone, Ruler, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,8 +37,9 @@ export function GoogleMap() {
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
+  const [showMarkers, setShowMarkers] = useState<boolean>(true);
   const [streetNames, setStreetNames] = useState<"on" | "off">(
-    (localStorage.getItem("streetNames") as "on" | "off") ?? "on",
+    (localStorage.getItem("streetNames") as "on" | "off") ?? "off",
   );
 
   useEffect(() => {
@@ -170,8 +171,26 @@ export function GoogleMap() {
               </div>
             </div>
           </section>
-          <section className="flex justify-end py-3">
+          <section className="flex justify-between py-3">
             <div className="flex space-x-3">
+              <Label>Visualizaciones</Label>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  className="bg-card"
+                  id="interactive"
+                  defaultChecked={showMarkers}
+                  onCheckedChange={() => setShowMarkers(!showMarkers)}
+                />
+                <label
+                  htmlFor="interactive"
+                  className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  <MapPinHouse size={17} strokeWidth={2} />
+                </label>
+              </div>
+            </div>
+            <div className="flex space-x-3">
+              <Label>Mapa</Label>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
@@ -210,6 +229,7 @@ export function GoogleMap() {
               key={mapKey}
               mapTypeId={mapTypeId}
               setDetails={setDetails}
+              showMarkers={showMarkers}
               streetNames={streetNames}
             />
           </div>
