@@ -1,8 +1,11 @@
 export interface IMarker {
-  address: string;
-  color: [number, number, number, number];
+  color: string;
   coordinates: [number, number];
-  id: string;
-  icon: string;
+  details: {
+    district: string;
+    icon: string;
+    id: string;
+    street: string;
+  };
   name: string;
 }
