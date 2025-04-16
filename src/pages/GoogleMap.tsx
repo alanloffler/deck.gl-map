@@ -261,26 +261,27 @@ export function GoogleMap() {
                   <div className="flex items-center space-x-2">
                     <span className="ml-1 w-3">#</span>
                     <span className="text-sm font-medium">
-                      {details.section?.id}
+                      {details.details?.id}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Milestone size={17} strokeWidth={2} />
                     <div className="text-xsm flex flex-col">
-                      <span>{details.section?.street},</span>
-                      <span>{details.section?.district}</span>
+                      <span>{details.details?.street},</span>
+                      <span>{details.details?.district}</span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Ruler size={17} strokeWidth={2} />
-                    <span className="text-xsm">
-                      {details.distance &&
-                        new Intl.NumberFormat("es-AR", {
+                  {details.distance && (
+                    <div className="flex items-center space-x-2">
+                      <Ruler size={17} strokeWidth={2} />
+                      <span className="text-xsm">
+                        {new Intl.NumberFormat("es-AR", {
                           maximumFractionDigits: 2,
                         }).format(details.distance)}{" "}
-                      metros de longitud
-                    </span>
-                  </div>
+                        metros de longitud
+                      </span>
+                    </div>
+                  )}
                 </section>
               )}
             </section>
