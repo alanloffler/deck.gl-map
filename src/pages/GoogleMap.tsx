@@ -177,15 +177,19 @@ export function GoogleMap() {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
-                  id="interactive"
+                  id="markers"
                   defaultChecked={showMarkers}
                   onCheckedChange={() => setShowMarkers(!showMarkers)}
                 />
                 <label
-                  htmlFor="interactive"
+                  htmlFor="markers"
                   className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  <Pin size={17} strokeWidth={2} />
+                  <Pin
+                    size={19}
+                    strokeWidth={2}
+                    className="fill-amber-400/70 stroke-amber-400"
+                  />
                 </label>
               </div>
             </div>
@@ -202,7 +206,11 @@ export function GoogleMap() {
                   htmlFor="street-names"
                   className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  <Milestone size={17} strokeWidth={2} />
+                  <Milestone
+                    size={19}
+                    strokeWidth={2}
+                    className="fill-stone-400/70 stroke-stone-400"
+                  />
                 </label>
               </div>
               <div className="flex items-center space-x-2">
@@ -216,7 +224,11 @@ export function GoogleMap() {
                   htmlFor="interactive"
                   className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  <MapPin size={17} strokeWidth={2} />
+                  <MapPin
+                    size={19}
+                    strokeWidth={2}
+                    className="fill-rose-400/70 stroke-rose-400"
+                  />
                 </label>
               </div>
             </div>
