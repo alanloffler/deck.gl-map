@@ -37,7 +37,9 @@ export function GoogleMap() {
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
-  const [showMarkers, setShowMarkers] = useState<boolean>(true);
+  const [showMarkers, setShowMarkers] = useState<"on" | "off">(
+    (localStorage.getItem("markers") as "on" | "off") ?? "on",
+  );
   const [streetNames, setStreetNames] = useState<"on" | "off">(
     (localStorage.getItem("streetNames") as "on" | "off") ?? "off",
   );
@@ -66,6 +68,17 @@ export function GoogleMap() {
     if (event === false) {
       setStreetNames("off");
       localStorage.setItem("streetNames", "off");
+    }
+  }
+
+  function handleMarkers(event: boolean): void {
+    if (event === true) {
+      setShowMarkers("on");
+      localStorage.setItem("markers", "on");
+    }
+    if (event === false) {
+      setShowMarkers("off");
+      localStorage.setItem("markers", "off");
     }
   }
 
@@ -178,8 +191,8 @@ export function GoogleMap() {
                 <Checkbox
                   className="bg-card"
                   id="markers"
-                  defaultChecked={showMarkers}
-                  onCheckedChange={() => setShowMarkers(!showMarkers)}
+                  defaultChecked={showMarkers === "on" ? true : false}
+                  onCheckedChange={handleMarkers}
                 />
                 <label
                   htmlFor="markers"
