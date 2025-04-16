@@ -1,4 +1,12 @@
-import { Map, MapPin, MapPinHouse, Milestone, Ruler, X } from "lucide-react";
+import {
+  Map,
+  MapPin,
+  MapPinHouse,
+  Milestone,
+  Pin,
+  Ruler,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -185,7 +193,7 @@ export function GoogleMap() {
                   htmlFor="interactive"
                   className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  <MapPinHouse size={17} strokeWidth={2} />
+                  <Pin size={17} strokeWidth={2} />
                 </label>
               </div>
             </div>
