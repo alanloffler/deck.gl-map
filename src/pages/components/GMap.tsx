@@ -54,32 +54,30 @@ export function GMap({
     if (!data) return [];
 
     return [
-      showMarkers &&
-        new IconLayer<IMarker>({
-          id: "markers-layer",
-          data: markers,
-          getColor: (d: IMarker) => hexToRgb(d.color),
-          getIcon: (d: IMarker) => ({
-            url: new URL(
-              `../../assets/icons/${d.details.icon}`,
-              import.meta.url,
-            ).href,
-            width: 320,
-            height: 320,
-          }),
-          getPosition: (d: IMarker) => d.coordinates,
-          getSize: 32,
-          // iconAtlas: iconAtlas,
-          // iconMapping: iconAtlasMap,
-          onClick: (item: PickingInfo<IMarker>) => {
-            setDetails({
-              color: item.object?.color,
-              name: item.object?.name,
-              details: item.object?.details,
-            });
-          },
-          pickable: true,
+      new IconLayer<IMarker>({
+        id: "markers-layer",
+        data: markers,
+        visible: showMarkers,
+        getColor: (d: IMarker) => hexToRgb(d.color),
+        getIcon: (d: IMarker) => ({
+          url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
+            .href,
+          width: 320,
+          height: 320,
         }),
+        getPosition: (d: IMarker) => d.coordinates,
+        getSize: 32,
+        // iconAtlas: iconAtlas,
+        // iconMapping: iconAtlasMap,
+        onClick: (item: PickingInfo<IMarker>) => {
+          setDetails({
+            color: item.object?.color,
+            name: item.object?.name,
+            details: item.object?.details,
+          });
+        },
+        pickable: true,
+      }),
       new GeoJsonLayer<IGeoJsonData>({
         id: "geojson-layer",
         data,
