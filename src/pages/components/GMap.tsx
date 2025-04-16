@@ -23,6 +23,7 @@ interface IProps {
   interactive: string;
   mapTypeId: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
+  showMarkers: boolean;
   streetNames: string;
 }
 
@@ -38,6 +39,7 @@ export function GMap({
   interactive,
   mapTypeId,
   setDetails,
+  showMarkers,
   streetNames,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
@@ -52,29 +54,32 @@ export function GMap({
     if (!data) return [];
 
     return [
-      new IconLayer<IMarker>({
-        id: "markers-layer",
-        data: markers,
-        getColor: (d: IMarker) => hexToRgb(d.color),
-        getIcon: (d: IMarker) => ({
-          url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
-            .href,
-          width: 24,
-          height: 24,
+      showMarkers &&
+        new IconLayer<IMarker>({
+          id: "markers-layer",
+          data: markers,
+          getColor: (d: IMarker) => hexToRgb(d.color),
+          getIcon: (d: IMarker) => ({
+            url: new URL(
+              `../../assets/icons/${d.details.icon}`,
+              import.meta.url,
+            ).href,
+            width: 24,
+            height: 24,
+          }),
+          getPosition: (d: IMarker) => d.coordinates,
+          getSize: 24,
+          // iconAtlas: iconAtlas,
+          // iconMapping: iconAtlasMap,
+          onClick: (item: PickingInfo<IMarker>) => {
+            setDetails({
+              color: item.object?.color,
+              name: item.object?.name,
+              details: item.object?.details,
+            });
+          },
+          pickable: true,
         }),
-        getPosition: (d: IMarker) => d.coordinates,
-        getSize: 24,
-        // iconAtlas: iconAtlas,
-        // iconMapping: iconAtlasMap,
-        onClick: (item: PickingInfo<IMarker>) => {
-          setDetails({
-            color: item.object?.color,
-            name: item.object?.name,
-            details: item.object?.details,
-          });
-        },
-        pickable: true,
-      }),
       new GeoJsonLayer<IGeoJsonData>({
         id: "geojson-layer",
         data,
