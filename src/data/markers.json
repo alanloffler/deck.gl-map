@@ -1,10 +1,13 @@
 [
   {
-    "address": "Av. República Argentina S/N",
     "coordinates": [-54.565352, -25.972841],
-    "color": [0, 130, 54, 255],
-    "icon": "building-office.svg",
-    "id": "M001",
+    "color": "#008236",
+    "details": {
+      "district": "Centro",
+      "icon": "building-office.svg",
+      "id": "M/001",
+      "street": "Avenida República Argentina"
+    },
     "name": "Cooperativa de Wanda"
   }
 ]
