@@ -103,22 +103,45 @@ export function GMap({
     ];
   }
 
-  const getTooltip = useCallback(({ object }: PickingInfo<IMarker>) => {
-    if (!object) return null;
+  const getTooltip = useCallback(
+    ({ object }: PickingInfo<IMarker | IGeoJsonData>) => {
+      if (!object) return null;
 
-    return {
-      html: `<div>${object.name}</div>`,
-      style: {
-        backgroundColor: "#ffffff",
-        border: "1px solid #e2e8f0",
-        borderRadius: "8px",
-        boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-        color: "#000000",
-        fontSize: "13px",
-        fontWeight: "500",
-      },
-    };
-  }, []);
+      if ("name" in object && "icon" in object) {
+        const item: IMarker = object;
+
+        return {
+          html: `<div>${item.name}</div>`,
+          style: {
+            backgroundColor: "#ffffff",
+            border: "1px solid #e2e8f0",
+            borderRadius: "8px",
+            boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+            color: "#000000",
+            fontSize: "13px",
+            fontWeight: "500",
+          },
+        };
+      } else {
+        const item: IGeoJsonData = object;
+
+        return {
+          text: item.properties.name,
+          html: `<div>${item.properties.name}</div>`,
+          style: {
+            backgroundColor: "#ffffff",
+            border: "1px solid #e2e8f0",
+            borderRadius: "8px",
+            boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+            color: "#000000",
+            fontSize: "13px",
+            fontWeight: "500",
+          },
+        };
+      }
+    },
+    [],
+  );
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
