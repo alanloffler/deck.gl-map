@@ -2,7 +2,7 @@ export interface IDetails {
   color?: string;
   distance?: number;
   name?: string;
-  section?: {
+  details?: {
     district?: string;
     id?: string;
     street?: string;
