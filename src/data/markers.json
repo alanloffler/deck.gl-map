@@ -1,8 +1,10 @@
 [
   {
-    "id": "001",
-    "position": { "lat": -25.9728451087578, "lng": -54.56535390077224 },
-    "type": "pin",
-    "zIndex": 1
+    "address": "Av. República Argentina S/N",
+    "coordinates": [-54.565352, -25.972841],
+    "color": [0, 130, 54, 255],
+    "icon": "building-office.svg",
+    "id": "M001",
+    "name": "Cooperativa de Wanda"
   }
 ]
