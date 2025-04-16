@@ -1,12 +1,4 @@
-import {
-  Map,
-  MapPin,
-  MapPinHouse,
-  Milestone,
-  Pin,
-  Ruler,
-  X,
-} from "lucide-react";
+import { Map, MapPin, Milestone, Pin, Ruler, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
