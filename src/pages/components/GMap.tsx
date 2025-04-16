@@ -1,6 +1,6 @@
-import { type Feature, type GeoJSON } from "geojson";
+import { type Feature, type Geometry, type GeoJSON } from "geojson";
 import { APIProvider, Map, type ColorScheme } from "@vis.gl/react-google-maps";
-import { GeoJsonLayer, IconLayer, type Color, type PickingInfo } from "deck.gl";
+import { GeoJsonLayer, IconLayer, type PickingInfo } from "deck.gl";
 import {
   type Dispatch,
   type SetStateAction,
@@ -28,6 +28,7 @@ interface IProps {
 
 import markersData from "../../data/markers.json";
 import watter from "../../data/watter.json";
+import { hexToRgb } from "@/lib/helpers";
 // import iconAtlas from "../../assets/icon-atlas.png";
 // import iconAtlasMap from "../../data/icon-atlas.json";
 
@@ -54,9 +55,10 @@ export function GMap({
       new IconLayer<IMarker>({
         id: "markers-layer",
         data: markers,
-        getColor: (d: IMarker) => d.color as Color,
+        getColor: (d: IMarker) => hexToRgb(d.color),
         getIcon: (d: IMarker) => ({
-          url: new URL(`../../assets/icons/${d.icon}`, import.meta.url).href,
+          url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
+            .href,
           width: 24,
           height: 24,
         }),
@@ -64,6 +66,13 @@ export function GMap({
         getSize: 24,
         // iconAtlas: iconAtlas,
         // iconMapping: iconAtlasMap,
+        onClick: (item: PickingInfo<IMarker>) => {
+          setDetails({
+            color: item.object?.color,
+            name: item.object?.name,
+            details: item.object?.details,
+          });
+        },
         pickable: true,
       }),
       new GeoJsonLayer<IGeoJsonData>({
@@ -76,17 +85,13 @@ export function GMap({
         lineWidthScale: 5,
         lineWidthMinPixels: 4,
         getFillColor: [160, 160, 180, 200],
-        getLineColor: (f: Feature) => {
-          const hex = f?.properties?.color;
-          if (!hex) return [0, 0, 0];
-
-          return hex.match(/[0-9a-f]{2}/g)!.map((x: string) => parseInt(x, 16));
-        },
+        getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
+          hexToRgb(f.properties?.color),
         getPointRadius: 20,
         getLineWidth: 1,
         getElevation: 30,
         pickable: true,
-        onClick: (item: PickingInfo<IGeoJsonData>) => {
+        onClick: (item: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
           const dist = distance(
             [-54.57118702316389, -25.97701522743678],
             [-54.56932570611937, -25.975259925641254],
@@ -96,7 +101,7 @@ export function GMap({
             color: item.object?.properties.color,
             distance: dist * 1000,
             name: item.object?.properties.name,
-            section: item.object?.properties.section,
+            details: item.object?.properties.details,
           });
         },
       }),
@@ -104,13 +109,14 @@ export function GMap({
   }
 
   const getTooltip = useCallback(
-    ({ object }: PickingInfo<IMarker | IGeoJsonData>) => {
+    ({ object }: PickingInfo<IMarker | Feature<Geometry, IGeoJsonData>>) => {
       if (!object) return null;
 
-      if ("name" in object && "icon" in object) {
-        const item: IMarker = object;
+      if ("name" in object && "icon" in object.details) {
+        const item = object as IMarker;
 
         return {
+          text: item.name,
           html: `<div>${item.name}</div>`,
           style: {
             backgroundColor: "#ffffff",
@@ -123,7 +129,7 @@ export function GMap({
           },
         };
       } else {
-        const item: IGeoJsonData = object;
+        const item = object as Feature<Geometry, IGeoJsonData>;
 
         return {
           text: item.properties.name,
