@@ -46,6 +46,36 @@ export function GMap({
     if (!data) return [];
 
     return [
+      new GeoJsonLayer<IGeoJsonData>({
+        id: "geojson-layer",
+        data,
+        stroked: false,
+        filled: true,
+        extruded: true,
+        pointType: "circle",
+        lineWidthScale: 1,
+        lineWidthMinPixels: 3,
+        getFillColor: [160, 160, 180, 200],
+        getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
+          hexToRgb(f.properties?.color),
+        getPointRadius: 20,
+        getLineWidth: 1,
+        getElevation: 0,
+        pickable: true,
+        onClick: (item: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
+          const dist = distance(
+            [-54.57118702316389, -25.97701522743678],
+            [-54.56932570611937, -25.975259925641254],
+            { units: "kilometers" },
+          );
+          setDetails({
+            color: item.object?.properties.color,
+            distance: dist * 1000,
+            name: item.object?.properties.name,
+            details: item.object?.properties.details,
+          });
+        },
+      }),
       new IconLayer<IMarker>({
         id: "markers-layer",
         data: markers,
@@ -69,36 +99,6 @@ export function GMap({
           });
         },
         pickable: true,
-      }),
-      new GeoJsonLayer<IGeoJsonData>({
-        id: "geojson-layer",
-        data,
-        stroked: false,
-        filled: true,
-        extruded: true,
-        pointType: "circle",
-        lineWidthScale: 1,
-        lineWidthMinPixels: 4,
-        getFillColor: [160, 160, 180, 200],
-        getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
-          hexToRgb(f.properties?.color),
-        getPointRadius: 20,
-        getLineWidth: 1,
-        getElevation: 30,
-        pickable: true,
-        onClick: (item: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
-          const dist = distance(
-            [-54.57118702316389, -25.97701522743678],
-            [-54.56932570611937, -25.975259925641254],
-            { units: "kilometers" },
-          );
-          setDetails({
-            color: item.object?.properties.color,
-            distance: dist * 1000,
-            name: item.object?.properties.name,
-            details: item.object?.properties.details,
-          });
-        },
       }),
     ];
   }
