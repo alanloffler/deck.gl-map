@@ -30,6 +30,7 @@ interface IProps {
 
 import markersData from "../../data/markers/markers.json";
 import mainNetwork from "../../data/networks/main-network.json";
+import secondaryNetwork from "../../data/networks/secondary-network.json";
 import { hexToRgb } from "@/lib/helpers";
 // import iconAtlas from "../../assets/icon-atlas.png";
 // import iconAtlasMap from "../../data/icon-atlas.json";
@@ -41,27 +42,30 @@ export function GMap({
   visualizations,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
+  const [secondaryNetworkData, setSecondaryNetworkData] =
+    useState<GeoJSON | null>(null);
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
 
   useEffect(() => {
     setData(mainNetwork as GeoJSON);
+    setSecondaryNetworkData(secondaryNetwork as GeoJSON);
     setMarkers(markersData as IMarker[]);
   }, []);
 
   function getDeckGlLayers() {
-    if (!data) return [];
+    if (!data || !secondaryNetworkData) return [];
 
     return [
       new GeoJsonLayer<IGeoJsonData>({
-        id: "geojson-layer",
-        data,
+        id: "secondary-network",
+        data: secondaryNetworkData,
         stroked: false,
         filled: true,
         extruded: true,
         // pointType: "circle",
         lineWidthScale: 2,
         lineWidthMinPixels: 3,
-        getFillColor: [160, 160, 180, 200],
+        // getFillColor: [160, 160, 180, 200],
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
         // getPointRadius: 20,
@@ -69,6 +73,39 @@ export function GMap({
         getElevation: 0,
         pickable: true,
         autoHighlight: true,
+        highlightColor: [168, 85, 247],
+        lineCapRounded: true,
+        onClick: (
+          item: PickingInfo<Feature<MultiLineString, IGeoJsonData>>,
+        ) => {
+          const dist: number | undefined = getDistance(
+            item.object?.geometry.coordinates,
+          );
+
+          setDetails({
+            color: item.object?.properties.color,
+            distance: dist && dist * 1000,
+            name: item.object?.properties.name,
+            details: item.object?.properties.details,
+          });
+        },
+      }),
+      new GeoJsonLayer<IGeoJsonData>({
+        id: "geojson-layer",
+        data,
+        stroked: false,
+        filled: true,
+        extruded: true,
+        lineWidthScale: 2,
+        lineWidthMinPixels: 3,
+        getFillColor: [160, 160, 180, 200],
+        getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
+          hexToRgb(f.properties?.color),
+        getLineWidth: 1,
+        getElevation: 0,
+        pickable: true,
+        autoHighlight: true,
+        highlightColor: [14, 165, 233],
         lineCapRounded: true,
         onClick: (
           item: PickingInfo<Feature<MultiLineString, IGeoJsonData>>,
@@ -98,8 +135,6 @@ export function GMap({
         }),
         getPosition: (d: IMarker) => d.coordinates,
         getSize: 32,
-        // iconAtlas: iconAtlas,
-        // iconMapping: iconAtlasMap,
         onClick: (item: PickingInfo<IMarker>) => {
           setDetails({
             color: item.object?.color,
