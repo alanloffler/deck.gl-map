@@ -23,8 +23,10 @@ interface IProps {
   interactive: string;
   mapTypeId: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
-  showMarkers: boolean;
-  streetNames: string;
+  visualizations: {
+    showMarkers: string;
+    showStreetNames: string;
+  };
 }
 
 import markersData from "../../data/markers.json";
@@ -39,8 +41,7 @@ export function GMap({
   interactive,
   mapTypeId,
   setDetails,
-  showMarkers,
-  streetNames,
+  visualizations,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
@@ -57,7 +58,7 @@ export function GMap({
       new IconLayer<IMarker>({
         id: "markers-layer",
         data: markers,
-        visible: showMarkers,
+        visible: visualizations.showMarkers === "on",
         getColor: (d: IMarker) => hexToRgb(d.color),
         getIcon: (d: IMarker) => ({
           url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
@@ -173,7 +174,7 @@ export function GMap({
           {
             featureType: "road",
             elementType: "labels",
-            stylers: [{ visibility: streetNames }],
+            stylers: [{ visibility: visualizations.showStreetNames }],
           },
         ]}
       >
