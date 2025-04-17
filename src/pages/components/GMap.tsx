@@ -1,6 +1,13 @@
-import { type Feature, type Geometry, type GeoJSON } from "geojson";
+import {
+  type Feature,
+  type Geometry,
+  type GeoJSON,
+  MultiLineString,
+  Position,
+} from "geojson";
 import { APIProvider, Map, type ColorScheme } from "@vis.gl/react-google-maps";
 import { GeoJsonLayer, IconLayer, type PickingInfo } from "deck.gl";
+import { distance } from "@turf/distance";
 import {
   type Dispatch,
   type SetStateAction,
@@ -8,7 +15,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { distance } from "@turf/distance";
 import { DeckGlOverlay } from "./DeckGlOverlay";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
@@ -52,25 +58,28 @@ export function GMap({
         stroked: false,
         filled: true,
         extruded: true,
-        pointType: "circle",
+        // pointType: "circle",
         lineWidthScale: 1,
         lineWidthMinPixels: 3,
         getFillColor: [160, 160, 180, 200],
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
-        getPointRadius: 20,
+        // getPointRadius: 20,
         getLineWidth: 1,
         getElevation: 0,
         pickable: true,
-        onClick: (item: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
-          const dist = distance(
-            [-54.57118702316389, -25.97701522743678],
-            [-54.56932570611937, -25.975259925641254],
-            { units: "kilometers" },
+        autoHighlight: true,
+        lineCapRounded: true,
+        onClick: (
+          item: PickingInfo<Feature<MultiLineString, IGeoJsonData>>,
+        ) => {
+          const dist: number | undefined = getDistance(
+            item.object?.geometry.coordinates,
           );
+
           setDetails({
             color: item.object?.properties.color,
-            distance: dist * 1000,
+            distance: dist && dist * 1000,
             name: item.object?.properties.name,
             details: item.object?.properties.details,
           });
@@ -101,6 +110,37 @@ export function GMap({
         pickable: true,
       }),
     ];
+  }
+
+  function getDistance(
+    multiLineArray: GeoJSON.Position[][] | undefined,
+  ): number | undefined {
+    if (!multiLineArray) return undefined;
+
+    const distancesByLineString: number[] = [];
+
+    for (const lineArray of multiLineArray) {
+      if (lineArray.length < 2) {
+        distancesByLineString.push(0);
+        continue;
+      }
+
+      const firstPoint: Position = lineArray[0];
+      const lastPoint: Position = lineArray[lineArray.length - 1];
+
+      const directDistance: number = distance(firstPoint, lastPoint, {
+        units: "kilometers",
+      });
+
+      distancesByLineString.push(directDistance);
+    }
+
+    const totalDistance: number = distancesByLineString.reduce(
+      (sum, distance) => sum + distance,
+      0,
+    );
+
+    return totalDistance;
   }
 
   const getTooltip = useCallback(
