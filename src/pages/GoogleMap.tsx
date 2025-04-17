@@ -167,9 +167,9 @@ export function GoogleMap() {
               </div>
             </div>
           </section>
-          <section className="flex justify-between py-3">
-            <div className="flex space-x-3">
-              <Label>Visualizaciones</Label>
+          <section className="flex justify-end space-x-6 py-3">
+            <Label>Mostrar:</Label>
+            <div className="flex space-x-4">
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
@@ -192,9 +192,6 @@ export function GoogleMap() {
                   />
                 </label>
               </div>
-            </div>
-            <div className="flex space-x-3">
-              <Label>Mapa</Label>
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
