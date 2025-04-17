@@ -20,10 +20,10 @@ import {
 import { GMap } from "./components/GMap";
 import { useEffect, useState } from "react";
 import type { IDetails } from "../interfaces/details.interface";
+import type { IVisualization } from "@/interfaces/visualization.interface";
 import { cn } from "@/lib/utils";
 
 export function GoogleMap() {
-  // const [clickableIcons, setClickableIcons] = useState<boolean>(false);
   const [colorScheme, setColorScheme] = useState<string>(
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
@@ -39,7 +39,7 @@ export function GoogleMap() {
     setMapKey(crypto.randomUUID());
   }, [colorScheme]);
 
-  const [visualizations, setVisualizations] = useState({
+  const [visualizations, setVisualizations] = useState<IVisualization>({
     showGmMarkers: localStorage.getItem("showGmMarkers") ?? "off",
     showMarkers: localStorage.getItem("showMarkers") ?? "on",
     showMainNetwork: localStorage.getItem("showMainNetwork") ?? "on",
