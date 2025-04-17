@@ -91,8 +91,9 @@ export function GMap({
         },
       }),
       new GeoJsonLayer<IGeoJsonData>({
-        id: "geojson-layer",
+        id: "main-network",
         data,
+        visible: visualizations.showMainNetworks === "on",
         stroked: false,
         filled: true,
         extruded: true,
