@@ -77,7 +77,7 @@ export function GMap({
         filled: true,
         extruded: true,
         pointType: "circle",
-        lineWidthScale: 5,
+        lineWidthScale: 1,
         lineWidthMinPixels: 4,
         getFillColor: [160, 160, 180, 200],
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
