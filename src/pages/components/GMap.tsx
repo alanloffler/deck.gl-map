@@ -62,13 +62,10 @@ export function GMap({
         stroked: false,
         filled: true,
         extruded: true,
-        // pointType: "circle",
         lineWidthScale: 2,
         lineWidthMinPixels: 3,
-        // getFillColor: [160, 160, 180, 200],
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
-        // getPointRadius: 20,
         getLineWidth: 1,
         getElevation: 0,
         pickable: true,
@@ -99,7 +96,6 @@ export function GMap({
         extruded: true,
         lineWidthScale: 2,
         lineWidthMinPixels: 3,
-        getFillColor: [160, 160, 180, 200],
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
         getLineWidth: 1,
