@@ -29,7 +29,7 @@ interface IProps {
 }
 
 import markersData from "../../data/markers.json";
-import watter from "../../data/watter.json";
+import RP001 from "../../data/RP-001.json";
 import { hexToRgb } from "@/lib/helpers";
 // import iconAtlas from "../../assets/icon-atlas.png";
 // import iconAtlasMap from "../../data/icon-atlas.json";
@@ -44,7 +44,7 @@ export function GMap({
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
 
   useEffect(() => {
-    setData(watter as GeoJSON);
+    setData(RP001 as GeoJSON);
     setMarkers(markersData as IMarker[]);
   }, []);
 
