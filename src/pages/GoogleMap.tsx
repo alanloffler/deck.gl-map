@@ -37,12 +37,12 @@ export function GoogleMap() {
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
-  const [showMarkers, setShowMarkers] = useState<"on" | "off">(
-    (localStorage.getItem("markers") as "on" | "off") ?? "on",
-  );
-  const [streetNames, setStreetNames] = useState<"on" | "off">(
-    (localStorage.getItem("streetNames") as "on" | "off") ?? "off",
-  );
+  // const [showMarkers, setShowMarkers] = useState<"on" | "off">(
+  //   (localStorage.getItem("markers") as "on" | "off") ?? "on",
+  // );
+  // const [streetNames, setStreetNames] = useState<"on" | "off">(
+  //   (localStorage.getItem("streetNames") as "on" | "off") ?? "off",
+  // );
 
   useEffect(() => {
     setMapKey(crypto.randomUUID());
@@ -60,26 +60,22 @@ export function GoogleMap() {
     }
   }
 
-  function handleStreetNames(event: boolean): void {
-    if (event === true) {
-      setStreetNames("on");
-      localStorage.setItem("streetNames", "on");
-    }
-    if (event === false) {
-      setStreetNames("off");
-      localStorage.setItem("streetNames", "off");
-    }
-  }
+  const [visualizations, setVisualizations] = useState({
+    showMarkers: localStorage.getItem("showMarkers") ?? "on",
+    showMainNetwork: localStorage.getItem("showMainNetwork") ?? "on",
+    showStreetNames: localStorage.getItem("showStreetNames") ?? "on",
+  });
 
-  function handleMarkers(event: boolean): void {
-    if (event === true) {
-      setShowMarkers("on");
-      localStorage.setItem("markers", "on");
-    }
-    if (event === false) {
-      setShowMarkers("off");
-      localStorage.setItem("markers", "off");
-    }
+  function handleVisualizations(event: boolean, type: string): void {
+    const value: string = event ? "on" : "off";
+
+    setVisualizations((prev) => ({
+      ...prev,
+      [type]: value,
+    }));
+
+    localStorage.setItem(type, value);
+    console.log(`Show ${type}: `, value);
   }
 
   const handleClose = () => {
@@ -191,8 +187,12 @@ export function GoogleMap() {
                 <Checkbox
                   className="bg-card"
                   id="markers"
-                  defaultChecked={showMarkers === "on" ? true : false}
-                  onCheckedChange={handleMarkers}
+                  defaultChecked={
+                    visualizations.showMarkers === "on" ? true : false
+                  }
+                  onCheckedChange={(event) =>
+                    handleVisualizations(event as boolean, "showMarkers")
+                  }
                 />
                 <label
                   htmlFor="markers"
@@ -212,8 +212,12 @@ export function GoogleMap() {
                 <Checkbox
                   className="bg-card"
                   id="street-names"
-                  defaultChecked={streetNames === "on" ? true : false}
-                  onCheckedChange={handleStreetNames}
+                  defaultChecked={
+                    visualizations.showStreetNames === "on" ? true : false
+                  }
+                  onCheckedChange={(event: boolean) =>
+                    handleVisualizations(event, "showStreetNames")
+                  }
                 />
                 <label
                   htmlFor="street-names"
@@ -254,8 +258,7 @@ export function GoogleMap() {
               key={mapKey}
               mapTypeId={mapTypeId}
               setDetails={setDetails}
-              showMarkers={showMarkers}
-              streetNames={streetNames}
+              visualizations={visualizations}
             />
           </div>
         </CardContent>
