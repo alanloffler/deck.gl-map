@@ -13,16 +13,13 @@ import { DeckGlOverlay } from "./DeckGlOverlay";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
+import type { IVisualization } from "@/interfaces/visualization.interface";
 
 interface IProps {
   colorScheme: string;
   mapTypeId: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
-  visualizations: {
-    showGmMarkers: string;
-    showMarkers: string;
-    showStreetNames: string;
-  };
+  visualizations: IVisualization;
 }
 
 import markersData from "../../data/markers.json";
