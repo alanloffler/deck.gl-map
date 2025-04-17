@@ -167,8 +167,13 @@ export function GMap({
         const item = object as Feature<Geometry, IGeoJsonData>;
 
         return {
-          text: item.properties.name,
-          html: `<div>${item.properties.name}</div>`,
+          html: `<div class="flex flex-col">
+              <span class="font-medium">${item.properties.details.street}</span>
+              <div class="flex flex-row space-x-2 items-center">
+                <div class="h-1 w-5" style="background:${item.properties.color}"></div>
+                <span>${item.properties.name}</span>
+              </div>
+            </div>`,
           style: {
             backgroundColor: "#ffffff",
             border: "1px solid #e2e8f0",
@@ -176,7 +181,6 @@ export function GMap({
             boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
             color: "#000000",
             fontSize: "13px",
-            fontWeight: "500",
           },
         };
       }
