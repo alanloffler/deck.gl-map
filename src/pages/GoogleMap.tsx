@@ -1,4 +1,4 @@
-import { Map, MapPin, Milestone, Pin, Ruler, X } from "lucide-react";
+import { Map, MapPin, Milestone, Pin, Ruler, Spline, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -42,7 +42,8 @@ export function GoogleMap() {
   const [visualizations, setVisualizations] = useState<IVisualization>({
     showGmMarkers: localStorage.getItem("showGmMarkers") ?? "off",
     showMarkers: localStorage.getItem("showMarkers") ?? "on",
-    showMainNetwork: localStorage.getItem("showMainNetwork") ?? "on",
+    showMainNetworks: localStorage.getItem("showMainNetwork") ?? "on",
+    showSecondaryNetworks: localStorage.getItem("showSecondaryNetwork") ?? "on",
     showStreetNames: localStorage.getItem("showStreetNames") ?? "on",
   });
 
@@ -173,6 +174,28 @@ export function GoogleMap() {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
+                  id="main-networks"
+                  defaultChecked={
+                    visualizations.showMainNetworks === "on" ? true : false
+                  }
+                  onCheckedChange={(event) =>
+                    handleVisualizations(event as boolean, "showMainNetworks")
+                  }
+                />
+                <label
+                  htmlFor="main-networks"
+                  className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  <Spline
+                    size={19}
+                    strokeWidth={2}
+                    className="stroke-sky-400"
+                  />
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  className="bg-card"
                   id="markers"
                   defaultChecked={
                     visualizations.showMarkers === "on" ? true : false
@@ -228,9 +251,6 @@ export function GoogleMap() {
                       setMapTypeId(type);
                       localStorage.setItem("mapTypeId", type);
                     }
-                    console.log(
-                      event ? "change to hybrid" : "change to satellite",
-                    );
                   }}
                 />
                 <label
