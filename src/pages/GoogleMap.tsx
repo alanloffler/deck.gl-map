@@ -23,44 +23,24 @@ import type { IDetails } from "../interfaces/details.interface";
 import { cn } from "@/lib/utils";
 
 export function GoogleMap() {
-  const [clickableIcons, setClickableIcons] = useState<boolean>(false);
+  // const [clickableIcons, setClickableIcons] = useState<boolean>(false);
   const [colorScheme, setColorScheme] = useState<string>(
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
   const [contentVisible, setContentVisible] = useState<boolean>(false);
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
-  const [interactive, setInteractive] = useState<"on" | "off">(
-    (localStorage.getItem("interactive") as "on" | "off") ?? "off",
-  );
   const [mapKey, setMapKey] = useState<string>("mapKey");
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
-  // const [showMarkers, setShowMarkers] = useState<"on" | "off">(
-  //   (localStorage.getItem("markers") as "on" | "off") ?? "on",
-  // );
-  // const [streetNames, setStreetNames] = useState<"on" | "off">(
-  //   (localStorage.getItem("streetNames") as "on" | "off") ?? "off",
-  // );
 
   useEffect(() => {
     setMapKey(crypto.randomUUID());
   }, [colorScheme]);
 
-  function handleInteractivity(event: boolean): void {
-    setClickableIcons(event);
-    if (event === true) {
-      setInteractive("on");
-      localStorage.setItem("interactive", "on");
-    }
-    if (event === false) {
-      setInteractive("off");
-      localStorage.setItem("interactive", "off");
-    }
-  }
-
   const [visualizations, setVisualizations] = useState({
+    showGmMarkers: localStorage.getItem("showGmMarkers") ?? "off",
     showMarkers: localStorage.getItem("showMarkers") ?? "on",
     showMainNetwork: localStorage.getItem("showMainNetwork") ?? "on",
     showStreetNames: localStorage.getItem("showStreetNames") ?? "on",
@@ -156,22 +136,29 @@ export function GoogleMap() {
                 <Select
                   defaultValue={mapTypeId}
                   onValueChange={(item) => {
-                    setMapTypeId(item);
-                    localStorage.setItem("mapTypeId", item);
+                    const actualType =
+                      item === "satellite" &&
+                      visualizations.showGmMarkers === "on"
+                        ? "hybrid"
+                        : item;
+
+                    setMapTypeId(actualType);
+                    localStorage.setItem("mapTypeId", actualType);
                   }}
                 >
                   <SelectTrigger className="bg-card w-fit" size="sm">
-                    <SelectValue placeholder="Tipo" />
+                    {mapTypeId === "roadmap"
+                      ? "Mapa"
+                      : mapTypeId === "hybrid"
+                        ? "Satelite"
+                        : "Satelite"}
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectItem value="roadmap" size="sm">
                         Mapa
                       </SelectItem>
-                      <SelectItem
-                        value={interactive ? "hybrid" : "satellite"}
-                        size="sm"
-                      >
+                      <SelectItem value="satellite" size="sm">
                         Satelite
                       </SelectItem>
                     </SelectGroup>
@@ -233,12 +220,24 @@ export function GoogleMap() {
               <div className="flex items-center space-x-2">
                 <Checkbox
                   className="bg-card"
-                  id="interactive"
-                  defaultChecked={interactive === "on" ? true : false}
-                  onCheckedChange={handleInteractivity}
+                  id="google-markers"
+                  defaultChecked={
+                    visualizations.showGmMarkers === "on" ? true : false
+                  }
+                  onCheckedChange={(event: boolean) => {
+                    handleVisualizations(event, "showGmMarkers");
+                    if (mapTypeId !== "roadmap") {
+                      const type = event ? "hybrid" : "satellite";
+                      setMapTypeId(type);
+                      localStorage.setItem("mapTypeId", type);
+                    }
+                    console.log(
+                      event ? "change to hybrid" : "change to satellite",
+                    );
+                  }}
                 />
                 <label
-                  htmlFor="interactive"
+                  htmlFor="google-markers"
                   className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   <MapPin
@@ -252,9 +251,7 @@ export function GoogleMap() {
           </section>
           <div className="h-[450px] w-full bg-slate-50">
             <GMap
-              clickableIcons={clickableIcons}
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
-              interactive={interactive}
               key={mapKey}
               mapTypeId={mapTypeId}
               setDetails={setDetails}
