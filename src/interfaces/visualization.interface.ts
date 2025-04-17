@@ -1,6 +1,7 @@
 export interface IVisualization {
   showGmMarkers: string;
-  showMainNetwork: string;
+  showMainNetworks: string;
   showMarkers: string;
+  showSecondaryNetworks: string;
   showStreetNames: string;
 }
