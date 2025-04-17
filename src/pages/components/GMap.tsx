@@ -28,8 +28,8 @@ interface IProps {
   visualizations: IVisualization;
 }
 
-import markersData from "../../data/markers.json";
-import RP001 from "../../data/RP-001.json";
+import markersData from "../../data/markers/markers.json";
+import mainNetwork from "../../data/networks/main-network.json";
 import { hexToRgb } from "@/lib/helpers";
 // import iconAtlas from "../../assets/icon-atlas.png";
 // import iconAtlasMap from "../../data/icon-atlas.json";
@@ -44,7 +44,7 @@ export function GMap({
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
 
   useEffect(() => {
-    setData(RP001 as GeoJSON);
+    setData(mainNetwork as GeoJSON);
     setMarkers(markersData as IMarker[]);
   }, []);
 
@@ -59,7 +59,7 @@ export function GMap({
         filled: true,
         extruded: true,
         // pointType: "circle",
-        lineWidthScale: 1,
+        lineWidthScale: 2,
         lineWidthMinPixels: 3,
         getFillColor: [160, 160, 180, 200],
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
