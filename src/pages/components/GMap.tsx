@@ -14,16 +14,12 @@ import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
 
-// const DATA_URL =
-// ("https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json");
-
 interface IProps {
-  clickableIcons: boolean;
   colorScheme: string;
-  interactive: string;
   mapTypeId: string;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
   visualizations: {
+    showGmMarkers: string;
     showMarkers: string;
     showStreetNames: string;
   };
@@ -36,9 +32,7 @@ import { hexToRgb } from "@/lib/helpers";
 // import iconAtlasMap from "../../data/icon-atlas.json";
 
 export function GMap({
-  clickableIcons,
   colorScheme,
-  interactive,
   mapTypeId,
   setDetails,
   visualizations,
@@ -156,7 +150,7 @@ export function GMap({
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
-        clickableIcons={clickableIcons}
+        clickableIcons={visualizations.showGmMarkers === "on" ? true : false}
         colorScheme={colorScheme as ColorScheme}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
         defaultZoom={16}
@@ -169,7 +163,7 @@ export function GMap({
           {
             featureType: "poi",
             elementType: "labels",
-            stylers: [{ visibility: interactive }],
+            stylers: [{ visibility: visualizations.showGmMarkers }],
           },
           {
             featureType: "road",
