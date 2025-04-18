@@ -56,6 +56,24 @@ export function VisControls({
         <div className="flex items-center space-x-2">
           <Checkbox
             className="bg-card"
+            id="secondary-networks"
+            defaultChecked={
+              visualizations.showSecondaryNetworks === "on" ? true : false
+            }
+            onCheckedChange={(event) =>
+              handleVisualizations(event as boolean, "showSecondaryNetworks")
+            }
+          />
+          <label
+            htmlFor="secondary-networks"
+            className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            <Spline size={19} strokeWidth={2} className="stroke-purple-400" />
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            className="bg-card"
             id="markers"
             defaultChecked={visualizations.showMarkers === "on" ? true : false}
             onCheckedChange={(event) =>
