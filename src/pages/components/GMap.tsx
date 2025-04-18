@@ -59,6 +59,7 @@ export function GMap({
       new GeoJsonLayer<IGeoJsonData>({
         id: "secondary-network",
         data: secondaryNetworkData,
+        visible: visualizations.showSecondaryNetworks === "on",
         stroked: false,
         filled: true,
         extruded: true,
