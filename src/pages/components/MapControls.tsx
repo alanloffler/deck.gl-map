@@ -30,8 +30,8 @@ export function MapControls({
   visualizations,
 }: IProps) {
   return (
-    <section className="flex rounded-md bg-slate-100 px-3 py-2 md:justify-between">
-      <div className="hidden items-center space-x-3 md:flex">
+    <section className="flex rounded-md bg-slate-100 px-3 py-2 sm:justify-between">
+      <div className="hidden items-center space-x-3 sm:flex">
         <Map size={17} strokeWidth={2} />
         <span className="text-sm font-medium">Mapa</span>
       </div>
