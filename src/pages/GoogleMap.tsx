@@ -150,7 +150,11 @@ export function GoogleMap() {
                   <div className="flex items-center space-x-3 text-base font-semibold">
                     <span>{details.name}</span>
                     <span
-                      className="h-1.5 w-7 rounded-sm"
+                      className={cn(
+                        details.details?.id?.charAt(0).toUpperCase() === "M"
+                          ? "h-3 w-3 rounded-full"
+                          : "h-1.5 w-7 rounded-sm",
+                      )}
                       style={{ background: details.color }}
                     ></span>
                   </div>
