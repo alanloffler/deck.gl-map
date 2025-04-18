@@ -32,7 +32,7 @@ export function VisControls({
   }
 
   return (
-    <section className="flex justify-end space-x-6 py-3">
+    <section className="flex justify-start space-x-6 py-3 sm:justify-end">
       <Label>Mostrar:</Label>
       <div className="flex space-x-4">
         <div className="flex items-center space-x-2">
