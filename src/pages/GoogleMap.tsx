@@ -38,8 +38,9 @@ export function GoogleMap() {
   const [visualizations, setVisualizations] = useState<IVisualization>({
     showGmMarkers: localStorage.getItem("showGmMarkers") ?? "off",
     showMarkers: localStorage.getItem("showMarkers") ?? "on",
-    showMainNetworks: localStorage.getItem("showMainNetwork") ?? "on",
-    showSecondaryNetworks: localStorage.getItem("showSecondaryNetwork") ?? "on",
+    showMainNetworks: localStorage.getItem("showMainNetworks") ?? "on",
+    showSecondaryNetworks:
+      localStorage.getItem("showSecondaryNetworks") ?? "on",
     showStreetNames: localStorage.getItem("showStreetNames") ?? "on",
   });
 
