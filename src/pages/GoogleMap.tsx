@@ -100,7 +100,7 @@ export function GoogleMap() {
             setVisualizations={setVisualizations}
             visualizations={visualizations}
           />
-          <div className="h-[450px] w-full bg-slate-50">
+          <div className="h-[450px] bg-slate-50">
             <GMap
               colorScheme={colorScheme || "FOLLOW_SYSTEM"}
               key={mapKey}
