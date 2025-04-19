@@ -1,22 +1,21 @@
 import { GoogleMapsOverlay } from "@deck.gl/google-maps";
-import { type LayersList, type PickingInfo } from "deck.gl";
+import { Layer, type LayersList, type PickingInfo } from "deck.gl";
 import { useEffect, useMemo } from "react";
 import { useMap } from "@vis.gl/react-google-maps";
 import type { ITooltip } from "@/interfaces/tooltip.type";
 
-type IDeckglOverlay = {
+type IDeckGLOverlay = {
   layers?: LayersList;
   getTooltip?: (object: PickingInfo) => ITooltip | null;
 };
 
-export const DeckGLOverlay = ({ layers, getTooltip }: IDeckglOverlay) => {
+export const DeckGLOverlay = ({ layers, getTooltip }: IDeckGLOverlay) => {
   const deck = useMemo(
     () =>
       new GoogleMapsOverlay({
         interleaved: true,
-        getTooltip: getTooltip,
       }),
-    [getTooltip],
+    [],
   );
 
   const map = useMap();
@@ -27,8 +26,8 @@ export const DeckGLOverlay = ({ layers, getTooltip }: IDeckglOverlay) => {
   }, [deck, map]);
 
   useEffect(() => {
-    deck.setProps({ layers });
-  }, [deck, layers]);
+    deck.setProps({ layers, getTooltip });
+  }, [deck, getTooltip, layers]);
 
   return null;
 };
