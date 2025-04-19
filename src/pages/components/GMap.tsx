@@ -13,10 +13,9 @@ import {
   type SetStateAction,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import { DeckGlOverlay } from "./DeckGlOverlay";
+import { DeckGLOverlay } from "./DeckGLOverlay";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
@@ -247,7 +246,7 @@ export function GMap({
           },
         ]}
       >
-        <DeckGlOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
+        <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
       </Map>
     </APIProvider>
   );
