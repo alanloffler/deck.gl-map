@@ -68,10 +68,11 @@ export function GMap({
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
         getLineWidth: 1,
-        pickable: true,
         autoHighlight: true,
         highlightColor: [168, 85, 247],
         lineCapRounded: true,
+        pickable: true,
+        getPolygonOffset: ({ layerIndex }) => [0, -layerIndex * 100],
         onClick: (
           item: PickingInfo<Feature<MultiLineString, IGeoJsonData>>,
         ) => {
@@ -94,17 +95,18 @@ export function GMap({
         stroked: false,
         filled: true,
         extruded: true,
-        // getElevation: 0,
+        getElevation: -30,
         // elevationScale: true,
         lineWidthScale: 2,
-        lineWidthMinPixels: 3,
+        lineWidthMinPixels: 2,
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
-        getLineWidth: 1,
-        pickable: true,
+        getLineWidth: 2,
         autoHighlight: true,
         highlightColor: [14, 165, 233],
         lineCapRounded: true,
+        pickable: true,
+        getPolygonOffset: ({ layerIndex }) => [0, -layerIndex * 100],
         onClick: (
           item: PickingInfo<Feature<MultiLineString, IGeoJsonData>>,
         ) => {
@@ -124,15 +126,16 @@ export function GMap({
         id: "markers-layer",
         data: markers,
         visible: visualizations.showMarkers === "on",
-        getColor: (d: IMarker) => hexToRgb(d.color),
         getIcon: (d: IMarker) => ({
           url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
             .href,
           width: 199,
           height: 171,
         }),
+        getPolygonOffset: ({ layerIndex }) => [0, -layerIndex * 100],
         getPosition: (d: IMarker) => d.coordinates,
         getSize: 32,
+        pickable: true,
         onClick: (item: PickingInfo<IMarker>) => {
           setDetails({
             color: item.object?.color,
@@ -140,7 +143,6 @@ export function GMap({
             details: item.object?.details,
           });
         },
-        pickable: true,
       }),
     ];
   }
@@ -184,9 +186,9 @@ export function GMap({
         const item = object as IMarker;
 
         return {
-          text: item.name,
           html: `<div>${item.name}</div>`,
           style: {
+            position: "relative",
             backgroundColor: "#ffffff",
             border: "1px solid #e2e8f0",
             borderRadius: "8px",
@@ -232,6 +234,7 @@ export function GMap({
         fullscreenControl
         gestureHandling={"greedy"}
         mapTypeId={mapTypeId}
+        reuseMaps={true}
         streetViewControl
         styles={[
           {
@@ -245,6 +248,7 @@ export function GMap({
             stylers: [{ visibility: visualizations.showStreetNames }],
           },
         ]}
+        tilt={0}
       >
         <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
       </Map>
