@@ -19,6 +19,7 @@ export default function App() {
         <section className="flex flex-1 items-center justify-end space-x-3 md:justify-start md:space-x-8">
           <Link to="/maplibre">MapLibre</Link>
           <Link to="/googlemap">Google Map</Link>
+          <Link to="/geojson">GeoJson</Link>
         </section>
       </nav>
       <section className="mt-16">
