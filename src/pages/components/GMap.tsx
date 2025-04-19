@@ -13,6 +13,7 @@ import {
   type SetStateAction,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { DeckGlOverlay } from "./DeckGlOverlay";
@@ -68,7 +69,6 @@ export function GMap({
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
         getLineWidth: 1,
-        getElevation: 0,
         pickable: true,
         autoHighlight: true,
         highlightColor: [168, 85, 247],
@@ -95,12 +95,13 @@ export function GMap({
         stroked: false,
         filled: true,
         extruded: true,
+        // getElevation: 0,
+        // elevationScale: true,
         lineWidthScale: 2,
         lineWidthMinPixels: 3,
         getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
           hexToRgb(f.properties?.color),
         getLineWidth: 1,
-        getElevation: 0,
         pickable: true,
         autoHighlight: true,
         highlightColor: [14, 165, 233],
@@ -128,8 +129,8 @@ export function GMap({
         getIcon: (d: IMarker) => ({
           url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
             .href,
-          width: 320,
-          height: 320,
+          width: 199,
+          height: 171,
         }),
         getPosition: (d: IMarker) => d.coordinates,
         getSize: 32,
@@ -227,7 +228,7 @@ export function GMap({
         clickableIcons={visualizations.showGmMarkers === "on" ? true : false}
         colorScheme={colorScheme as ColorScheme}
         defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
-        defaultZoom={16}
+        defaultZoom={15}
         disableDefaultUI={true}
         fullscreenControl
         gestureHandling={"greedy"}
