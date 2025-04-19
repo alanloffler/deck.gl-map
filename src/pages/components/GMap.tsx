@@ -132,7 +132,7 @@ export function GMap({
           width: 199,
           height: 171,
         }),
-        getPolygonOffset: ({ layerIndex }) => [0, -layerIndex * 100],
+        // getPolygonOffset: ({ layerIndex }) => [0, -layerIndex * 100],
         getPosition: (d: IMarker) => d.coordinates,
         getSize: 32,
         pickable: true,
@@ -188,7 +188,6 @@ export function GMap({
         return {
           html: `<div>${item.name}</div>`,
           style: {
-            position: "relative",
             backgroundColor: "#ffffff",
             border: "1px solid #e2e8f0",
             borderRadius: "8px",
