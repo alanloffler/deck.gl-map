@@ -9,7 +9,7 @@ type IDeckglOverlay = {
   getTooltip?: (object: PickingInfo) => ITooltip | null;
 };
 
-export const DeckGlOverlay = ({ layers, getTooltip }: IDeckglOverlay) => {
+export const DeckGLOverlay = ({ layers, getTooltip }: IDeckglOverlay) => {
   const deck = useMemo(
     () =>
       new GoogleMapsOverlay({
