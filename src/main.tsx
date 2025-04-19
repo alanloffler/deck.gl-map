@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 // import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+import { GeoJson } from "./pages/GeoJson.tsx";
 import { GoogleMap } from "./pages/GoogleMap.tsx";
 import { MapLibre } from "./pages/MapLibre.tsx";
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById("root")!).render(
         <Route index element={<MapLibre />} />
         <Route path="/maplibre" element={<MapLibre />} />
         <Route path="/googlemap" element={<GoogleMap />} />
+        <Route path="/geojson" element={<GeoJson />} />
       </Route>
     </Routes>
   </BrowserRouter>,
