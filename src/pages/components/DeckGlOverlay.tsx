@@ -11,7 +11,11 @@ type IDeckglOverlay = {
 
 export const DeckGlOverlay = ({ layers, getTooltip }: IDeckglOverlay) => {
   const deck = useMemo(
-    () => new GoogleMapsOverlay({ interleaved: true, getTooltip: getTooltip }),
+    () =>
+      new GoogleMapsOverlay({
+        interleaved: true,
+        getTooltip: getTooltip,
+      }),
     [getTooltip],
   );
 
