@@ -1,5 +1,5 @@
 import { GoogleMapsOverlay } from "@deck.gl/google-maps";
-import { Layer, type LayersList, type PickingInfo } from "deck.gl";
+import { type LayersList, type PickingInfo } from "deck.gl";
 import { useEffect, useMemo } from "react";
 import { useMap } from "@vis.gl/react-google-maps";
 import type { ITooltip } from "@/interfaces/tooltip.type";
