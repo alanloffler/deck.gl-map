@@ -147,7 +147,8 @@ export function MyMap({ className, setInfo }: IProps) {
           latitude: -25.972807,
           zoom: 16,
         }}
-        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        // mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+        mapStyle="https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL"
       >
         <DeckGLOverlay
           getTooltip={({ object }: PickingInfo<IPathData>) =>
