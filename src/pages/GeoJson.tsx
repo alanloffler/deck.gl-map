@@ -1,14 +1,16 @@
+// Components
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { GoogleMapsOverlay } from "@deck.gl/google-maps";
-import { APIProvider, Map, useMap } from "@vis.gl/react-google-maps";
-import { DeckProps, GeoJsonLayer, PickingInfo } from "deck.gl";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import geojsonData from "../data/networks/main-network.json";
-import { Feature, GeoJSON, Geometry } from "geojson";
-import { hexToRgb } from "@/lib/helpers";
-import { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import { IMarker } from "@/interfaces/marker.interface";
 import { DeckGLOverlay } from "./components/DeckGLOverlay";
+// Packages imports
+import type { Feature, GeoJSON, Geometry } from "geojson";
+import { GeoJsonLayer, type PickingInfo } from "deck.gl";
+import { useCallback, useEffect, useState } from "react";
+// App imports
+import geojsonData from "../data/networks/main-network.json";
+import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
+import type { IMarker } from "@/interfaces/marker.interface";
+import { hexToRgb } from "@/lib/helpers";
 
 export function GeoJson() {
   const [data, setData] = useState<GeoJSON>();
