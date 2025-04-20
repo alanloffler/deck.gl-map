@@ -19,6 +19,7 @@ const mapOptions = {
 
 export function GeoJson() {
   const [data, setData] = useState<GeoJSON>();
+  const [mapIsReady, setMapIsReady] = useState<boolean>(false);
 
   useEffect(() => {
     setData(geojsonData as GeoJSON);
@@ -90,13 +91,19 @@ export function GeoJson() {
       </CardHeader>
       <CardContent>
         <section className="h-[450px]">
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+          <APIProvider
+            apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+            onLoad={() => console.log("map is ready")}
+          >
             <Map
+              onTilesLoaded={() => setMapIsReady(true)}
               defaultCenter={mapOptions.center}
               defaultZoom={mapOptions.zoom}
               mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
             >
-              <DeckGLOverlay layers={layers} getTooltip={getTooltip} />
+              {mapIsReady && (
+                <DeckGLOverlay layers={layers} getTooltip={getTooltip} />
+              )}
             </Map>
           </APIProvider>
         </section>
