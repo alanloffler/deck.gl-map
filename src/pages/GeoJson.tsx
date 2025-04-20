@@ -12,6 +12,11 @@ import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
 import { hexToRgb } from "@/lib/helpers";
 
+const mapOptions = {
+  center: { lng: -54.566963, lat: -25.973053 },
+  zoom: 15,
+};
+
 export function GeoJson() {
   const [data, setData] = useState<GeoJSON>();
 
@@ -87,9 +92,9 @@ export function GeoJson() {
         <section className="h-[450px]">
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
             <Map
-              mapId="cd5bd2065fd561ba"
-              defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
-              defaultZoom={15}
+              defaultCenter={mapOptions.center}
+              defaultZoom={mapOptions.zoom}
+              mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
             >
               <DeckGLOverlay layers={layers} getTooltip={getTooltip} />
             </Map>
