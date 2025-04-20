@@ -46,6 +46,8 @@ export function GMap({
     useState<GeoJSON | null>(null);
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
 
+  const [_mapId, _setMapId] = useState<string>("1c6903a9111fa3c3");
+
   useEffect(() => {
     setData(mainNetwork as GeoJSON);
     setSecondaryNetworkData(secondaryNetwork as GeoJSON);
@@ -88,7 +90,7 @@ export function GMap({
           });
         },
       }),
-      new GeoJsonLayer<IGeoJsonData>({
+      new GeoJsonLayer({
         id: "main-network",
         data,
         visible: visualizations.showMainNetworks === "on",
@@ -96,6 +98,7 @@ export function GMap({
         filled: true,
         extruded: true,
         getElevation: -30,
+        updateTriggers: [_mapId],
         // elevationScale: true,
         lineWidthScale: 2,
         lineWidthMinPixels: 2,
@@ -120,6 +123,9 @@ export function GMap({
             name: item.object?.properties.name,
             details: item.object?.properties.details,
           });
+        },
+        parameters: {
+          depthTest: false,
         },
       }),
       new IconLayer<IMarker>({
@@ -223,34 +229,40 @@ export function GMap({
   );
 
   return (
-    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <Map
-        clickableIcons={visualizations.showGmMarkers === "on" ? true : false}
-        colorScheme={colorScheme as ColorScheme}
-        defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
-        defaultZoom={15}
-        disableDefaultUI={true}
-        fullscreenControl
-        gestureHandling={"greedy"}
-        mapTypeId={mapTypeId}
-        reuseMaps={true}
-        streetViewControl
-        styles={[
-          {
-            featureType: "poi",
-            elementType: "labels",
-            stylers: [{ visibility: visualizations.showGmMarkers }],
-          },
-          {
-            featureType: "road",
-            elementType: "labels",
-            stylers: [{ visibility: visualizations.showStreetNames }],
-          },
-        ]}
-        tilt={0}
-      >
-        <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
-      </Map>
-    </APIProvider>
+    <>
+      <button onClick={() => _setMapId("cd5bd2065fd561ba")}>remove</button>
+      <button onClick={() => _setMapId("1c6903a9111fa3c3")}>revoke</button>
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+        <Map
+          key={_mapId}
+          mapId={_mapId}
+          clickableIcons={visualizations.showGmMarkers === "on" ? true : false}
+          colorScheme={colorScheme as ColorScheme}
+          defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
+          defaultZoom={15}
+          disableDefaultUI={true}
+          fullscreenControl
+          gestureHandling={"greedy"}
+          mapTypeId={mapTypeId}
+          // reuseMaps={true}
+          streetViewControl
+          styles={[
+            {
+              featureType: "poi",
+              elementType: "labels",
+              stylers: [{ visibility: visualizations.showGmMarkers }],
+            },
+            {
+              featureType: "road",
+              elementType: "labels",
+              stylers: [{ visibility: visualizations.showStreetNames }],
+            },
+          ]}
+          tilt={0}
+        >
+          <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
+        </Map>
+      </APIProvider>
+    </>
   );
 }
