@@ -100,8 +100,6 @@ export function GoogleMap() {
             setMapTypeId={setMapTypeId}
           />
           <VisControls
-            mapTypeId={mapTypeId}
-            setMapTypeId={setMapTypeId}
             setVisualizations={setVisualizations}
             visualizations={visualizations}
           />
