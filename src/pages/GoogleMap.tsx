@@ -22,7 +22,7 @@ import type { IVisualization } from "@/interfaces/visualization.interface";
 import { cameraConfig } from "@/config/camera.config";
 import { cn } from "@/lib/utils";
 
-export function GoogleMap() {
+export default function GoogleMap() {
   const [colorScheme, setColorScheme] = useState<string>(
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
