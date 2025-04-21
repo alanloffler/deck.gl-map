@@ -7,4 +7,5 @@ export interface IDetails {
     id?: string;
     street?: string;
   };
+  type?: "connection" | "marker" | "network";
 }
