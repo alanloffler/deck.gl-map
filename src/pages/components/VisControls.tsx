@@ -1,25 +1,19 @@
-import { MapPin, Milestone, Pin, Spline } from "lucide-react";
-
+// Icons
+import { MapPin, Spline } from "lucide-react";
+// Components
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-
+// Packages imports
 import { type Dispatch, type SetStateAction } from "react";
-
+// App imports
 import type { IVisualization } from "@/interfaces/visualization.interface";
-
+// Interface
 interface IProps {
-  mapTypeId: string;
-  setMapTypeId: Dispatch<SetStateAction<string>>;
   setVisualizations: Dispatch<SetStateAction<IVisualization>>;
   visualizations: IVisualization;
 }
 
-export function VisControls({
-  mapTypeId,
-  setMapTypeId,
-  setVisualizations,
-  visualizations,
-}: IProps) {
+export function VisControls({ setVisualizations, visualizations }: IProps) {
   function handleVisualizations(event: boolean, type: string): void {
     const value: string = event ? "on" : "off";
 
@@ -94,55 +88,6 @@ export function VisControls({
             <span className="hidden md:inline">Centrales</span>
           </label>
         </div>
-        {/* <div className="flex items-center space-x-2">
-          <Checkbox
-            className="bg-card"
-            id="street-names"
-            defaultChecked={
-              visualizations.showStreetNames === "on" ? true : false
-            }
-            onCheckedChange={(event: boolean) =>
-              handleVisualizations(event, "showStreetNames")
-            }
-          />
-          <label
-            htmlFor="street-names"
-            className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            <Milestone
-              size={19}
-              strokeWidth={2}
-              className="fill-stone-400/70 stroke-stone-400"
-            />
-          </label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            className="bg-card"
-            id="google-markers"
-            defaultChecked={
-              visualizations.showGmMarkers === "on" ? true : false
-            }
-            onCheckedChange={(event: boolean) => {
-              handleVisualizations(event, "showGmMarkers");
-              if (mapTypeId !== "roadmap") {
-                const type = event ? "hybrid" : "satellite";
-                setMapTypeId(type);
-                localStorage.setItem("mapTypeId", type);
-              }
-            }}
-          />
-          <label
-            htmlFor="google-markers"
-            className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            <MapPin
-              size={19}
-              strokeWidth={2}
-              className="fill-rose-400/70 stroke-rose-400"
-            />
-          </label>
-        </div> */}
       </div>
     </section>
   );
