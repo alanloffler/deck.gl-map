@@ -147,11 +147,11 @@ export function GMap({
         getIcon: (d: IMarker) => ({
           url: new URL(`../../assets/icons/${d.details.icon}`, import.meta.url)
             .href,
-          width: 199,
-          height: 171,
+          width: 24,
+          height: 24,
         }),
         getPosition: (d: IMarker) => d.coordinates,
-        getSize: 32,
+        getSize: 24,
         pickable: true,
         onClick: (item: PickingInfo<IMarker>) => {
           setDetails({
