@@ -1,4 +1,4 @@
-export interface IMapOptions {
+export interface ICameraOptions {
   center: {
     lng: number;
     lat: number;
