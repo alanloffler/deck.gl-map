@@ -64,30 +64,41 @@ export function MapControls({
           <Label className="font-normal text-slate-500">Tipo</Label>
           <Select
             defaultValue={mapTypeId}
-            onValueChange={(item) => {
-              const actualType =
-                item === "satellite" && visualizations.showGmMarkers === "on"
-                  ? "hybrid"
-                  : item;
-
-              setMapTypeId(actualType);
-              localStorage.setItem("mapTypeId", actualType);
+            onValueChange={(value) => {
+              setMapTypeId(value);
+              localStorage.setItem("mapTypeId", value);
             }}
+            // onValueChange={(item) => {
+            //   const actualType =
+            //     item === "satellite" && visualizations.showGmMarkers === "on"
+            //       ? "hybrid"
+            //       : item;
+
+            //   setMapTypeId(actualType);
+            //   localStorage.setItem("mapTypeId", actualType);
+            // }}
           >
             <SelectTrigger className="bg-card w-fit" size="sm">
-              {mapTypeId === "roadmap"
+              <SelectValue />
+              {/* {mapTypeId === "roadmap"
                 ? "Mapa"
                 : mapTypeId === "hybrid"
                   ? "Satelite"
-                  : "Satelite"}
+                  : "Satelite"} */}
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="roadmap" size="sm">
-                  Mapa
+                  Ruta
+                </SelectItem>
+                <SelectItem value="terrain" size="sm">
+                  Terreno
                 </SelectItem>
                 <SelectItem value="satellite" size="sm">
                   Satelite
+                </SelectItem>
+                <SelectItem value="hybrid" size="sm">
+                  Híbrido
                 </SelectItem>
               </SelectGroup>
             </SelectContent>
