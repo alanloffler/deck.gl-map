@@ -22,20 +22,20 @@ import {
   useState,
 } from "react";
 // App immports
+import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import type { IMapOptions } from "@/interfaces/map-options.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
 import type { IVisualization } from "@/interfaces/visualization.interface";
 import { DeckGLOverlay } from "./DeckGLOverlay";
 import { hexToRgb } from "@/lib/helpers";
 // Interface
 interface IProps {
+  cameraOptions: ICameraOptions;
   colorScheme: string;
   mapTypeId: string;
-  mapOptions: IMapOptions;
+  setCameraOptions: Dispatch<SetStateAction<ICameraOptions>>;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
-  setMapOptions: Dispatch<SetStateAction<IMapOptions>>;
   visualizations: IVisualization;
 }
 
@@ -44,11 +44,11 @@ import mainNetwork from "../../data/networks/main-network.json";
 import secondaryNetwork from "../../data/networks/secondary-network.json";
 
 export function GMap({
+  cameraOptions,
   colorScheme,
-  mapOptions,
   mapTypeId,
+  setCameraOptions,
   setDetails,
-  setMapOptions,
   visualizations,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
@@ -64,12 +64,12 @@ export function GMap({
 
   const handleCameraChange = useCallback(
     (ev: MapCameraChangedEvent) => {
-      setMapOptions({
+      setCameraOptions({
         center: ev.detail.center,
         zoom: ev.detail.zoom,
       });
     },
-    [setMapOptions],
+    [setCameraOptions],
   );
 
   function getDeckGlLayers() {
@@ -253,7 +253,7 @@ export function GMap({
         onCameraChanged={handleCameraChange}
         streetViewControl
         tilt={0}
-        {...mapOptions}
+        {...cameraOptions}
       >
         <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
       </Map>
