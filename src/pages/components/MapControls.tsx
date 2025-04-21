@@ -95,12 +95,12 @@ export function MapControls({
           </Select>
         </section>
         <Button
-          className="border border-slate-300 bg-slate-100 hover:bg-slate-200/70"
+          className="text-blue-400 hover:bg-slate-200 hover:text-blue-400"
           onClick={handleResetCenter}
           size="sm"
           variant="ghost"
         >
-          <Locate size={17} strokeWidth={2} />
+          <Locate size={17} strokeWidth={3} />
         </Button>
       </section>
     </main>
