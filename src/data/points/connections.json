@@ -10,7 +10,8 @@
           "id": "10347",
           "street": "Calle 9 de Julio"
         },
-        "name": "Sanatorio Rolón Vargas"
+        "name": "Sanatorio Rolón Vargas",
+        "type": "connection"
       },
       "geometry": {
         "type": "Point",
