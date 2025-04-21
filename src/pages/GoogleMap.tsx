@@ -1,5 +1,6 @@
+// Icons
 import { Milestone, Ruler, X } from "lucide-react";
-
+// Components
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,14 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
+// App components
 import { GMap } from "./components/GMap";
 import { MapControls } from "./components/MapControls";
 import { VisControls } from "./components/VisControls";
-
+// Packages imports
 import { useEffect, useState } from "react";
-
+// App imports
 import type { IDetails } from "../interfaces/details.interface";
+import type { IMapOptions } from "@/interfaces/map-options.interface";
 import type { IVisualization } from "@/interfaces/visualization.interface";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +29,10 @@ export function GoogleMap() {
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [mapKey, setMapKey] = useState<string>("mapKey");
+  const [mapOptions, setMapOptions] = useState<IMapOptions>({
+    center: { lng: -54.566963, lat: -25.973053 },
+    zoom: 15,
+  });
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
@@ -91,8 +97,8 @@ export function GoogleMap() {
             colorScheme={colorScheme}
             mapTypeId={mapTypeId}
             setColorScheme={setColorScheme}
+            setMapOptions={setMapOptions}
             setMapTypeId={setMapTypeId}
-            visualizations={visualizations}
           />
           <VisControls
             mapTypeId={mapTypeId}
@@ -104,6 +110,8 @@ export function GoogleMap() {
             colorScheme={colorScheme || "FOLLOW_SYSTEM"}
             key={mapKey}
             mapTypeId={mapTypeId}
+            mapOptions={mapOptions}
+            setMapOptions={setMapOptions}
             setDetails={setDetails}
             visualizations={visualizations}
           />
