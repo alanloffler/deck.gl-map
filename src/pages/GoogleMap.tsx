@@ -100,15 +100,13 @@ export function GoogleMap() {
             setVisualizations={setVisualizations}
             visualizations={visualizations}
           />
-          <div className="h-[450px] bg-slate-50">
-            <GMap
-              colorScheme={colorScheme || "FOLLOW_SYSTEM"}
-              key={mapKey}
-              mapTypeId={mapTypeId}
-              setDetails={setDetails}
-              visualizations={visualizations}
-            />
-          </div>
+          <GMap
+            colorScheme={colorScheme || "FOLLOW_SYSTEM"}
+            key={mapKey}
+            mapTypeId={mapTypeId}
+            setDetails={setDetails}
+            visualizations={visualizations}
+          />
         </CardContent>
       </Card>
       {isPanelVisible && (
