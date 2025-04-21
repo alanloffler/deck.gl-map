@@ -20,6 +20,7 @@ const mapOptions = {
 export function GeoJson() {
   const [data, setData] = useState<GeoJSON>();
   const [mapIsReady, setMapIsReady] = useState<boolean>(false);
+  const [mapType, setMapType] = useState<string>("roadmap");
 
   useEffect(() => {
     setData(geojsonData as GeoJSON);
@@ -90,6 +91,9 @@ export function GeoJson() {
         <CardTitle>GeoJson map</CardTitle>
       </CardHeader>
       <CardContent>
+        <section>
+          <button onClick={() => setMapType("satellite")}>Satellite</button>
+        </section>
         <section className="h-[450px]">
           <APIProvider
             apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
@@ -99,7 +103,8 @@ export function GeoJson() {
               onTilesLoaded={() => setMapIsReady(true)}
               defaultCenter={mapOptions.center}
               defaultZoom={mapOptions.zoom}
-              mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
+              // mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
+              mapTypeId={mapType}
             >
               {mapIsReady && (
                 <DeckGLOverlay layers={layers} getTooltip={getTooltip} />
