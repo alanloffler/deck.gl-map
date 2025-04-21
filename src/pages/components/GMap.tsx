@@ -1,11 +1,17 @@
+// Packages imports
 import {
   type Feature,
-  type Geometry,
   type GeoJSON,
-  MultiLineString,
-  Position,
+  type Geometry,
+  type MultiLineString,
+  type Position,
 } from "geojson";
-import { APIProvider, Map, type ColorScheme } from "@vis.gl/react-google-maps";
+import {
+  APIProvider,
+  Map,
+  type ColorScheme,
+  type MapCameraChangedEvent,
+} from "@vis.gl/react-google-maps";
 import { GeoJsonLayer, IconLayer, type PickingInfo } from "deck.gl";
 import { distance } from "@turf/distance";
 import {
@@ -15,30 +21,34 @@ import {
   useEffect,
   useState,
 } from "react";
-import { DeckGLOverlay } from "./DeckGLOverlay";
+// App immports
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
+import type { IMapOptions } from "@/interfaces/map-options.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
 import type { IVisualization } from "@/interfaces/visualization.interface";
-
+import { DeckGLOverlay } from "./DeckGLOverlay";
+import { hexToRgb } from "@/lib/helpers";
+// Interface
 interface IProps {
   colorScheme: string;
   mapTypeId: string;
+  mapOptions: IMapOptions;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
+  setMapOptions: Dispatch<SetStateAction<IMapOptions>>;
   visualizations: IVisualization;
 }
 
 import markersData from "../../data/markers/markers.json";
 import mainNetwork from "../../data/networks/main-network.json";
 import secondaryNetwork from "../../data/networks/secondary-network.json";
-import { hexToRgb } from "@/lib/helpers";
-// import iconAtlas from "../../assets/icon-atlas.png";
-// import iconAtlasMap from "../../data/icon-atlas.json";
 
 export function GMap({
   colorScheme,
+  mapOptions,
   mapTypeId,
   setDetails,
+  setMapOptions,
   visualizations,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
@@ -51,6 +61,16 @@ export function GMap({
     setSecondaryNetworkData(secondaryNetwork as GeoJSON);
     setMarkers(markersData as IMarker[]);
   }, []);
+
+  const handleCameraChange = useCallback(
+    (ev: MapCameraChangedEvent) => {
+      setMapOptions({
+        center: ev.detail.center,
+        zoom: ev.detail.zoom,
+      });
+    },
+    [setMapOptions],
+  );
 
   function getDeckGlLayers() {
     if (!data || !secondaryNetworkData) return [];
@@ -130,7 +150,6 @@ export function GMap({
           width: 199,
           height: 171,
         }),
-        // getPolygonOffset: ({ layerIndex }) => [0, -layerIndex * 100],
         getPosition: (d: IMarker) => d.coordinates,
         getSize: 32,
         pickable: true,
@@ -141,7 +160,6 @@ export function GMap({
             details: item.object?.details,
           });
         },
-        // onHover: (info) => setHoverInfo(info),
       }),
     ];
   }
@@ -225,17 +243,17 @@ export function GMap({
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
         className="relative h-[450px] w-full"
-        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
         clickableIcons={visualizations.showGmMarkers === "on" ? true : false}
         colorScheme={colorScheme as ColorScheme}
-        defaultCenter={{ lng: -54.566963, lat: -25.973053 }}
-        defaultZoom={15}
         disableDefaultUI={true}
         fullscreenControl
         gestureHandling={"greedy"}
+        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
         mapTypeId={mapTypeId}
+        onCameraChanged={handleCameraChange}
         streetViewControl
         tilt={0}
+        {...mapOptions}
       >
         <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
       </Map>
