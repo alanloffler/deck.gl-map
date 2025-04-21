@@ -48,9 +48,10 @@ export function VisControls({
           />
           <label
             htmlFor="main-networks"
-            className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            <Spline size={19} strokeWidth={2} className="stroke-sky-400" />
+            <Spline size={15} strokeWidth={2} className="stroke-sky-400" />
+            <span className="hidden md:inline">Red principal</span>
           </label>
         </div>
         <div className="flex items-center space-x-2">
@@ -66,9 +67,10 @@ export function VisControls({
           />
           <label
             htmlFor="secondary-networks"
-            className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            <Spline size={19} strokeWidth={2} className="stroke-purple-400" />
+            <Spline size={15} strokeWidth={2} className="stroke-purple-400" />
+            <span className="hidden md:inline">Red secundaria</span>
           </label>
         </div>
         <div className="flex items-center space-x-2">
@@ -82,16 +84,17 @@ export function VisControls({
           />
           <label
             htmlFor="markers"
-            className="text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            <Pin
+            <MapPin
               size={19}
               strokeWidth={2}
-              className="fill-amber-400/70 stroke-amber-400"
+              className="fill-rose-400/70 stroke-rose-400"
             />
+            <span className="hidden md:inline">Centrales</span>
           </label>
         </div>
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <Checkbox
             className="bg-card"
             id="street-names"
@@ -139,7 +142,7 @@ export function VisControls({
               className="fill-rose-400/70 stroke-rose-400"
             />
           </label>
-        </div>
+        </div> */}
       </div>
     </section>
   );
