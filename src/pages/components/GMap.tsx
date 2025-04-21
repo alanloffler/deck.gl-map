@@ -4,6 +4,7 @@ import {
   type GeoJSON,
   type Geometry,
   type MultiLineString,
+  type Point,
   type Position,
 } from "geojson";
 import {
@@ -23,6 +24,7 @@ import {
 } from "react";
 // App immports
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
+import type { IConnectionData } from "@/interfaces/connection-data.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
@@ -39,8 +41,9 @@ interface IProps {
   visualizations: IVisualization;
 }
 
-import markersData from "../../data/markers/markers.json";
+import connectionsData from "../../data/points/connections.json";
 import mainNetwork from "../../data/networks/main-network.json";
+import markersData from "../../data/markers/markers.json";
 import secondaryNetwork from "../../data/networks/secondary-network.json";
 
 export function GMap({
@@ -51,12 +54,14 @@ export function GMap({
   setDetails,
   visualizations,
 }: IProps) {
+  const [connections, setConnections] = useState<GeoJSON | null>(null);
   const [data, setData] = useState<GeoJSON | null>(null);
   const [secondaryNetworkData, setSecondaryNetworkData] =
     useState<GeoJSON | null>(null);
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
 
   useEffect(() => {
+    setConnections(connectionsData as GeoJSON);
     setData(mainNetwork as GeoJSON);
     setSecondaryNetworkData(secondaryNetwork as GeoJSON);
     setMarkers(markersData as IMarker[]);
@@ -73,7 +78,7 @@ export function GMap({
   );
 
   function getDeckGlLayers() {
-    if (!data || !secondaryNetworkData) return [];
+    if (!data || !secondaryNetworkData || !connections) return [];
 
     return [
       new GeoJsonLayer<IGeoJsonData>({
@@ -158,6 +163,24 @@ export function GMap({
             color: item.object?.color,
             name: item.object?.name,
             details: item.object?.details,
+          });
+        },
+      }),
+      new GeoJsonLayer<Point>({
+        id: "connections-network",
+        data: connections,
+        pointType: "circle+text",
+        filled: true,
+        stroked: false,
+        getPointRadius: 2,
+        pointRadiusUnits: "meters",
+        getFillColor: hexToRgb("#f59e0b"),
+        pickable: true,
+        onClick: (item: PickingInfo<Feature<Point, IGeoJsonData>>) => {
+          setDetails({
+            color: item.object?.properties.color,
+            name: item.object?.properties.name,
+            details: item.object?.properties.details,
           });
         },
       }),
