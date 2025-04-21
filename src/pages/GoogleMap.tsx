@@ -16,9 +16,10 @@ import { VisControls } from "./components/VisControls";
 // Packages imports
 import { useEffect, useState } from "react";
 // App imports
-import type { IDetails } from "../interfaces/details.interface";
-import type { IMapOptions } from "@/interfaces/map-options.interface";
+import type { ICameraOptions } from "@/interfaces/camera-options.interface";
+import type { IDetails } from "@/interfaces/details.interface";
 import type { IVisualization } from "@/interfaces/visualization.interface";
+import { cameraConfig } from "@/config/camera.config";
 import { cn } from "@/lib/utils";
 
 export function GoogleMap() {
@@ -29,10 +30,8 @@ export function GoogleMap() {
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [mapKey, setMapKey] = useState<string>("mapKey");
-  const [mapOptions, setMapOptions] = useState<IMapOptions>({
-    center: { lng: -54.566963, lat: -25.973053 },
-    zoom: 15,
-  });
+  const [cameraOptions, setCameraOptions] =
+    useState<ICameraOptions>(cameraConfig);
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
@@ -96,8 +95,8 @@ export function GoogleMap() {
           <MapControls
             colorScheme={colorScheme}
             mapTypeId={mapTypeId}
+            setCameraOptions={setCameraOptions}
             setColorScheme={setColorScheme}
-            setMapOptions={setMapOptions}
             setMapTypeId={setMapTypeId}
           />
           <VisControls
@@ -107,11 +106,11 @@ export function GoogleMap() {
             visualizations={visualizations}
           />
           <GMap
+            cameraOptions={cameraOptions}
             colorScheme={colorScheme || "FOLLOW_SYSTEM"}
             key={mapKey}
             mapTypeId={mapTypeId}
-            mapOptions={mapOptions}
-            setMapOptions={setMapOptions}
+            setCameraOptions={setCameraOptions}
             setDetails={setDetails}
             visualizations={visualizations}
           />
