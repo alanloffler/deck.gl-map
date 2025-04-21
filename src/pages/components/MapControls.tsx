@@ -12,22 +12,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // Package imports
-import type { IMapOptions } from "@/interfaces/map-options.interface";
+import type { ICameraOptions } from "@/interfaces/camera-options.interface";
+import { cameraConfig } from "@/config/camera.config";
 import { type Dispatch, type SetStateAction } from "react";
 // Interface
 interface IProps {
   colorScheme: string;
   mapTypeId: string;
+  setCameraOptions: Dispatch<SetStateAction<ICameraOptions>>;
   setColorScheme: Dispatch<SetStateAction<string>>;
-  setMapOptions: Dispatch<SetStateAction<IMapOptions>>;
   setMapTypeId: Dispatch<SetStateAction<string>>;
 }
 
 export function MapControls({
   colorScheme,
   mapTypeId,
+  setCameraOptions,
   setColorScheme,
-  setMapOptions,
   setMapTypeId,
 }: IProps) {
   function handleColorScheme(value: string): void {
@@ -41,10 +42,7 @@ export function MapControls({
   }
 
   function handleResetCenter(): void {
-    setMapOptions({
-      center: { lng: -54.566963, lat: -25.973053 },
-      zoom: 15,
-    });
+    setCameraOptions(cameraConfig);
   }
 
   return (
