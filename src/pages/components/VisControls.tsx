@@ -85,7 +85,7 @@ export function VisControls({ setVisualizations, visualizations }: IProps) {
               strokeWidth={2}
               className="fill-rose-400/70 stroke-rose-400"
             />
-            <span className="hidden md:inline">Centrales</span>
+            <span className="hidden md:inline">Marcadores</span>
           </label>
         </div>
       </div>
