@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "color": "#f59e0b",
+        "details": {
+          "district": "Barrio Centro",
+          "id": "10347",
+          "street": "Calle 9 de Julio"
+        },
+        "name": "Sanatorio Rolón Vargas"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.564112303165324, -25.972737349427092]
+      }
+    }
+  ]
+}
