@@ -24,7 +24,6 @@ import {
 } from "react";
 // App immports
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
-import type { IConnectionData } from "@/interfaces/connection-data.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
@@ -166,21 +165,23 @@ export function GMap({
           });
         },
       }),
-      new GeoJsonLayer<Point>({
+      new GeoJsonLayer<Point, IGeoJsonData>({
         id: "connections-network",
         data: connections,
         pointType: "circle+text",
         filled: true,
         stroked: false,
         getPointRadius: 2,
+        pointRadiusMinPixels: 2,
         pointRadiusUnits: "meters",
         getFillColor: hexToRgb("#f59e0b"),
         pickable: true,
         onClick: (item: PickingInfo<Feature<Point, IGeoJsonData>>) => {
           setDetails({
             color: item.object?.properties.color,
-            name: item.object?.properties.name,
             details: item.object?.properties.details,
+            name: item.object?.properties.name,
+            type: item.object?.properties.type,
           });
         },
       }),
