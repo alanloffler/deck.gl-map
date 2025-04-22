@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@deck.gl/extensions": "^9.1.11",
     "@deck.gl/google-maps": "^9.1.8",
     "@deck.gl/mapbox": "^9.1.8",
     "@deck.gl/react": "^9.1.8",
