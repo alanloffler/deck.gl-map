@@ -106,9 +106,10 @@ export function GMap({
 
           setDetails({
             color: item.object?.properties.color,
+            details: item.object?.properties.details,
             distance: dist && dist * 1000,
             name: item.object?.properties.name,
-            details: item.object?.properties.details,
+            type: item.object?.properties.type,
           });
         },
       }),
@@ -138,9 +139,10 @@ export function GMap({
 
           setDetails({
             color: item.object?.properties.color,
+            details: item.object?.properties.details,
             distance: dist && dist * 1000,
             name: item.object?.properties.name,
-            details: item.object?.properties.details,
+            type: item.object?.properties.type,
           });
         },
       }),
@@ -160,8 +162,9 @@ export function GMap({
         onClick: (item: PickingInfo<IMarker>) => {
           setDetails({
             color: item.object?.color,
-            name: item.object?.name,
             details: item.object?.details,
+            name: item.object?.name,
+            type: item.object?.type,
           });
         },
       }),
@@ -171,7 +174,7 @@ export function GMap({
         pointType: "circle+text",
         filled: true,
         stroked: false,
-        getPointRadius: 2,
+        getPointRadius: 3,
         pointRadiusMinPixels: 2,
         pointRadiusUnits: "meters",
         getFillColor: hexToRgb("#f59e0b"),
@@ -242,12 +245,12 @@ export function GMap({
         const item = object as Feature<Geometry, IGeoJsonData>;
 
         return {
-          html: `<div class="flex flex-col">
-              <span class="font-medium">${item.properties.details.street}</span>
+          html: `<div class="flex flex-col space-y-1">
               <div class="flex flex-row space-x-2 items-center">
-                <div class="h-1 w-5" style="background:${item.properties.color}"></div>
-                <span>${item.properties.name}</span>
+                <div class="${item.properties.type === "connection" ? "h-3 w-3 rounded-full" : "h-1 w-5"}" style="background:${item.properties.color}"></div>
+                <span class="font-medium">${item.properties.name}</span>
               </div>
+              <span class="font-normal">${item.properties.details.street}</span>
             </div>`,
           style: {
             backgroundColor: "#ffffff",
