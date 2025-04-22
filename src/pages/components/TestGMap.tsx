@@ -40,6 +40,7 @@ interface IProps {
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
   setSelectedIndex: Dispatch<SetStateAction<number | null>>;
   visualizations: IVisualization;
+  dataVisualization: string[];
 }
 
 import testData from "../../data/test-data.json";
@@ -53,6 +54,7 @@ export function TestGMap({
   setDetails,
   setSelectedIndex,
   visualizations,
+  dataVisualization,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
@@ -109,7 +111,7 @@ export function TestGMap({
         },
         getFilterCategory: (f: Feature<MultiLineString, IGeoJsonData>) =>
           f.properties.type,
-        filterCategories: ["main-network", "secondary-network"],
+        filterCategories: dataVisualization,
         extensions: [new DataFilterExtension({ categorySize: 1 })],
       }),
     ];
