@@ -4,13 +4,14 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Red principal",
         "color": "#38bdf8",
         "details": {
           "id": "RP/001",
           "street": "Avenida República Argentina",
           "district": "Centro"
-        }
+        },
+        "name": "Red principal",
+        "type": "network"
       },
       "geometry": {
         "type": "MultiLineString",
@@ -115,13 +116,14 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Red principal",
         "color": "#38bdf8",
         "details": {
           "id": "RP/002",
           "street": "Avenida San Martín",
           "district": "Centro"
-        }
+        },
+        "name": "Red principal",
+        "type": "network"
       },
       "geometry": {
         "type": "MultiLineString",
@@ -207,13 +209,14 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Red principal",
         "color": "#38bdf8",
         "details": {
           "id": "RP/003",
           "street": "Avenida Juan Domingo Perón",
           "district": "Centro"
-        }
+        },
+        "type": "network",
+        "name": "Red principal"
       },
       "geometry": {
         "type": "MultiLineString",
