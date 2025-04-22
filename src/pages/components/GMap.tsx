@@ -58,6 +58,7 @@ export function GMap({
   const [secondaryNetworkData, setSecondaryNetworkData] =
     useState<GeoJSON | null>(null);
   const [markers, setMarkers] = useState<IMarker[] | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     setConnections(connectionsData as GeoJSON);
@@ -111,6 +112,7 @@ export function GMap({
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
+          setSelectedIndex(item.index);
         },
       }),
       new GeoJsonLayer({
@@ -136,7 +138,7 @@ export function GMap({
           const dist: number | undefined = getDistance(
             item.object?.geometry.coordinates,
           );
-
+          console.log(item);
           setDetails({
             color: item.object?.properties.color,
             details: item.object?.properties.details,
@@ -144,6 +146,7 @@ export function GMap({
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
+          setSelectedIndex(item.index);
         },
       }),
       new IconLayer<IMarker>({
@@ -160,6 +163,7 @@ export function GMap({
         getSize: 24,
         pickable: true,
         onClick: (item: PickingInfo<IMarker>) => {
+          console.log("Icon", item);
           setDetails({
             color: item.object?.color,
             details: item.object?.details,
