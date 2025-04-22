@@ -18,6 +18,7 @@ export default function App() {
         </section>
         <section className="flex flex-1 items-center justify-end space-x-3 md:justify-start md:space-x-8">
           <Link to="/googlemap">Mapa de redes</Link>
+          <Link to="/test">Mapa de pruebas</Link>
         </section>
       </nav>
       <section className="mt-16">
