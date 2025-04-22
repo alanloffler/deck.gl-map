@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 // import { GoogleMap } from "./pages/GoogleMap.tsx";
 import { Loading } from "./components/Loading.tsx";
 const GoogleMap = lazy(() => import("./pages/GoogleMap.tsx"));
+const TestMap = lazy(() => import("./pages/TestMap.tsx"));
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
@@ -32,6 +33,14 @@ createRoot(document.getElementById("root")!).render(
           element={
             <Suspense fallback={<Loading />}>
               <GoogleMap />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/test"
+          element={
+            <Suspense fallback={<Loading />}>
+              <TestMap />
             </Suspense>
           }
         />
