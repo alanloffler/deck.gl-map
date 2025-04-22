@@ -154,18 +154,24 @@ export default function GoogleMap() {
                     <span>{details.name}</span>
                     <span
                       className={cn(
-                        details.details?.id?.charAt(0).toUpperCase() === "M"
+                        details.details?.id?.charAt(0).toUpperCase() !== "R"
                           ? "h-3 w-3 rounded-full"
                           : "h-1.5 w-7 rounded-sm",
                       )}
                       style={{ background: details.color }}
                     ></span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="ml-1 w-3">#</span>
-                    <span className="text-sm font-medium">
-                      {details.details?.id}
+                  <div className="flex items-center space-x-2 text-sm">
+                    <span className="ml-1 w-fit font-medium">
+                      {details.type === "connection"
+                        ? "# Conexión"
+                        : details.type === "marker"
+                          ? "# Item"
+                          : details.type === "network"
+                            ? "# Red"
+                            : "#"}
                     </span>
+                    <span>{details.details?.id}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Milestone size={17} strokeWidth={2} />
