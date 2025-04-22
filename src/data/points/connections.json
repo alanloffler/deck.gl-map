@@ -17,6 +17,23 @@
         "type": "Point",
         "coordinates": [-54.564112303165324, -25.972737349427092]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "color": "#f59e0b",
+        "details": {
+          "district": "Barrio Centro",
+          "id": "20311",
+          "street": "Calle Los Helechos"
+        },
+        "name": "Comisaria de Wanda",
+        "type": "connection"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.56108910701376, -25.97156231470149]
+      }
     }
   ]
 }
