@@ -8,7 +8,8 @@
       "id": "M/001",
       "street": "Avenida República Argentina S/N"
     },
-    "name": "Cooperativa de Wanda"
+    "name": "Cooperativa de Wanda",
+    "type": "marker"
   },
   {
     "coordinates": [-54.55715, -25.970738],
@@ -19,7 +20,8 @@
       "id": "M/002",
       "street": "Calle Los Yerbales S/N"
     },
-    "name": "Bomba 01"
+    "name": "Bomba 01",
+    "type": "marker"
   },
   {
     "coordinates": [-54.584854, -25.968143],
@@ -30,7 +32,8 @@
       "id": "M/003",
       "street": "Ruta Provincial Nº 19"
     },
-    "name": "Bomba 02"
+    "name": "Bomba 02",
+    "type": "marker"
   },
   {
     "coordinates": [-54.564425, -25.980413],
@@ -41,6 +44,7 @@
       "id": "M/004",
       "street": "Calle Juan XXIII S/N"
     },
-    "name": "Planta potabilizadora"
+    "name": "Planta potabilizadora",
+    "type": "marker"
   }
 ]
