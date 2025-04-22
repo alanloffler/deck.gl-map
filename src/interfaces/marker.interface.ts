@@ -8,4 +8,5 @@ export interface IMarker {
     street: string;
   };
   name: string;
+  type: "connection" | "marker" | "network";
 }
