@@ -6,5 +6,10 @@ export interface IGeoJsonData {
     street: string;
   };
   name: string;
-  type: "connection" | "marker" | "network";
+  type:
+    | "connection"
+    | "marker"
+    | "network"
+    | "main-network"
+    | "secondary-network";
 }
