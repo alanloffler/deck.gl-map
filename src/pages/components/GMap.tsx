@@ -182,6 +182,14 @@ export function GMap({
         pointRadiusMinPixels: 2,
         pointRadiusUnits: "meters",
         getFillColor: hexToRgb("#f59e0b"),
+        textSizeUnits: "pixels",
+        textSizeMaxPixels: 12,
+        textSizeMinPixels: 12,
+        textFontFamily: "InterVariable",
+        textFontWeight: 600,
+        visible: cameraOptions.zoom >= 18,
+        getText: (f: Feature<Geometry, IGeoJsonData>) =>
+          `# ${f.properties.details.id}`,
         pickable: true,
         onClick: (item: PickingInfo<Feature<Point, IGeoJsonData>>) => {
           setDetails({
