@@ -7,5 +7,10 @@ export interface IDetails {
     id?: string;
     street?: string;
   };
-  type?: "connection" | "marker" | "network";
+  type?:
+    | "connection"
+    | "marker"
+    | "network"
+    | "main-network"
+    | "secondary-network";
 }
