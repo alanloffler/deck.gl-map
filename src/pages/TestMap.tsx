@@ -75,6 +75,11 @@ export default function TestMap() {
 
   const isPanelVisible = details !== null || isClosing;
 
+  const [dataVisualization, setDataVisualization] = useState<string[]>([
+    "main-network",
+    "secondary-network",
+  ]);
+
   return (
     <main className="flex flex-col gap-6 overflow-x-hidden md:flex-row">
       <Card
@@ -105,19 +110,26 @@ export default function TestMap() {
             <div className="flex items-center space-x-2">
               <Checkbox
                 className="bg-card"
-                id="secondary-networks"
+                id="main-network"
                 defaultChecked={
-                  visualizations.showSecondaryNetworks === "on" ? true : false
+                  dataVisualization.some((item) => item === "main-network")
+                  // visualizations.showSecondaryNetworks === "on" ? true : false
                 }
-                onCheckedChange={
-                  (event) => {
-                    console.log(event);
+                onCheckedChange={(event) => {
+                  if (event === true) {
+                    if (!dataVisualization.includes("main-network")) {
+                      setDataVisualization((prev) => [...prev, "main-network"]);
+                    }
+                  } else {
+                    const filtered = dataVisualization.filter(
+                      (item) => item !== "main-network",
+                    );
+                    setDataVisualization(filtered);
                   }
-                  // handleVisualizations(event as boolean, "showSecondaryNetworks")
-                }
+                }}
               />
               <label
-                htmlFor="secondary-networks"
+                htmlFor="main-network"
                 className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 <Spline
@@ -143,6 +155,7 @@ export default function TestMap() {
             setCameraOptions={setCameraOptions}
             setDetails={setDetails}
             visualizations={visualizations}
+            dataVisualization={dataVisualization}
           />
         </CardContent>
       </Card>
