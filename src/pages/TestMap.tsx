@@ -24,16 +24,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
 export default function TestMap() {
+  const local = localStorage.getItem("dataVis");
+
   const [cameraOptions, setCameraOptions] =
     useState<ICameraOptions>(cameraConfig);
   const [colorScheme, setColorScheme] = useState<string>(
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
   const [contentVisible, setContentVisible] = useState<boolean>(false);
-  const [dataVisualization, setDataVisualization] = useState<string[]>([
-    "main-network",
-    "secondary-network",
-  ]);
+  const [dataVisualization, setDataVisualization] = useState<string[]>(
+    local !== null ? JSON.parse(local) : ["main-network", "secondary-network"],
+  );
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [mapKey, setMapKey] = useState<string>("mapKey");
@@ -70,6 +71,10 @@ export default function TestMap() {
 
   const isPanelVisible = details !== null || isClosing;
 
+  useEffect(() => {
+    localStorage.setItem("dataVis", JSON.stringify(dataVisualization));
+  }, [dataVisualization]);
+
   return (
     <main className="flex flex-col gap-6 overflow-x-hidden md:flex-row">
       <Card
@@ -102,10 +107,9 @@ export default function TestMap() {
               <Checkbox
                 className="bg-card"
                 id="main-network"
-                defaultChecked={
-                  dataVisualization.some((item) => item === "main-network")
-                  // visualizations.showSecondaryNetworks === "on" ? true : false
-                }
+                defaultChecked={dataVisualization.some(
+                  (item) => item === "main-network",
+                )}
                 onCheckedChange={(event) => {
                   if (event === true) {
                     if (!dataVisualization.includes("main-network")) {
