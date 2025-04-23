@@ -1,27 +1,10 @@
 // Packages imports
-import {
-  type Feature,
-  type GeoJSON,
-  type Geometry,
-  type MultiLineString,
-  type Position,
-} from "geojson";
-import {
-  APIProvider,
-  Map,
-  type ColorScheme,
-  type MapCameraChangedEvent,
-} from "@vis.gl/react-google-maps";
+import { type Feature, type GeoJSON, type Geometry, type MultiLineString, type Point, type Position } from "geojson";
+import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
 import { GeoJsonLayer, type PickingInfo } from "deck.gl";
 import { distance } from "@turf/distance";
-import {
-  type Dispatch,
-  type SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from "react";
 // App immports
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
@@ -40,7 +23,7 @@ interface IProps {
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
   setSelectedIndex: Dispatch<SetStateAction<number | null>>;
 }
-
+// GeoJSON data
 import testData from "../../data/test-data.json";
 
 export function TestGMap({
@@ -74,27 +57,36 @@ export function TestGMap({
 
     return [
       new GeoJsonLayer({
-        id: "main-network",
+        id: "networks",
         data,
         visible: true,
         stroked: false,
         filled: true,
+        // Lines
         lineWidthScale: 2,
         lineWidthMinPixels: 1,
         getLineWidth: 2,
         lineCapRounded: true,
-        getLineColor: (f: Feature<Geometry, IGeoJsonData>) =>
-          hexToRgb(f.properties?.color),
+        getLineColor: (f: Feature<Geometry, IGeoJsonData>) => hexToRgb(f.properties?.color),
+        // Icon
+        pointType: "icon",
+        getIcon: (marker: Feature<Geometry, IGeoJsonData>) => ({
+          url: new URL(`../../assets/icons/${marker.properties.details.icon}`, import.meta.url).href,
+          width: 24,
+          height: 24,
+        }),
+        getIconSize: 24,
+        getPosition: (marker: Feature<Point, IGeoJsonData>) => marker.geometry.coordinates,
+        // Selection
+        pickable: true,
         autoHighlight: true,
         highlightColor: [251, 191, 36],
         highlightedObjectIndex: selectedIndex,
-        pickable: true,
-        onClick: (
-          item: PickingInfo<Feature<MultiLineString, IGeoJsonData>>,
-        ) => {
-          const dist: number | undefined = getDistance(
-            item.object?.geometry.coordinates,
-          );
+        onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
+          let dist: number | undefined;
+          if (item.object?.geometry.type === "MultiLineString") {
+            dist = getDistance(item.object?.geometry.coordinates);
+          }
           setDetails({
             color: item.object?.properties.color,
             details: item.object?.properties.details,
@@ -104,17 +96,15 @@ export function TestGMap({
           });
           setSelectedIndex(item.index);
         },
-        getFilterCategory: (f: Feature<MultiLineString, IGeoJsonData>) =>
-          f.properties.type,
+        // Filters
+        getFilterCategory: (f: Feature<Geometry, IGeoJsonData>) => f.properties.type,
         filterCategories: dataVisualization,
         extensions: [new DataFilterExtension({ categorySize: 1 })],
       }),
     ];
   }
 
-  function getDistance(
-    multiLineArray: GeoJSON.Position[][] | undefined,
-  ): number | undefined {
+  function getDistance(multiLineArray: GeoJSON.Position[][] | undefined): number | undefined {
     if (!multiLineArray) return undefined;
 
     const distancesByLineString: number[] = [];
@@ -135,57 +125,51 @@ export function TestGMap({
       distancesByLineString.push(directDistance);
     }
 
-    const totalDistance: number = distancesByLineString.reduce(
-      (sum, distance) => sum + distance,
-      0,
-    );
+    const totalDistance: number = distancesByLineString.reduce((sum, distance) => sum + distance, 0);
 
     return totalDistance;
   }
 
-  const getTooltip = useCallback(
-    ({ object }: PickingInfo<IMarker | Feature<Geometry, IGeoJsonData>>) => {
-      if (!object) return null;
+  const getTooltip = useCallback(({ object }: PickingInfo<IMarker | Feature<Geometry, IGeoJsonData>>) => {
+    if (!object) return null;
 
-      if ("name" in object && "icon" in object.details) {
-        const item = object as IMarker;
+    if ("name" in object && "icon" in object.details) {
+      const item = object as IMarker;
 
-        return {
-          html: `<div>${item.name}</div>`,
-          style: {
-            backgroundColor: "#ffffff",
-            border: "1px solid #e2e8f0",
-            borderRadius: "8px",
-            boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-            color: "#000000",
-            fontSize: "13px",
-            fontWeight: "500",
-          },
-        };
-      } else {
-        const item = object as Feature<Geometry, IGeoJsonData>;
+      return {
+        html: `<div>${item.name}</div>`,
+        style: {
+          backgroundColor: "#ffffff",
+          border: "1px solid #e2e8f0",
+          borderRadius: "8px",
+          boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+          color: "#000000",
+          fontSize: "13px",
+          fontWeight: "500",
+        },
+      };
+    } else {
+      const item = object as Feature<Geometry, IGeoJsonData>;
 
-        return {
-          html: `<div class="flex flex-col space-y-1">
+      return {
+        html: `<div class="flex flex-col space-y-1">
               <div class="flex flex-row space-x-2 items-center">
                 <div class="${item.properties.type === "connection" ? "h-3 w-3 rounded-full" : "h-1 w-5"}" style="background:${item.properties.color}"></div>
                 <span class="font-medium">${item.properties.name}</span>
               </div>
               <span class="font-normal">${item.properties.details.street}</span>
             </div>`,
-          style: {
-            backgroundColor: "#ffffff",
-            border: "1px solid #e2e8f0",
-            borderRadius: "8px",
-            boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-            color: "#000000",
-            fontSize: "13px",
-          },
-        };
-      }
-    },
-    [],
-  );
+        style: {
+          backgroundColor: "#ffffff",
+          border: "1px solid #e2e8f0",
+          borderRadius: "8px",
+          boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+          color: "#000000",
+          fontSize: "13px",
+        },
+      };
+    }
+  }, []);
 
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
