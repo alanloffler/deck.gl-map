@@ -22,6 +22,7 @@ import type { IVisualization } from "@/interfaces/visualization.interface";
 import { cameraConfig } from "@/config/camera.config";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 export default function TestMap() {
   const [colorScheme, setColorScheme] = useState<string>(
@@ -106,7 +107,8 @@ export default function TestMap() {
             setColorScheme={setColorScheme}
             setMapTypeId={setMapTypeId}
           />
-          <section className="py-2">
+          <section className="flex justify-start space-x-6 py-3 sm:justify-end">
+            <Label>Mostrar:</Label>
             <div className="flex items-center space-x-2">
               <Checkbox
                 className="bg-card"
@@ -132,12 +134,44 @@ export default function TestMap() {
                 htmlFor="main-network"
                 className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
+                <Spline size={15} strokeWidth={2} className="stroke-sky-400" />
+                <span className="hidden md:inline">Red principal</span>
+              </label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                className="bg-card"
+                id="secondary-network"
+                defaultChecked={
+                  dataVisualization.some((item) => item === "secondary-network")
+                  // visualizations.showSecondaryNetworks === "on" ? true : false
+                }
+                onCheckedChange={(event) => {
+                  if (event === true) {
+                    if (!dataVisualization.includes("secondary-network")) {
+                      setDataVisualization((prev) => [
+                        ...prev,
+                        "secondary-network",
+                      ]);
+                    }
+                  } else {
+                    const filtered = dataVisualization.filter(
+                      (item) => item !== "secondary-network",
+                    );
+                    setDataVisualization(filtered);
+                  }
+                }}
+              />
+              <label
+                htmlFor="secondary-network"
+                className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
                 <Spline
                   size={15}
                   strokeWidth={2}
                   className="stroke-purple-400"
                 />
-                <span className="hidden md:inline">Red principal</span>
+                <span className="hidden md:inline">Red secundaria</span>
               </label>
             </div>
           </section>
