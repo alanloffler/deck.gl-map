@@ -18,39 +18,33 @@ import { useEffect, useState } from "react";
 // App imports
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
-import type { IVisualization } from "@/interfaces/visualization.interface";
 import { cameraConfig } from "@/config/camera.config";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
 export default function TestMap() {
+  const [cameraOptions, setCameraOptions] =
+    useState<ICameraOptions>(cameraConfig);
   const [colorScheme, setColorScheme] = useState<string>(
     localStorage.getItem("colorScheme") ?? "LIGHT",
   );
   const [contentVisible, setContentVisible] = useState<boolean>(false);
+  const [dataVisualization, setDataVisualization] = useState<string[]>([
+    "main-network",
+    "secondary-network",
+  ]);
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [mapKey, setMapKey] = useState<string>("mapKey");
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [cameraOptions, setCameraOptions] =
-    useState<ICameraOptions>(cameraConfig);
   const [mapTypeId, setMapTypeId] = useState<string>(
     localStorage.getItem("mapTypeId") ?? "roadmap",
   );
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     setMapKey(crypto.randomUUID());
   }, [colorScheme]);
-
-  const [visualizations, setVisualizations] = useState<IVisualization>({
-    showGmMarkers: localStorage.getItem("showGmMarkers") ?? "off",
-    showMarkers: localStorage.getItem("showMarkers") ?? "on",
-    showMainNetworks: localStorage.getItem("showMainNetworks") ?? "on",
-    showSecondaryNetworks:
-      localStorage.getItem("showSecondaryNetworks") ?? "on",
-    showStreetNames: localStorage.getItem("showStreetNames") ?? "on",
-  });
 
   const handleClose = () => {
     setIsClosing(true);
@@ -75,11 +69,6 @@ export default function TestMap() {
   }, [details, isClosing]);
 
   const isPanelVisible = details !== null || isClosing;
-
-  const [dataVisualization, setDataVisualization] = useState<string[]>([
-    "main-network",
-    "secondary-network",
-  ]);
 
   return (
     <main className="flex flex-col gap-6 overflow-x-hidden md:flex-row">
@@ -142,10 +131,9 @@ export default function TestMap() {
               <Checkbox
                 className="bg-card"
                 id="secondary-network"
-                defaultChecked={
-                  dataVisualization.some((item) => item === "secondary-network")
-                  // visualizations.showSecondaryNetworks === "on" ? true : false
-                }
+                defaultChecked={dataVisualization.some(
+                  (item) => item === "secondary-network",
+                )}
                 onCheckedChange={(event) => {
                   if (event === true) {
                     if (!dataVisualization.includes("secondary-network")) {
@@ -175,21 +163,16 @@ export default function TestMap() {
               </label>
             </div>
           </section>
-          {/* <VisControls
-            setVisualizations={setVisualizations}
-            visualizations={visualizations}
-          /> */}
           <TestGMap
             cameraOptions={cameraOptions}
             colorScheme={colorScheme || "FOLLOW_SYSTEM"}
+            dataVisualization={dataVisualization}
             key={mapKey}
             mapTypeId={mapTypeId}
             selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
             setCameraOptions={setCameraOptions}
             setDetails={setDetails}
-            visualizations={visualizations}
-            dataVisualization={dataVisualization}
+            setSelectedIndex={setSelectedIndex}
           />
         </CardContent>
       </Card>
