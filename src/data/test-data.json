@@ -254,7 +254,7 @@
       "properties": {
         "name": "Bomba 01",
         "type": "marker",
-        "color": "#22c55e",
+        "color": "#fb7185",
         "details": {
           "district": "Barrio APSA Sur",
           "icon": "map-pin.svg",
