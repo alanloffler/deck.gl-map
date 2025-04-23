@@ -2,13 +2,7 @@
 import { Milestone, Ruler, Spline, X } from "lucide-react";
 // Components
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // App components
 import { TestGMap } from "./components/TestGMap";
 import { MapControls } from "./components/MapControls";
@@ -26,11 +20,8 @@ import { Label } from "@/components/ui/label";
 export default function TestMap() {
   const local = localStorage.getItem("dataVis");
 
-  const [cameraOptions, setCameraOptions] =
-    useState<ICameraOptions>(cameraConfig);
-  const [colorScheme, setColorScheme] = useState<string>(
-    localStorage.getItem("colorScheme") ?? "LIGHT",
-  );
+  const [cameraOptions, setCameraOptions] = useState<ICameraOptions>(cameraConfig);
+  const [colorScheme, setColorScheme] = useState<string>(localStorage.getItem("colorScheme") ?? "LIGHT");
   const [contentVisible, setContentVisible] = useState<boolean>(false);
   const [dataVisualization, setDataVisualization] = useState<string[]>(
     local !== null ? JSON.parse(local) : ["main-network", "secondary-network"],
@@ -38,9 +29,7 @@ export default function TestMap() {
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
   const [mapKey, setMapKey] = useState<string>("mapKey");
-  const [mapTypeId, setMapTypeId] = useState<string>(
-    localStorage.getItem("mapTypeId") ?? "roadmap",
-  );
+  const [mapTypeId, setMapTypeId] = useState<string>(localStorage.getItem("mapTypeId") ?? "roadmap");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -80,18 +69,12 @@ export default function TestMap() {
       <Card
         className={cn(
           "w-full transition-all duration-300 ease-in-out",
-          isPanelVisible && !isClosing
-            ? "md:w-2/3"
-            : isClosing
-              ? "md:w-full"
-              : "md:w-full",
+          isPanelVisible && !isClosing ? "md:w-2/3" : isClosing ? "md:w-full" : "md:w-full",
         )}
       >
         <CardHeader>
           <CardTitle>Redes de agua potable</CardTitle>
-          <CardDescription className="text-sm">
-            Visualización de conexiones
-          </CardDescription>
+          <CardDescription className="text-sm">Visualización de conexiones</CardDescription>
         </CardHeader>
         <CardContent>
           <MapControls
@@ -107,18 +90,14 @@ export default function TestMap() {
               <Checkbox
                 className="bg-card"
                 id="main-network"
-                defaultChecked={dataVisualization.some(
-                  (item) => item === "main-network",
-                )}
+                defaultChecked={dataVisualization.some((item) => item === "main-network")}
                 onCheckedChange={(event) => {
                   if (event === true) {
                     if (!dataVisualization.includes("main-network")) {
                       setDataVisualization((prev) => [...prev, "main-network"]);
                     }
                   } else {
-                    const filtered = dataVisualization.filter(
-                      (item) => item !== "main-network",
-                    );
+                    const filtered = dataVisualization.filter((item) => item !== "main-network");
                     setDataVisualization(filtered);
                   }
                 }}
@@ -135,21 +114,14 @@ export default function TestMap() {
               <Checkbox
                 className="bg-card"
                 id="secondary-network"
-                defaultChecked={dataVisualization.some(
-                  (item) => item === "secondary-network",
-                )}
+                defaultChecked={dataVisualization.some((item) => item === "secondary-network")}
                 onCheckedChange={(event) => {
                   if (event === true) {
                     if (!dataVisualization.includes("secondary-network")) {
-                      setDataVisualization((prev) => [
-                        ...prev,
-                        "secondary-network",
-                      ]);
+                      setDataVisualization((prev) => [...prev, "secondary-network"]);
                     }
                   } else {
-                    const filtered = dataVisualization.filter(
-                      (item) => item !== "secondary-network",
-                    );
+                    const filtered = dataVisualization.filter((item) => item !== "secondary-network");
                     setDataVisualization(filtered);
                   }
                 }}
@@ -158,11 +130,7 @@ export default function TestMap() {
                 htmlFor="secondary-network"
                 className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                <Spline
-                  size={15}
-                  strokeWidth={2}
-                  className="stroke-purple-400"
-                />
+                <Spline size={15} strokeWidth={2} className="stroke-purple-400" />
                 <span className="hidden md:inline">Red secundaria</span>
               </label>
             </div>
