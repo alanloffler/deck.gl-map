@@ -12,8 +12,8 @@ import {
   type ColorScheme,
   type MapCameraChangedEvent,
 } from "@vis.gl/react-google-maps";
-import { GeoJsonLayer, type PickingInfo } from "deck.gl";
 import { DataFilterExtension } from "@deck.gl/extensions";
+import { GeoJsonLayer, type PickingInfo } from "deck.gl";
 import { distance } from "@turf/distance";
 import {
   type Dispatch,
@@ -27,20 +27,18 @@ import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import type { IMarker } from "@/interfaces/marker.interface";
-import type { IVisualization } from "@/interfaces/visualization.interface";
 import { DeckGLOverlay } from "./DeckGLOverlay";
 import { hexToRgb } from "@/lib/helpers";
 // Interface
 interface IProps {
   cameraOptions: ICameraOptions;
   colorScheme: string;
+  dataVisualization: string[];
   mapTypeId: string;
   selectedIndex: number | null;
   setCameraOptions: Dispatch<SetStateAction<ICameraOptions>>;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
   setSelectedIndex: Dispatch<SetStateAction<number | null>>;
-  visualizations: IVisualization;
-  dataVisualization: string[];
 }
 
 import testData from "../../data/test-data.json";
@@ -48,13 +46,12 @@ import testData from "../../data/test-data.json";
 export function TestGMap({
   cameraOptions,
   colorScheme,
+  dataVisualization,
   mapTypeId,
   selectedIndex,
   setCameraOptions,
   setDetails,
   setSelectedIndex,
-  visualizations,
-  dataVisualization,
 }: IProps) {
   const [data, setData] = useState<GeoJSON | null>(null);
 
@@ -79,11 +76,9 @@ export function TestGMap({
       new GeoJsonLayer({
         id: "main-network",
         data,
-        visible: visualizations.showMainNetworks === "on",
+        visible: true,
         stroked: false,
         filled: true,
-        extruded: true,
-        getElevation: 300,
         lineWidthScale: 2,
         lineWidthMinPixels: 1,
         getLineWidth: 2,
@@ -196,7 +191,7 @@ export function TestGMap({
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
         className="relative h-[450px] w-full"
-        clickableIcons={visualizations.showGmMarkers === "on" ? true : false}
+        clickableIcons={true}
         colorScheme={colorScheme as ColorScheme}
         disableDefaultUI={true}
         fullscreenControl
