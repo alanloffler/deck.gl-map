@@ -1,4 +1,5 @@
 export interface IGeoJsonData {
+  id?: number;
   color: string;
   details: {
     district: string;
