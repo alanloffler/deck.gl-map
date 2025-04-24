@@ -22,7 +22,7 @@ export default function Networks() {
   const [colorScheme, setColorScheme] = useState<string>(localStorage.getItem("colorScheme") ?? "LIGHT");
   const [contentVisible, setContentVisible] = useState<boolean>(false);
   const [dataVisualization, setDataVisualization] = useState<string[]>(
-    local !== null ? JSON.parse(local) : ["main-network", "secondary-network", "marker"],
+    local !== null ? JSON.parse(local) : ["connection", "main-network", "secondary-network", "marker"],
   );
   const [details, setDetails] = useState<IDetails | null>(null);
   const [isClosing, setIsClosing] = useState(false);
