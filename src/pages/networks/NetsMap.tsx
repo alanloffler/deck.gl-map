@@ -126,13 +126,12 @@ export function NetsMap({
             dist = getDistance(item.object?.geometry.coordinates);
           }
           setDetails({
-            color: item.object?.properties.color,
+            color: selectedColors.find((c) => c.type === item.object?.properties.type)?.normal,
             details: item.object?.properties.details,
             distance: dist && dist * 1000,
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
-          // item.layer?.setState({ color: "#000099" });
           setSelectedIndex(item.index);
         },
         // Filters
@@ -172,12 +171,14 @@ export function NetsMap({
   const getTooltip = useCallback(({ object }: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
     if (!object) return null;
 
+    const objColor = selectedColors.find((c) => c.type === object.properties.type);
+
     return {
       html: `<div class="flex flex-col space-y-1">
                 <div class="flex flex-row space-x-2 items-center">
                   <div
                     class="${object.geometry.type === "Point" ? "h-3 w-3 rounded-full" : "h-1 w-4"}"
-                    style="background:${object.properties.color}"></div>
+                    style="background:${objColor?.normal}"></div>
                   <span class="font-medium">${object.properties.name}</span>
                 </div>
                 <span class="font-normal">${object.properties.details.street}</span>
