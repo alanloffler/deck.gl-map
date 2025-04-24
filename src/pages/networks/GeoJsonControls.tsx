@@ -1,8 +1,10 @@
 // Icons
-import { MapPin, Spline } from "lucide-react";
+import { Spline } from "lucide-react";
 // Components
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+// App components
+import { MapPinCustom } from "@/assets/icons/1x/map-pin";
 // Packages imports
 import type { Dispatch, SetStateAction } from "react";
 // Interface
@@ -83,7 +85,7 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
           htmlFor="markers"
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          <MapPin size={16} strokeWidth={1.5} className="fill-rose-400/70 stroke-rose-500" />
+          <MapPinCustom width={16} height={16} fill="#fb7185" />
           <span className="hidden md:inline">Marcadores</span>
         </label>
       </div>
