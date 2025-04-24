@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")!).render(
           index
           element={
             <Suspense fallback={<Loading />}>
-              <GoogleMap />
+              <Networks />
             </Suspense>
           }
         />
