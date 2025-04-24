@@ -74,7 +74,6 @@ export function TestGMap({
         id: "networks",
         data,
         visible: true,
-        stroked: false,
         filled: true,
         // Lines
         lineWidthScale: 2,
@@ -93,14 +92,18 @@ export function TestGMap({
           url: new URL(`../../assets/icons/${marker.properties.details.icon}`, import.meta.url).href,
           width: 24,
           height: 24,
+          anchorX: 12,
+          anchorY: 12,
+          mask: true,
         }),
         getIconSize: 24,
-        getIconColor: [255, 113, 133, 255],
-        // getIconColor: (marker: Feature<Point, IGeoJsonData>) => {
-        //   const type = marker.properties.type;
-        //   const color = selectedColors.find((color) => color.type === type);
-        //   return hexToRgb(color?.normal) as number[];
-        // },
+        iconSizeUnits: "pixels",
+        iconSizeScale: 1,
+        getIconColor: ((marker: Feature<Point, IGeoJsonData>) => {
+          const type = marker.properties.type;
+          const color = selectedColors.find((color) => color.type === type);
+          return hexToRgb(color?.normal);
+        }) as unknown as [number, number, number],
         getPosition: (marker: Feature<Point, IGeoJsonData>) => marker.geometry.coordinates,
         // Selection
         pickable: true,
@@ -112,7 +115,6 @@ export function TestGMap({
 
           return hexToRgb(color?.selected) as number[];
         },
-        // highlightedObjectIndex: selectedIndex,
         updateTriggers: {
           getLineColor: [selectedIndex],
         },
