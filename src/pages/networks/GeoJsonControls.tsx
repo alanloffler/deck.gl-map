@@ -1,5 +1,5 @@
 // Icons
-import { Spline } from "lucide-react";
+import { MapPin, Spline } from "lucide-react";
 // Components
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -61,6 +61,30 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
         >
           <Spline size={15} strokeWidth={2} className="stroke-purple-400" />
           <span className="hidden md:inline">Red secundaria</span>
+        </label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          className="bg-card"
+          id="markers"
+          defaultChecked={dataVisualization.some((item) => item === "markers")}
+          onCheckedChange={(event) => {
+            if (event === true) {
+              if (!dataVisualization.includes("markers")) {
+                setDataVisualization((prev) => [...prev, "markers"]);
+              }
+            } else {
+              const filtered = dataVisualization.filter((item) => item !== "markers");
+              setDataVisualization(filtered);
+            }
+          }}
+        />
+        <label
+          htmlFor="markers"
+          className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          <MapPin size={16} strokeWidth={1.5} className="fill-rose-400/70 stroke-rose-500" />
+          <span className="hidden md:inline">Marcadores</span>
         </label>
       </div>
     </main>
