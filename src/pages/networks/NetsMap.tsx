@@ -16,7 +16,7 @@ import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } 
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import { DeckGLOverlay } from "./DeckGLOverlay";
+import { DeckGLOverlay } from "../components/DeckGLOverlay";
 import { hexToRgb } from "@/lib/helpers";
 // Interface
 interface IProps {
@@ -34,7 +34,7 @@ import testData from "../../data/test-data.json";
 // Config
 import selectedColors from "../../config/geojson-colors.config.json";
 
-export function TestGMap({
+export function NetsMap({
   cameraOptions,
   colorScheme,
   dataVisualization,
@@ -65,10 +65,6 @@ export function TestGMap({
     },
     [setCameraOptions],
   );
-
-  useEffect(() => {
-    console.log(cameraOptions.zoom);
-  }, [cameraOptions.zoom]);
 
   function getDeckGlLayers() {
     if (!data) return [];
