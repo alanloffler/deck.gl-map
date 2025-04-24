@@ -66,6 +66,10 @@ export function TestGMap({
     [setCameraOptions],
   );
 
+  useEffect(() => {
+    console.log(cameraOptions.zoom);
+  }, [cameraOptions.zoom]);
+
   function getDeckGlLayers() {
     if (!data) return [];
 
@@ -89,14 +93,14 @@ export function TestGMap({
         // Icon
         pointType: "icon",
         getIcon: (marker: Feature<Geometry, IGeoJsonData>) => ({
-          url: new URL(`../../assets/icons/${marker.properties.details.icon}`, import.meta.url).href,
-          width: 24,
-          height: 24,
-          anchorX: 12,
-          anchorY: 12,
+          url: new URL(`../../assets/icons/1x/${marker.properties.details.icon}`, import.meta.url).href,
+          width: 120,
+          height: 120,
+          anchorX: 60,
+          anchorY: 60,
           mask: true,
         }),
-        getIconSize: 24,
+        getIconSize: 1.73 * Math.pow(1.18, cameraOptions.zoom),
         iconSizeUnits: "pixels",
         iconSizeScale: 1,
         getIconColor: ((f: Feature<Point, IGeoJsonData>) => {
@@ -109,7 +113,6 @@ export function TestGMap({
         // Selection
         pickable: true,
         autoHighlight: true,
-        // highlightColor: [251, 191, 36],
         highlightColor: (item: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
           const type = item.object?.properties.type;
           const color = selectedColors.find((color) => color.type === type);
@@ -119,6 +122,7 @@ export function TestGMap({
         updateTriggers: {
           getLineColor: [selectedIndex],
           getIconColor: [selectedIndex],
+          getIconSize: [cameraOptions.zoom],
         },
         onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
           let dist: number | undefined;
