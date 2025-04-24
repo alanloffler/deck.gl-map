@@ -4,7 +4,7 @@ import { Milestone, Ruler, Spline, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // App components
-import { TestGMap } from "./components/TestGMap";
+import { NetsMap } from "./networks/NetsMap";
 import { MapControls } from "./components/MapControls";
 // import { VisControls } from "./components/VisControls";
 // Packages imports
@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
-export default function TestMap() {
+export default function Networks() {
   const local = localStorage.getItem("dataVis");
 
   const [cameraOptions, setCameraOptions] = useState<ICameraOptions>(cameraConfig);
@@ -135,7 +135,7 @@ export default function TestMap() {
               </label>
             </div>
           </section>
-          <TestGMap
+          <NetsMap
             cameraOptions={cameraOptions}
             colorScheme={colorScheme || "FOLLOW_SYSTEM"}
             dataVisualization={dataVisualization}
