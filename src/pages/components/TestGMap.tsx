@@ -1,5 +1,12 @@
 // Packages imports
-import { type Feature, type GeoJSON, type Geometry, type MultiLineString, type Point, type Position } from "geojson";
+import {
+  type Feature,
+  type FeatureCollection,
+  type Geometry,
+  type MultiLineString,
+  type Point,
+  type Position,
+} from "geojson";
 import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
 import { GeoJsonLayer, type PickingInfo } from "deck.gl";
@@ -24,6 +31,8 @@ interface IProps {
 }
 // GeoJSON data
 import testData from "../../data/test-data.json";
+// Config
+import selectedColors from "../../config/geojson-colors.config.json";
 
 export function TestGMap({
   cameraOptions,
@@ -35,16 +44,15 @@ export function TestGMap({
   setDetails,
   setSelectedIndex,
 }: IProps) {
-  const [data, setData] = useState<GeoJSON | null>(null);
+  const [data, setData] = useState<FeatureCollection<Geometry, IGeoJsonData> | null>(null);
 
   useEffect(() => {
-    setData(testData as GeoJSON);
+    setData(testData as FeatureCollection<Geometry, IGeoJsonData>);
   }, []);
 
   useEffect(() => {
     data?.features.forEach((feature, index) => {
       feature.properties.id = index;
-      console.log(feature.properties.name);
     });
   }, [data?.features]);
 
@@ -57,12 +65,6 @@ export function TestGMap({
     },
     [setCameraOptions],
   );
-
-  const selectedColors = [
-    { type: "marker", normal: "#fb7185", selected: "#e11d48" },
-    { type: "main-network", normal: "#38bdf8", selected: "#0369a1" },
-    { type: "secondary-network", normal: "#c084fc", selected: "#c026d3" },
-  ];
 
   function getDeckGlLayers() {
     if (!data) return [];
