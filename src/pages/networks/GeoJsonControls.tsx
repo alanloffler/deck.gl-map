@@ -67,14 +67,14 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
         <Checkbox
           className="bg-card"
           id="markers"
-          defaultChecked={dataVisualization.some((item) => item === "markers")}
+          defaultChecked={dataVisualization.some((item) => item === "marker")}
           onCheckedChange={(event) => {
             if (event === true) {
-              if (!dataVisualization.includes("markers")) {
-                setDataVisualization((prev) => [...prev, "markers"]);
+              if (!dataVisualization.includes("marker")) {
+                setDataVisualization((prev) => [...prev, "marker"]);
               }
             } else {
-              const filtered = dataVisualization.filter((item) => item !== "markers");
+              const filtered = dataVisualization.filter((item) => item !== "marker");
               setDataVisualization(filtered);
             }
           }}
