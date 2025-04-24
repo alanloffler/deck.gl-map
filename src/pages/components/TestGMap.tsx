@@ -9,7 +9,6 @@ import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } 
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import type { IMarker } from "@/interfaces/marker.interface";
 import { DeckGLOverlay } from "./DeckGLOverlay";
 import { hexToRgb } from "@/lib/helpers";
 // Interface
@@ -42,6 +41,13 @@ export function TestGMap({
     setData(testData as GeoJSON);
   }, []);
 
+  useEffect(() => {
+    data?.features.forEach((feature, index) => {
+      feature.properties.id = index;
+      console.log(feature.properties.name);
+    });
+  }, [data?.features]);
+
   const handleCameraChange = useCallback(
     (ev: MapCameraChangedEvent) => {
       setCameraOptions({
@@ -51,6 +57,12 @@ export function TestGMap({
     },
     [setCameraOptions],
   );
+
+  const selectedColors = [
+    { type: "marker", normal: "#fb7185", selected: "#e11d48" },
+    { type: "main-network", normal: "#38bdf8", selected: "#0369a1" },
+    { type: "secondary-network", normal: "#c084fc", selected: "#c026d3" },
+  ];
 
   function getDeckGlLayers() {
     if (!data) return [];
@@ -67,7 +79,12 @@ export function TestGMap({
         lineWidthMinPixels: 1,
         getLineWidth: 2,
         lineCapRounded: true,
-        getLineColor: (f: Feature<Geometry, IGeoJsonData>) => hexToRgb(f.properties?.color),
+        getLineColor: (f: Feature<Geometry, IGeoJsonData>) => {
+          const type = f.properties.type;
+          const colorObj = selectedColors.find((c) => c.type === type);
+          const colorType = selectedIndex === f.properties.id ? colorObj?.selected : colorObj?.normal;
+          return hexToRgb(colorType);
+        },
         // Icon
         pointType: "icon",
         getIcon: (marker: Feature<Geometry, IGeoJsonData>) => ({
@@ -76,12 +93,27 @@ export function TestGMap({
           height: 24,
         }),
         getIconSize: 24,
+        getIconColor: [255, 113, 133, 255],
+        // getIconColor: (marker: Feature<Point, IGeoJsonData>) => {
+        //   const type = marker.properties.type;
+        //   const color = selectedColors.find((color) => color.type === type);
+        //   return hexToRgb(color?.normal) as number[];
+        // },
         getPosition: (marker: Feature<Point, IGeoJsonData>) => marker.geometry.coordinates,
         // Selection
         pickable: true,
         autoHighlight: true,
-        highlightColor: [251, 191, 36],
-        highlightedObjectIndex: selectedIndex,
+        // highlightColor: [251, 191, 36],
+        highlightColor: (item: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
+          const type = item.object?.properties.type;
+          const color = selectedColors.find((color) => color.type === type);
+
+          return hexToRgb(color?.selected) as number[];
+        },
+        // highlightedObjectIndex: selectedIndex,
+        updateTriggers: {
+          getLineColor: [selectedIndex],
+        },
         onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
           let dist: number | undefined;
           if (item.object?.geometry.type === "MultiLineString") {
@@ -94,6 +126,7 @@ export function TestGMap({
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
+          item.layer?.setState({ color: "#000099" });
           setSelectedIndex(item.index);
         },
         // Filters
@@ -130,45 +163,28 @@ export function TestGMap({
     return totalDistance;
   }
 
-  const getTooltip = useCallback(({ object }: PickingInfo<IMarker | Feature<Geometry, IGeoJsonData>>) => {
+  const getTooltip = useCallback(({ object }: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
     if (!object) return null;
 
-    if ("name" in object && "icon" in object.details) {
-      const item = object as IMarker;
-
-      return {
-        html: `<div>${item.name}</div>`,
-        style: {
-          backgroundColor: "#ffffff",
-          border: "1px solid #e2e8f0",
-          borderRadius: "8px",
-          boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-          color: "#000000",
-          fontSize: "13px",
-          fontWeight: "500",
-        },
-      };
-    } else {
-      const item = object as Feature<Geometry, IGeoJsonData>;
-
-      return {
-        html: `<div class="flex flex-col space-y-1">
-              <div class="flex flex-row space-x-2 items-center">
-                <div class="${item.properties.type === "connection" ? "h-3 w-3 rounded-full" : "h-1 w-5"}" style="background:${item.properties.color}"></div>
-                <span class="font-medium">${item.properties.name}</span>
-              </div>
-              <span class="font-normal">${item.properties.details.street}</span>
-            </div>`,
-        style: {
-          backgroundColor: "#ffffff",
-          border: "1px solid #e2e8f0",
-          borderRadius: "8px",
-          boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-          color: "#000000",
-          fontSize: "13px",
-        },
-      };
-    }
+    return {
+      html: `<div class="flex flex-col space-y-1">
+                <div class="flex flex-row space-x-2 items-center">
+                  <div
+                    class="${object.geometry.type === "Point" ? "h-3 w-3 rounded-full" : "h-1 w-4"}"
+                    style="background:${object.properties.color}"></div>
+                  <span class="font-medium">${object.properties.name}</span>
+                </div>
+                <span class="font-normal">${object.properties.details.street}</span>
+              </div>`,
+      style: {
+        backgroundColor: "#ffffff",
+        border: "1px solid #e2e8f0",
+        borderRadius: "8px",
+        boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        color: "#000000",
+        fontSize: "13px",
+      },
+    };
   }, []);
 
   return (
