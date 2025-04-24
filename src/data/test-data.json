@@ -6,7 +6,6 @@
       "properties": {
         "name": "Red principal",
         "type": "main-network",
-        "color": "#38bdf8",
         "details": {
           "id": "RP/001",
           "street": "Avenida República Argentina",
@@ -64,7 +63,6 @@
       "properties": {
         "name": "Red principal",
         "type": "main-network",
-        "color": "#38bdf8",
         "details": {
           "id": "RP/002",
           "street": "Avenida San Martín",
@@ -127,7 +125,6 @@
       "properties": {
         "name": "Red principal",
         "type": "main-network",
-        "color": "#38bdf8",
         "details": {
           "id": "RP/003",
           "street": "Avenida Juan Domingo Perón",
@@ -168,7 +165,6 @@
       "properties": {
         "name": "Red secundaria",
         "type": "secondary-network",
-        "color": "#c084fc",
         "details": {
           "id": "RS/001",
           "street": "Calle 9 de Julio",
@@ -207,7 +203,6 @@
       "properties": {
         "name": "Red secundaria",
         "type": "secondary-network",
-        "color": "#c084fc",
         "details": {
           "id": "RS/002",
           "street": "Calle Los Rosales",
