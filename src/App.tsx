@@ -1,5 +1,5 @@
-import { Link, Outlet } from "react-router";
 import logo from "./assets/coop-logo.png";
+import { Link, Outlet } from "react-router";
 
 export default function App() {
   return (
@@ -17,8 +17,8 @@ export default function App() {
           </div>
         </section>
         <section className="flex flex-1 items-center justify-end space-x-3 md:justify-start md:space-x-8">
-          <Link to="/googlemap">Mapa de redes</Link>
-          <Link to="/test">Mapa de pruebas</Link>
+          {/* <Link to="/googlemap">Mapa de redes</Link> */}
+          <Link to="/redes">Mapa de redes</Link>
         </section>
       </nav>
       <section className="mt-16">
