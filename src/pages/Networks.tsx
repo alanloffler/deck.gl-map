@@ -1,12 +1,12 @@
 // Icons
-import { Milestone, Ruler, Spline, X } from "lucide-react";
+import { Milestone, Ruler, X } from "lucide-react";
 // Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // App components
-import { NetsMap } from "./networks/NetsMap";
+import { GeoJsonControls } from "./networks/GeoJsonControls";
 import { MapControls } from "./components/MapControls";
-// import { VisControls } from "./components/VisControls";
+import { NetsMap } from "./networks/NetsMap";
 // Packages imports
 import { useEffect, useState } from "react";
 // App imports
@@ -14,11 +14,9 @@ import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import { cameraConfig } from "@/config/camera.config";
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 
 export default function Networks() {
-  const local = localStorage.getItem("dataVis");
+  const local: string | null = localStorage.getItem("dataVis");
 
   const [cameraOptions, setCameraOptions] = useState<ICameraOptions>(cameraConfig);
   const [colorScheme, setColorScheme] = useState<string>(localStorage.getItem("colorScheme") ?? "LIGHT");
@@ -84,57 +82,7 @@ export default function Networks() {
             setColorScheme={setColorScheme}
             setMapTypeId={setMapTypeId}
           />
-          <section className="flex justify-start space-x-6 py-3 sm:justify-end">
-            <Label>Mostrar:</Label>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                className="bg-card"
-                id="main-network"
-                defaultChecked={dataVisualization.some((item) => item === "main-network")}
-                onCheckedChange={(event) => {
-                  if (event === true) {
-                    if (!dataVisualization.includes("main-network")) {
-                      setDataVisualization((prev) => [...prev, "main-network"]);
-                    }
-                  } else {
-                    const filtered = dataVisualization.filter((item) => item !== "main-network");
-                    setDataVisualization(filtered);
-                  }
-                }}
-              />
-              <label
-                htmlFor="main-network"
-                className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                <Spline size={15} strokeWidth={2} className="stroke-sky-400" />
-                <span className="hidden md:inline">Red principal</span>
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                className="bg-card"
-                id="secondary-network"
-                defaultChecked={dataVisualization.some((item) => item === "secondary-network")}
-                onCheckedChange={(event) => {
-                  if (event === true) {
-                    if (!dataVisualization.includes("secondary-network")) {
-                      setDataVisualization((prev) => [...prev, "secondary-network"]);
-                    }
-                  } else {
-                    const filtered = dataVisualization.filter((item) => item !== "secondary-network");
-                    setDataVisualization(filtered);
-                  }
-                }}
-              />
-              <label
-                htmlFor="secondary-network"
-                className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                <Spline size={15} strokeWidth={2} className="stroke-purple-400" />
-                <span className="hidden md:inline">Red secundaria</span>
-              </label>
-            </div>
-          </section>
+          <GeoJsonControls dataVisualization={dataVisualization} setDataVisualization={setDataVisualization} />
           <NetsMap
             cameraOptions={cameraOptions}
             colorScheme={colorScheme || "FOLLOW_SYSTEM"}
