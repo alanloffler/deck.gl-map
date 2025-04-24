@@ -99,10 +99,11 @@ export function TestGMap({
         getIconSize: 24,
         iconSizeUnits: "pixels",
         iconSizeScale: 1,
-        getIconColor: ((marker: Feature<Point, IGeoJsonData>) => {
-          const type = marker.properties.type;
-          const color = selectedColors.find((color) => color.type === type);
-          return hexToRgb(color?.normal);
+        getIconColor: ((f: Feature<Point, IGeoJsonData>) => {
+          const type = f.properties.type;
+          const colorObj = selectedColors.find((c) => c.type === type);
+          const colorType = selectedIndex === f.properties.id ? colorObj?.selected : colorObj?.normal;
+          return hexToRgb(colorType);
         }) as unknown as [number, number, number],
         getPosition: (marker: Feature<Point, IGeoJsonData>) => marker.geometry.coordinates,
         // Selection
@@ -117,6 +118,7 @@ export function TestGMap({
         },
         updateTriggers: {
           getLineColor: [selectedIndex],
+          getIconColor: [selectedIndex],
         },
         onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
           let dist: number | undefined;
@@ -130,7 +132,7 @@ export function TestGMap({
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
-          item.layer?.setState({ color: "#000099" });
+          // item.layer?.setState({ color: "#000099" });
           setSelectedIndex(item.index);
         },
         // Filters
