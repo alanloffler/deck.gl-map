@@ -88,15 +88,22 @@ export function NetsMap({
         },
         // Icon
         pointType: "icon",
-        getIcon: (marker: Feature<Geometry, IGeoJsonData>) => ({
-          url: new URL(`../../assets/icons/1x/${marker.properties.details.icon}`, import.meta.url).href,
-          width: 120,
-          height: 120,
-          anchorX: 60,
-          anchorY: 60,
-          mask: true,
-        }),
-        getIconSize: 1.73 * Math.pow(1.18, cameraOptions.zoom),
+        getIcon: (marker: Feature<Geometry, IGeoJsonData>) => {
+          const iconPath: string = marker.properties.type === "marker" ? "map-pin.png" : "connection.svg";
+          return {
+            url: new URL(`../../assets/icons/1x/${iconPath}`, import.meta.url).href,
+            width: 120,
+            height: 120,
+            anchorX: 60,
+            anchorY: 60,
+            mask: true,
+          };
+        },
+        getIconSize: (item) => {
+          const size: number = 1.73 * Math.pow(1.18, cameraOptions.zoom);
+          if (item.properties.type === "connection") return size / 2.5;
+          return size;
+        },
         iconSizeUnits: "pixels",
         iconSizeScale: 1,
         getIconColor: ((f: Feature<Point, IGeoJsonData>) => {
