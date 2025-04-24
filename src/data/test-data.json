@@ -297,6 +297,54 @@
         "type": "Point",
         "coordinates": [-54.564425, -25.980413]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sanatorio Rolón Vargas",
+        "type": "connection",
+        "details": {
+          "district": "Barrio Centro",
+          "id": "10347",
+          "street": "Calle 9 de Julio"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.564112, -25.972737]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Comisaria de Wanda",
+        "type": "connection",
+        "details": {
+          "district": "Barrio Centro",
+          "id": "20311",
+          "street": "Calle Los Helechos"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.561089, -25.971562]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Municipalidad de Wanda",
+        "type": "connection",
+        "details": {
+          "district": "Barrio Centro",
+          "id": "20298",
+          "street": "Calle Los Helechos"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.561017, -25.971985]
+      }
     }
   ]
 }
