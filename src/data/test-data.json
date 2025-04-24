@@ -239,7 +239,7 @@
         "color": "#22c55e",
         "details": {
           "district": "Barrio Centro",
-          "icon": "map-pin.svg",
+          "icon": "map-pin.png",
           "id": "M/001",
           "street": "Avenida República Argentina S/N"
         }
@@ -257,7 +257,7 @@
         "color": "#fb7185",
         "details": {
           "district": "Barrio APSA Sur",
-          "icon": "map-pin.svg",
+          "icon": "map-pin.png",
           "id": "M/002",
           "street": "Calle Los Yerbales S/N"
         }
@@ -275,7 +275,7 @@
         "color": "#fb7185",
         "details": {
           "district": "Barrio San Martín",
-          "icon": "map-pin.svg",
+          "icon": "map-pin.png",
           "id": "M/003",
           "street": "Ruta Provincial Nº 19"
         }
@@ -293,7 +293,7 @@
         "color": "#fb7185",
         "details": {
           "district": "Barrio Cooperativa",
-          "icon": "map-pin.svg",
+          "icon": "map-pin.png",
           "id": "M/004",
           "street": "Calle Juan XXIII S/N"
         }
