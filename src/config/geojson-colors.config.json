@@ -1,5 +1,6 @@
 [
-  { "type": "marker", "normal": "#fb7185", "selected": "#e11d48" },
+  { "type": "connection", "normal": "#fbbf24", "selected": "#f59e0b" },
   { "type": "main-network", "normal": "#38bdf8", "selected": "#0369a1" },
+  { "type": "marker", "normal": "#fb7185", "selected": "#e11d48" },
   { "type": "secondary-network", "normal": "#c084fc", "selected": "#c026d3" }
 ]
