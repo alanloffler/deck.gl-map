@@ -93,7 +93,7 @@ export function NetsMap({
           return hexToRgb(colorType);
         },
         // Icon
-        pointType: "icon",
+        pointType: "icon+text",
         getIcon: (marker: Feature<Geometry, IGeoJsonData>) => {
           const iconPath: string = marker.properties.type === "marker" ? "map-pin.png" : "connection.svg";
           return {
@@ -120,6 +120,10 @@ export function NetsMap({
           return hexToRgb(colorType);
         }) as unknown as [number, number, number],
         getPosition: (marker: Feature<Point, IGeoJsonData>) => marker.geometry.coordinates,
+        // Text
+        getText: (t: Feature<Point, IGeoJsonData>) => t.properties.details.id,
+        getTextSize: 10,
+        getTextPixelOffset: [0, 20],
         // Selection
         pickable: true,
         autoHighlight: true,
