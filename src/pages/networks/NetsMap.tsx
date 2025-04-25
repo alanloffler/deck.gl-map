@@ -69,6 +69,12 @@ export function NetsMap({
   function getDeckGlLayers() {
     if (!data) return [];
 
+    const isConnectionZoomVisible: boolean = cameraOptions.zoom >= 17;
+    const effectiveDataVisualization: string[] = [...dataVisualization];
+    const renderDataVisualization: string[] = effectiveDataVisualization.filter(
+      (type) => type !== "connection" || isConnectionZoomVisible,
+    );
+
     return [
       new GeoJsonLayer({
         id: "networks",
@@ -106,6 +112,7 @@ export function NetsMap({
         },
         iconSizeUnits: "pixels",
         iconSizeScale: 1,
+        iconSizeMinPixels: 1,
         getIconColor: ((f: Feature<Point, IGeoJsonData>) => {
           const type = f.properties.type;
           const colorObj = selectedColors.find((c) => c.type === type);
@@ -126,6 +133,7 @@ export function NetsMap({
           getLineColor: [selectedIndex],
           getIconColor: [selectedIndex],
           getIconSize: [cameraOptions.zoom],
+          getFilterCategory: [renderDataVisualization, cameraOptions.zoom],
         },
         onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
           let dist: number | undefined;
@@ -142,9 +150,9 @@ export function NetsMap({
           setSelectedIndex(item.index);
         },
         // Filters
-        getFilterCategory: (f: Feature<Geometry, IGeoJsonData>) => f.properties.type,
-        filterCategories: dataVisualization,
         extensions: [new DataFilterExtension({ categorySize: 1 })],
+        getFilterCategory: (f: Feature<Geometry, IGeoJsonData>) => f.properties.type,
+        filterCategories: renderDataVisualization,
       }),
     ];
   }
