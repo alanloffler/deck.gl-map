@@ -95,7 +95,6 @@ export default function Networks() {
             mapTypeId={mapTypeId}
             selectedIndex={selectedIndex}
             setCameraOptions={setCameraOptions}
-            setDataVisualization={setDataVisualization}
             setDetails={setDetails}
             setSelectedIndex={setSelectedIndex}
           />
