@@ -7,16 +7,19 @@ import { Label } from "@/components/ui/label";
 import { MapPinCustom } from "@/assets/icons/1x/map-pin";
 // Packages imports
 import type { Dispatch, SetStateAction } from "react";
+// App imports
+import { cn } from "@/lib/utils";
 // Interface
 interface IProps {
   dataVisualization: string[];
+  isPanelVisible: boolean;
   setDataVisualization: Dispatch<SetStateAction<string[]>>;
 }
 
-export function GeoJsonControls({ dataVisualization, setDataVisualization }: IProps) {
+export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisualization }: IProps) {
   return (
     <main className="flex justify-start space-x-6 py-3 sm:justify-end">
-      <Label>Mostrar:</Label>
+      <Label className={cn(isPanelVisible ? "hidden lg:inline" : "hidden sm:inline")}>Mostrar:</Label>
       <div className="flex items-center space-x-2">
         <Checkbox
           className="bg-card"
@@ -38,7 +41,7 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           <Spline size={15} strokeWidth={2} className="stroke-sky-400" />
-          <span className="hidden md:inline">Red principal</span>
+          <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Red principal</span>
         </label>
       </div>
       <div className="flex items-center space-x-2">
@@ -62,7 +65,7 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           <Spline size={15} strokeWidth={2} className="stroke-purple-400" />
-          <span className="hidden md:inline">Red secundaria</span>
+          <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Red secundaria </span>
         </label>
       </div>
       <div className="flex items-center space-x-2">
@@ -86,7 +89,7 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           <MapPinCustom width={16} height={16} fill="#fb7185" />
-          <span className="hidden md:inline">Marcadores</span>
+          <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Marcadores</span>
         </label>
       </div>
       <div className="flex items-center space-x-2">
@@ -110,7 +113,7 @@ export function GeoJsonControls({ dataVisualization, setDataVisualization }: IPr
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           <Circle size={16} className="fill-[#fbbf24] stroke-0" />
-          <span className="hidden md:inline">Conexiones</span>
+          <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Conexiones</span>
         </label>
       </div>
     </main>
