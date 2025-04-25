@@ -82,7 +82,11 @@ export default function Networks() {
             setColorScheme={setColorScheme}
             setMapTypeId={setMapTypeId}
           />
-          <GeoJsonControls dataVisualization={dataVisualization} setDataVisualization={setDataVisualization} />
+          <GeoJsonControls
+            dataVisualization={dataVisualization}
+            isPanelVisible={isPanelVisible}
+            setDataVisualization={setDataVisualization}
+          />
           <NetsMap
             cameraOptions={cameraOptions}
             colorScheme={colorScheme || "FOLLOW_SYSTEM"}
