@@ -8,8 +8,8 @@
         "type": "main-network",
         "details": {
           "id": "RP/001",
-          "street": "Avenida República Argentina",
-          "district": "Centro"
+          "street": "Av. República Argentina S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -65,8 +65,8 @@
         "type": "main-network",
         "details": {
           "id": "RP/002",
-          "street": "Avenida San Martín",
-          "district": "Centro"
+          "street": "Av. San Martín S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -127,8 +127,8 @@
         "type": "main-network",
         "details": {
           "id": "RP/003",
-          "street": "Avenida Juan Domingo Perón",
-          "district": "Centro"
+          "street": "Av. Juan Domingo Perón S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -167,8 +167,8 @@
         "type": "secondary-network",
         "details": {
           "id": "RS/001",
-          "street": "Calle 9 de Julio",
-          "district": "Centro"
+          "street": "9 de Julio S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -205,8 +205,8 @@
         "type": "secondary-network",
         "details": {
           "id": "RS/002",
-          "street": "Calle Los Rosales",
-          "district": "Centro"
+          "street": "Los Rosales S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -233,10 +233,10 @@
         "type": "marker",
         "color": "#22c55e",
         "details": {
-          "district": "Barrio Centro",
+          "district": "Bo. Centro",
           "icon": "map-pin.png",
           "id": "M/001",
-          "street": "Avenida República Argentina S/N"
+          "street": "Av. República Argentina S/N"
         }
       },
       "geometry": {
@@ -251,10 +251,10 @@
         "type": "marker",
         "color": "#fb7185",
         "details": {
-          "district": "Barrio APSA Sur",
+          "district": "Bo. APSA Sur",
           "icon": "map-pin.png",
           "id": "M/002",
-          "street": "Calle Los Yerbales S/N"
+          "street": "Los Yerbales S/N"
         }
       },
       "geometry": {
@@ -269,10 +269,10 @@
         "type": "marker",
         "color": "#fb7185",
         "details": {
-          "district": "Barrio San Martín",
+          "district": "Bo. San Martín",
           "icon": "map-pin.png",
           "id": "M/003",
-          "street": "Ruta Provincial Nº 19"
+          "street": "Ruta Prov. Nº 19"
         }
       },
       "geometry": {
@@ -287,10 +287,10 @@
         "type": "marker",
         "color": "#fb7185",
         "details": {
-          "district": "Barrio Cooperativa",
+          "district": "Bo. Cooperativa",
           "icon": "map-pin.png",
           "id": "M/004",
-          "street": "Calle Juan XXIII S/N"
+          "street": "Juan XXIII S/N"
         }
       },
       "geometry": {
@@ -304,9 +304,9 @@
         "name": "Sanatorio Rolón Vargas",
         "type": "connection",
         "details": {
-          "district": "Barrio Centro",
+          "district": "Bo. Centro",
           "id": "10347",
-          "street": "Calle 9 de Julio"
+          "street": "9 de Julio S/N"
         }
       },
       "geometry": {
@@ -320,9 +320,9 @@
         "name": "Comisaria de Wanda",
         "type": "connection",
         "details": {
-          "district": "Barrio Centro",
+          "district": "Bo. Centro",
           "id": "20311",
-          "street": "Calle Los Helechos"
+          "street": "Los Helechos S/N"
         }
       },
       "geometry": {
@@ -336,14 +336,30 @@
         "name": "Municipalidad de Wanda",
         "type": "connection",
         "details": {
-          "district": "Barrio Centro",
+          "district": "Bo. Centro",
           "id": "20298",
-          "street": "Calle Los Helechos"
+          "street": "Los Helechos S/N"
         }
       },
       "geometry": {
         "type": "Point",
         "coordinates": [-54.561017, -25.971985]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Super Andy",
+        "type": "connection",
+        "details": {
+          "district": "Bo. Centro",
+          "id": "20099",
+          "street": "1 de Mayo S/N"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.562228, -25.972371]
       }
     }
   ]
