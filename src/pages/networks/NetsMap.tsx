@@ -150,6 +150,7 @@ export function NetsMap({
           getFilterCategory: [renderDataVisualization, cameraOptions.zoom],
         },
         onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
+          console.log(item);
           let dist: number | undefined;
           if (item.object?.geometry.type === "MultiLineString") {
             dist = getDistance(item.object?.geometry.coordinates);
@@ -209,22 +210,65 @@ export function NetsMap({
     return totalDistance;
   }
 
-  const getTooltip = useCallback(({ object }: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
+  const flipTooltip = (x, y, viewport, content) => {
+    // Create a temporary element to measure the content
+    const tempEl = document.createElement("div");
+    tempEl.innerHTML = content;
+    tempEl.style.position = "absolute";
+    tempEl.style.visibility = "hidden";
+    tempEl.style.display = "block";
+    tempEl.style.padding = "8px"; // Match your tooltip's padding
+    tempEl.style.maxWidth = "200px"; // Set appropriate max width
+    document.body.appendChild(tempEl);
+
+    // Measure the element
+    const tooltipWidth = tempEl.offsetWidth;
+    const tooltipHeight = tempEl.offsetHeight;
+
+    // Clean up
+    document.body.removeChild(tempEl);
+
+    // Calculate position
+    const { width, height } = viewport;
+    let newX = x;
+    let newY = y;
+
+    // Adjust horizontal position to keep tooltip in view
+    if (x + tooltipWidth + 10 > width) {
+      newX = x - tooltipWidth - 10;
+    } else {
+      newX = x + 10;
+    }
+
+    // Adjust vertical position to keep tooltip in view
+    if (y + tooltipHeight + 10 > height) {
+      newY = y - tooltipHeight - 10;
+    } else {
+      newY = y + 10;
+    }
+
+    return `translate(${newX}px, ${newY}px)`;
+  };
+  const getTooltip = useCallback(({ object, x, y, viewport }: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
     if (!object) return null;
 
     const objColor = selectedColors.find((c) => c.type === object.properties.type);
+    const htmlTooltip = `<div class="flex flex-col space-y-1">
+              <div class="flex flex-row space-x-2 items-center">
+                <div
+                  class="${object.geometry.type === "Point" ? "h-3 w-3 rounded-full" : "h-1 w-4"}"
+                  style="background:${objColor?.normal}"></div>
+                <span class="font-medium">${object.properties.name}</span>
+              </div>
+              <span class="font-medium text-xs"># ${object.properties.details.id}</span>
+              <span class="font-normal text-xs">${object.properties.details.street}</span>
+            </div>`;
+    console.log(htmlTooltip);
 
     return {
-      html: `<div class="flex flex-col space-y-1">
-                <div class="flex flex-row space-x-2 items-center">
-                  <div
-                    class="${object.geometry.type === "Point" ? "h-3 w-3 rounded-full" : "h-1 w-4"}"
-                    style="background:${objColor?.normal}"></div>
-                  <span class="font-medium">${object.properties.name}</span>
-                </div>
-                <span class="font-normal">${object.properties.details.street}</span>
-              </div>`,
+      html: htmlTooltip,
       style: {
+        transform: flipTooltip(x, y, viewport, htmlTooltip),
         backgroundColor: "#ffffff",
         border: "1px solid #e2e8f0",
         borderRadius: "8px",
