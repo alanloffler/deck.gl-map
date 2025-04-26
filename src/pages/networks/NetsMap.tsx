@@ -9,7 +9,7 @@ import {
 } from "geojson";
 import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
-import { GeoJsonLayer, type PickingInfo } from "deck.gl";
+import { GeoJsonLayer, TextLayer, type PickingInfo } from "deck.gl";
 import { distance } from "@turf/distance";
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from "react";
 // App immports
@@ -45,6 +45,9 @@ export function NetsMap({
   setSelectedIndex,
 }: IProps) {
   const [data, setData] = useState<FeatureCollection<Geometry, IGeoJsonData> | null>(null);
+  const [connText, setConnText] = useState<{ id: string; name: string; coordinates: number[] }[] | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     setData(testData as FeatureCollection<Geometry, IGeoJsonData>);
@@ -54,6 +57,17 @@ export function NetsMap({
     data?.features.forEach((feature, index) => {
       feature.properties.id = index;
     });
+
+    const filterFeatures = data?.features.filter((feature) => feature.properties.type === "connection") as Feature<
+      Point,
+      IGeoJsonData
+    >[];
+    const textFeatures = filterFeatures?.map((feat) => ({
+      id: feat.properties.details.id,
+      name: feat.properties.details.id,
+      coordinates: feat.geometry.coordinates,
+    }));
+    setConnText(textFeatures);
   }, [data?.features]);
 
   const handleCameraChange = useCallback(
@@ -93,7 +107,7 @@ export function NetsMap({
           return hexToRgb(colorType);
         },
         // Icon
-        pointType: "icon+text",
+        pointType: "icon",
         getIcon: (marker: Feature<Geometry, IGeoJsonData>) => {
           const iconPath: string = marker.properties.type === "marker" ? "map-pin.png" : "connection.svg";
           return {
@@ -120,10 +134,6 @@ export function NetsMap({
           return hexToRgb(colorType);
         }) as unknown as [number, number, number],
         getPosition: (marker: Feature<Point, IGeoJsonData>) => marker.geometry.coordinates,
-        // Text
-        getText: (t: Feature<Point, IGeoJsonData>) => t.properties.details.id,
-        getTextSize: 10,
-        getTextPixelOffset: [0, 20],
         // Selection
         pickable: true,
         autoHighlight: true,
@@ -157,6 +167,18 @@ export function NetsMap({
         extensions: [new DataFilterExtension({ categorySize: 1 })],
         getFilterCategory: (f: Feature<Geometry, IGeoJsonData>) => f.properties.type,
         filterCategories: renderDataVisualization,
+      }),
+      new TextLayer<{ id: string; name: string; coordinates: [number, number] }>({
+        id: "connections-id-layer",
+        data: connText,
+        visible: cameraOptions.zoom >= 18 && renderDataVisualization.includes("connection"),
+        getText: (f) => f.id,
+        getPosition: (f) => f.coordinates,
+        getSize: 11,
+        fontFamily: "InterVariable",
+        fontWeight: 500,
+        getPixelOffset: [0, cameraOptions.zoom - 2],
+        pickable: false,
       }),
     ];
   }
