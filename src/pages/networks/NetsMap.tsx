@@ -119,7 +119,7 @@ export function NetsMap({
             mask: true,
           };
         },
-        getIconSize: (item) => {
+        getIconSize: (item: Feature<Geometry, IGeoJsonData>) => {
           const size: number = 1.73 * Math.pow(1.18, cameraOptions.zoom);
           if (item.properties.type === "connection") return size / 2.5;
           return size;
@@ -210,7 +210,7 @@ export function NetsMap({
     return totalDistance;
   }
 
-  function flipTooltip(x: number, y: number, viewport: Viewport, content: string): string {
+  function flipTooltip(x: number, y: number, viewport: Viewport, content: string, objType: string): string {
     const tempEl = document.createElement("div");
     tempEl.innerHTML = content;
     tempEl.style.position = "absolute";
@@ -226,10 +226,12 @@ export function NetsMap({
     const { width, height } = viewport;
     let newX = x;
     let newY = y;
-
-    if (x + tooltipWidth > width) newX = x - tooltipWidth;
+    let extraPixels = 0;
+    if (objType === "marker") extraPixels = 12;
+    if (objType === "connection") extraPixels = 0;
+    if (x + tooltipWidth > width) newX = x - tooltipWidth - extraPixels;
     else newX = x;
-    if (y + tooltipHeight > height) newY = y - tooltipHeight;
+    if (y + tooltipHeight > height) newY = y - tooltipHeight - extraPixels;
     else newY = y;
 
     return `translate(${newX}px, ${newY}px)`;
@@ -253,7 +255,7 @@ export function NetsMap({
     return {
       html: htmlTooltip,
       style: {
-        transform: flipTooltip(x, y, viewport!, htmlTooltip),
+        transform: flipTooltip(x, y, viewport!, htmlTooltip, object.properties.type),
         backgroundColor: "#ffffff",
         border: "1px solid #e2e8f0",
         borderRadius: "8px",
