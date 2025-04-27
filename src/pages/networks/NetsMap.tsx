@@ -9,7 +9,7 @@ import {
 } from "geojson";
 import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
-import { GeoJsonLayer, TextLayer, type PickingInfo } from "deck.gl";
+import { GeoJsonLayer, TextLayer, Viewport, type PickingInfo } from "deck.gl";
 import { distance } from "@turf/distance";
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from "react";
 // App immports
@@ -210,45 +210,31 @@ export function NetsMap({
     return totalDistance;
   }
 
-  const flipTooltip = (x, y, viewport, content) => {
-    // Create a temporary element to measure the content
+  function flipTooltip(x: number, y: number, viewport: Viewport, content: string): string {
     const tempEl = document.createElement("div");
     tempEl.innerHTML = content;
     tempEl.style.position = "absolute";
     tempEl.style.visibility = "hidden";
     tempEl.style.display = "block";
-    tempEl.style.padding = "8px"; // Match your tooltip's padding
-    tempEl.style.maxWidth = "200px"; // Set appropriate max width
     document.body.appendChild(tempEl);
 
-    // Measure the element
     const tooltipWidth = tempEl.offsetWidth;
     const tooltipHeight = tempEl.offsetHeight;
 
-    // Clean up
     document.body.removeChild(tempEl);
 
-    // Calculate position
     const { width, height } = viewport;
     let newX = x;
     let newY = y;
 
-    // Adjust horizontal position to keep tooltip in view
-    if (x + tooltipWidth + 10 > width) {
-      newX = x - tooltipWidth - 10;
-    } else {
-      newX = x + 10;
-    }
-
-    // Adjust vertical position to keep tooltip in view
-    if (y + tooltipHeight + 10 > height) {
-      newY = y - tooltipHeight - 10;
-    } else {
-      newY = y + 10;
-    }
+    if (x + tooltipWidth > width) newX = x - tooltipWidth;
+    else newX = x;
+    if (y + tooltipHeight > height) newY = y - tooltipHeight;
+    else newY = y;
 
     return `translate(${newX}px, ${newY}px)`;
-  };
+  }
+
   const getTooltip = useCallback(({ object, x, y, viewport }: PickingInfo<Feature<Geometry, IGeoJsonData>>) => {
     if (!object) return null;
 
@@ -263,12 +249,11 @@ export function NetsMap({
               <span class="font-medium text-xs"># ${object.properties.details.id}</span>
               <span class="font-normal text-xs">${object.properties.details.street}</span>
             </div>`;
-    console.log(htmlTooltip);
 
     return {
       html: htmlTooltip,
       style: {
-        transform: flipTooltip(x, y, viewport, htmlTooltip),
+        transform: flipTooltip(x, y, viewport!, htmlTooltip),
         backgroundColor: "#ffffff",
         border: "1px solid #e2e8f0",
         borderRadius: "8px",
