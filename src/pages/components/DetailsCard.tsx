@@ -9,7 +9,7 @@ import { IDetails } from "@/interfaces/details.interface";
 // Interface
 interface IProps {
   contentVisible: boolean;
-  details: IDetails;
+  details: IDetails | null;
   handleClose: () => void;
   isClosing: boolean;
   isPanelVisible: boolean;
