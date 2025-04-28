@@ -15,6 +15,14 @@ interface IProps {
   isPanelVisible: boolean;
 }
 
+enum ETypes {
+  "main-network" = "Red principal",
+  "secondary-network" = "Red secundaria",
+  connection = "Conexión",
+  marker = "Marcador",
+  network = "Red",
+}
+
 export function DetailsCard({ contentVisible, details, handleClose, isClosing, isPanelVisible }: IProps) {
   if (isPanelVisible)
     return (
@@ -51,7 +59,8 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
             {details && (
               <section className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-3 text-base font-semibold">
-                  <span>{details.name}</span>
+                  {/* <span>{details.name}</span> */}
+                  <span>{details.type && (ETypes[details.type] as unknown as keyof typeof ETypes)}</span>
                   <span
                     className={cn(
                       details.details?.id?.charAt(0).toUpperCase() !== "R"
