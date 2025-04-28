@@ -135,6 +135,14 @@ export function NetsMap({
           });
 
           setSelectedIndex(item.index);
+
+          setCameraOptions((prev) => ({
+            ...prev,
+            center: {
+              lng: item.object?.geometry.coordinates[0],
+              lat: item.object?.geometry.coordinates[1],
+            } as unknown as { lng: number; lat: number },
+          }));
         },
         // Filters
         extensions: [new DataFilterExtension({ categorySize: 1 })],
