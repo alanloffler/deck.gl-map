@@ -120,11 +120,12 @@ export function NetsMap({
           getFilterCategory: [renderDataVisualization, cameraOptions.zoom],
         },
         onClick: (item: PickingInfo<Feature<MultiLineString | Point, IGeoJsonData>>) => {
-          console.log(item);
           let dist: number | undefined;
+
           if (item.object?.geometry.type === "MultiLineString") {
             dist = getDistance(item.object?.geometry.coordinates, "meters");
           }
+
           setDetails({
             color: selectedColors.find((c) => c.type === item.object?.properties.type)?.normal,
             details: item.object?.properties.details,
@@ -132,6 +133,7 @@ export function NetsMap({
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
+
           setSelectedIndex(item.index);
         },
         // Filters
