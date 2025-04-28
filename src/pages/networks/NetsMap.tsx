@@ -1,15 +1,19 @@
 // Packages imports
-import { type Feature, type FeatureCollection, type Geometry, type MultiLineString, type Point } from "geojson";
 import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
 import { GeoJsonLayer, TextLayer, type PickingInfo } from "deck.gl";
-import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useCallback } from "react";
+import { type Feature, type Geometry, type MultiLineString, type Point } from "geojson";
 // App immports
+import selectedColors from "@/config/geojson-colors.config.json";
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import { DeckGLOverlay } from "../components/DeckGLOverlay";
+import { DeckGLOverlay } from "@/pages/components/DeckGLOverlay";
 import { hexToRgb } from "@/lib/helpers";
+import { useDistance } from "@/hooks/useDistance";
+import { useMapData } from "@/hooks/useMapData";
+import { useTooltip } from "@/hooks/useTooltip";
 // Interface
 interface IProps {
   cameraOptions: ICameraOptions;
@@ -21,12 +25,6 @@ interface IProps {
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
   setSelectedIndex: Dispatch<SetStateAction<number | null>>;
 }
-// GeoJSON data
-import testData from "../../data/test-data.json";
-// Config
-import selectedColors from "@/config/geojson-colors.config.json";
-import { useDistance } from "@/hooks/useDistance";
-import { useTooltip } from "@/hooks/useTooltip";
 
 export function NetsMap({
   cameraOptions,
@@ -38,33 +36,9 @@ export function NetsMap({
   setDetails,
   setSelectedIndex,
 }: IProps) {
-  const [data, setData] = useState<FeatureCollection<Geometry, IGeoJsonData> | null>(null);
-  const [connText, setConnText] = useState<{ id: string; name: string; coordinates: number[] }[] | undefined>(
-    undefined,
-  );
+  const { geoJsonData, textData } = useMapData();
   const { getDistance } = useDistance();
   const { getTooltip } = useTooltip();
-
-  useEffect(() => {
-    setData(testData as FeatureCollection<Geometry, IGeoJsonData>);
-  }, []);
-
-  useEffect(() => {
-    data?.features.forEach((feature, index) => {
-      feature.properties.id = index;
-    });
-
-    const filterFeatures = data?.features.filter((feature) => feature.properties.type === "connection") as Feature<
-      Point,
-      IGeoJsonData
-    >[];
-    const textFeatures = filterFeatures?.map((feat) => ({
-      id: feat.properties.details.id,
-      name: feat.properties.details.id,
-      coordinates: feat.geometry.coordinates,
-    }));
-    setConnText(textFeatures);
-  }, [data?.features]);
 
   const handleCameraChange = useCallback(
     (ev: MapCameraChangedEvent) => {
@@ -77,7 +51,7 @@ export function NetsMap({
   );
 
   function getDeckGlLayers() {
-    if (!data) return [];
+    if (!geoJsonData) return [];
 
     const isConnectionZoomVisible: boolean = cameraOptions.zoom >= 17;
     const effectiveDataVisualization: string[] = [...dataVisualization];
@@ -88,7 +62,7 @@ export function NetsMap({
     return [
       new GeoJsonLayer({
         id: "networks",
-        data,
+        data: geoJsonData,
         visible: true,
         filled: true,
         // Lines
@@ -167,7 +141,7 @@ export function NetsMap({
       }),
       new TextLayer<{ id: string; name: string; coordinates: [number, number] }>({
         id: "connections-id-layer",
-        data: connText,
+        data: textData,
         visible: cameraOptions.zoom >= 18 && renderDataVisualization.includes("connection"),
         getText: (f) => f.id,
         getPosition: (f) => f.coordinates,
