@@ -139,8 +139,8 @@ export function NetsMap({
           setCameraOptions((prev) => ({
             ...prev,
             center: {
-              lng: item.object?.geometry.coordinates[0],
-              lat: item.object?.geometry.coordinates[1],
+              lng: item.coordinate && item.coordinate[0],
+              lat: item.coordinate && item.coordinate[1],
             } as unknown as { lng: number; lat: number },
           }));
         },
