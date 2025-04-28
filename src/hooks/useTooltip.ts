@@ -4,6 +4,15 @@ import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import { Viewport, type PickingInfo } from "deck.gl";
 import { useCallback } from "react";
 
+const style = {
+  backgroundColor: "#ffffff",
+  border: "1px solid #e2e8f0",
+  borderRadius: "8px",
+  boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+  color: "#000000",
+  fontSize: "13px",
+};
+
 export function useTooltip() {
   function flipTooltip(x: number, y: number, viewport: Viewport, content: string, objType: string): string {
     const tempEl = document.createElement("div");
@@ -21,9 +30,11 @@ export function useTooltip() {
     const { width, height } = viewport;
     let newX = x;
     let newY = y;
+
     let extraPixels = 0;
     if (objType === "marker") extraPixels = 12;
     if (objType === "connection") extraPixels = 0;
+
     if (x + tooltipWidth > width) newX = x - tooltipWidth - extraPixels;
     else newX = x;
     if (y + tooltipHeight > height) newY = y - tooltipHeight - extraPixels;
@@ -50,13 +61,8 @@ export function useTooltip() {
     return {
       html: htmlTooltip,
       style: {
+        ...style,
         transform: flipTooltip(x, y, viewport!, htmlTooltip, object.properties.type),
-        backgroundColor: "#ffffff",
-        border: "1px solid #e2e8f0",
-        borderRadius: "8px",
-        boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-        color: "#000000",
-        fontSize: "13px",
       },
     };
   }, []);
