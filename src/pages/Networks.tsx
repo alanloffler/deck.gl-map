@@ -1,9 +1,10 @@
 // Components
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // App components
-import { GeoJsonControls } from "./networks/GeoJsonControls";
-import { MapControls } from "./components/MapControls";
-import { NetsMap } from "./networks/NetsMap";
+import { DetailsCard } from "@/pages/components/DetailsCard";
+import { GeoJsonControls } from "@/pages/networks/GeoJsonControls";
+import { MapControls } from "@/pages/components/MapControls";
+import { NetsMap } from "@/pages/networks/NetsMap";
 // Packages imports
 import { useEffect, useState } from "react";
 // App imports
@@ -11,7 +12,6 @@ import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import { cameraConfig } from "@/config/camera.config";
 import { cn } from "@/lib/utils";
-import { DetailsCard } from "./components/DetailsCard";
 
 export default function Networks() {
   const local: string | null = localStorage.getItem("dataVis");
