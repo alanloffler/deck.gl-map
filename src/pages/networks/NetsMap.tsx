@@ -1,16 +1,8 @@
 // Packages imports
-import {
-  type Feature,
-  type FeatureCollection,
-  type Geometry,
-  type MultiLineString,
-  type Point,
-  type Position,
-} from "geojson";
+import { type Feature, type FeatureCollection, type Geometry, type MultiLineString, type Point } from "geojson";
 import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
 import { GeoJsonLayer, TextLayer, Viewport, type PickingInfo } from "deck.gl";
-import { distance } from "@turf/distance";
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from "react";
 // App immports
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
@@ -33,6 +25,7 @@ interface IProps {
 import testData from "../../data/test-data.json";
 // Config
 import selectedColors from "../../config/geojson-colors.config.json";
+import { useDistance } from "@/hooks/useDistance";
 
 export function NetsMap({
   cameraOptions,
@@ -48,6 +41,7 @@ export function NetsMap({
   const [connText, setConnText] = useState<{ id: string; name: string; coordinates: number[] }[] | undefined>(
     undefined,
   );
+  const getDistance = useDistance();
 
   useEffect(() => {
     setData(testData as FeatureCollection<Geometry, IGeoJsonData>);
@@ -153,12 +147,12 @@ export function NetsMap({
           console.log(item);
           let dist: number | undefined;
           if (item.object?.geometry.type === "MultiLineString") {
-            dist = getDistance(item.object?.geometry.coordinates);
+            dist = getDistance(item.object?.geometry.coordinates, "meters");
           }
           setDetails({
             color: selectedColors.find((c) => c.type === item.object?.properties.type)?.normal,
             details: item.object?.properties.details,
-            distance: dist && dist * 1000,
+            distance: dist,
             name: item.object?.properties.name,
             type: item.object?.properties.type,
           });
@@ -182,32 +176,6 @@ export function NetsMap({
         pickable: false,
       }),
     ];
-  }
-
-  function getDistance(multiLineArray: GeoJSON.Position[][] | undefined): number | undefined {
-    if (!multiLineArray) return undefined;
-
-    const distancesByLineString: number[] = [];
-
-    for (const lineArray of multiLineArray) {
-      if (lineArray.length < 2) {
-        distancesByLineString.push(0);
-        continue;
-      }
-
-      const firstPoint: Position = lineArray[0];
-      const lastPoint: Position = lineArray[lineArray.length - 1];
-
-      const directDistance: number = distance(firstPoint, lastPoint, {
-        units: "kilometers",
-      });
-
-      distancesByLineString.push(directDistance);
-    }
-
-    const totalDistance: number = distancesByLineString.reduce((sum, distance) => sum + distance, 0);
-
-    return totalDistance;
   }
 
   function flipTooltip(x: number, y: number, viewport: Viewport, content: string, objType: string): string {
