@@ -4,7 +4,7 @@ import { distance } from "@turf/distance";
 import { useCallback } from "react";
 
 export const useDistance = () => {
-  const calculateDistance = useCallback(
+  const getDistance = useCallback(
     (multiLineArray: GeoJSON.Position[][] | undefined, units: Units): number | undefined => {
       if (!multiLineArray) return undefined;
 
@@ -32,5 +32,5 @@ export const useDistance = () => {
     [],
   );
 
-  return calculateDistance;
+  return { getDistance };
 };
