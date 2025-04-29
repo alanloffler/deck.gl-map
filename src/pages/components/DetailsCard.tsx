@@ -49,7 +49,7 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
         <CardContent>
           <section
             className={cn(
-              "flex flex-col transition-opacity duration-300 ease-in-out",
+              "flex flex-col space-y-12 transition-opacity duration-300 ease-in-out md:space-y-0",
               contentVisible ? "opacity-100" : "opacity-0",
             )}
           >
@@ -97,7 +97,7 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                       {`${new Intl.NumberFormat("es-AR", {
                         maximumFractionDigits: 2,
                         minimumFractionDigits: 2,
-                      }).format(details.distance)} metros`}
+                      }).format(details.distance)} mts.`}
                     </span>
                   </div>
                 )}
@@ -113,7 +113,7 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                 )}
               </section>
             )}
-            <section className="fixed bottom-5">
+            <section className="bottom-5 flex md:fixed">
               <Statistics />
             </section>
           </section>
