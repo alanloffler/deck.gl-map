@@ -3,7 +3,10 @@ import { X } from "lucide-react";
 // Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// App components
+import { MapPinCustom } from "@/assets/icons/1x/map-pin";
 // App imports
+import color from "@/config/geojson-colors.config.json";
 import type { IDetails } from "@/interfaces/details.interface";
 import { cn } from "@/lib/utils";
 // Interface
@@ -63,7 +66,7 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                   <span className="text-xsm font-semibold text-slate-500">
                     <small>NOMBRE:</small>
                   </span>
-                  <span className="text-xsm"> {details.details?.title}</span>
+                  <span className="text-xsm font-semibold"> {details.details?.title}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xsm font-semibold text-slate-500">
@@ -86,15 +89,24 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                 {details.distance && (
                   <div className="flex items-center space-x-2">
                     <span className="text-xsm font-semibold text-slate-500">
-                      <small>DISTANCIA:</small>
+                      <small>LONGITUD:</small>
                     </span>
                     <span className="text-xsm">
-                      {new Intl.NumberFormat("es-AR", {
+                      {`${new Intl.NumberFormat("es-AR", {
                         maximumFractionDigits: 2,
                         minimumFractionDigits: 2,
-                      }).format(details.distance)}{" "}
-                      metros de longitud
+                      }).format(details.distance)} metros`}
                     </span>
+                  </div>
+                )}
+                {details.coordinates && (
+                  <div className="-ml-1 flex items-center space-x-2">
+                    <MapPinCustom
+                      width={18}
+                      height={18}
+                      fill={color.find((c) => c.type === "marker")?.normal ?? "black"}
+                    />
+                    <span className="text-xs font-light text-slate-600">{`[${details.coordinates[0]}, ${details.coordinates[1]}]`}</span>
                   </div>
                 )}
               </section>
