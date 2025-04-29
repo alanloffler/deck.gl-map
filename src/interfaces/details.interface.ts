@@ -1,4 +1,5 @@
-import { Position } from "deck.gl";
+import type { Position } from "deck.gl";
+import { EType } from "@/enums/type.enum";
 
 export interface IDetails {
   color?: string;
@@ -11,5 +12,5 @@ export interface IDetails {
     street?: string;
     title?: string;
   };
-  type?: "connection" | "marker" | "network" | "main-network" | "secondary-network";
+  type?: EType;
 }
