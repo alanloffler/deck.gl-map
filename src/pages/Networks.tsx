@@ -59,7 +59,7 @@ export default function Networks() {
   }, [dataVisualization]);
 
   return (
-    <main className="flex flex-col gap-6 overflow-x-hidden md:flex-row">
+    <main className="flex w-full max-w-[1180px] flex-col gap-6 overflow-x-hidden md:flex-row">
       <Card
         className={cn(
           "w-full transition-all duration-300 ease-in-out",
