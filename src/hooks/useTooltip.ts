@@ -10,7 +10,7 @@ const style = {
   borderRadius: "8px",
   boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
   color: "#000000",
-  fontSize: "13px",
+  fontSize: "12px",
 };
 
 export function useTooltip() {
@@ -47,15 +47,15 @@ export function useTooltip() {
     if (!object) return null;
 
     const objColor = selectedColors.find((c) => c.type === object.properties.type);
-    const htmlTooltip = `<div class="flex flex-col space-y-1">
-              <div class="flex flex-row space-x-2 items-center">
+    const htmlTooltip = `<div class="flex flex-col space-y-0.5">
+              <div class="flex flex-row space-x-2 items-center pb-1">
                 <div
                   class="${object.geometry.type === "Point" ? "h-3 w-3 rounded-full" : "h-1 w-4"}"
                   style="background:${objColor?.normal}"></div>
-                <span class="font-medium">${object.properties.name}</span>
+                <span class="font-medium text-xsm">${object.properties.name}</span>
               </div>
-              <span class="font-medium text-xs"># ${object.properties.details.id}</span>
-              <span class="font-normal text-xs">${object.properties.details.street}</span>
+              <span class="font-medium">${object.properties.details.id}</span>
+              <span class="font-normal">${object.properties.details.title}</span>
             </div>`;
 
     return {
