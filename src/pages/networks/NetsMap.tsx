@@ -61,7 +61,7 @@ export function NetsMap({
 
     return [
       new GeoJsonLayer({
-        id: "networks",
+        id: "networks-layer",
         data: geoJsonData,
         visible: true,
         filled: true,
