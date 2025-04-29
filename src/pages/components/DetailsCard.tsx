@@ -1,5 +1,5 @@
 // Icons
-import { Milestone, Ruler, X } from "lucide-react";
+import { Milestone, Ruler, Tag, X } from "lucide-react";
 // Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -70,31 +70,39 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                     style={{ background: details.color }}
                   ></span>
                 </div>
-                <div className="flex items-center space-x-2 text-sm">
-                  <span className="ml-1 w-fit font-medium">
-                    {details.type === "connection"
-                      ? "# Conexión"
-                      : details.type === "marker"
-                        ? "# Item"
-                        : details.type === "network"
-                          ? "# Red"
-                          : "#"}
+                <div className="flex items-center space-x-2">
+                  <span className="text-xsm font-semibold text-slate-500">
+                    <small># ID:</small>
                   </span>
-                  <span>{details.details?.id}</span>
+                  <span className="text-xsm">{details.details?.id}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Milestone size={17} strokeWidth={2} />
-                  <div className="text-xsm flex flex-col">
-                    <span>{details.details?.street},</span>
-                    <span>{details.details?.district}</span>
-                  </div>
+                  <span className="text-xsm font-semibold text-slate-500">
+                    <small>NOMBRE:</small>
+                  </span>
+                  <span className="text-xsm"> {details.details?.title}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xsm font-semibold text-slate-500">
+                    <small>CALLE:</small>
+                  </span>
+                  <span className="text-xsm">{details.details?.street}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xsm font-semibold text-slate-500">
+                    <small>BARRIO:</small>
+                  </span>
+                  <span className="text-xsm">{details.details?.district}</span>
                 </div>
                 {details.distance && (
                   <div className="flex items-center space-x-2">
-                    <Ruler size={17} strokeWidth={2} />
+                    <span className="text-xsm font-semibold text-slate-500">
+                      <small>DISTANCIA:</small>
+                    </span>
                     <span className="text-xsm">
                       {new Intl.NumberFormat("es-AR", {
                         maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
                       }).format(details.distance)}{" "}
                       metros de longitud
                     </span>
