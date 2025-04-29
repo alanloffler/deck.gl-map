@@ -9,7 +9,7 @@ import selectedColors from "@/config/geojson-colors.config.json";
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import { DeckGLOverlay } from "../components/DeckGLOverlay";
+import { DeckGlOverlay } from "@/pages/components/DeckGlOverlay";
 import { EType } from "@/enums/type.enum";
 import { hexToRgb } from "@/lib/helpers";
 import { useDistance } from "@/hooks/useDistance";
@@ -186,7 +186,7 @@ export function NetsMap({
           tilt={0}
           {...cameraOptions}
         >
-          <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
+          <DeckGlOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
         </Map>
       </APIProvider>
     </>
