@@ -10,6 +10,7 @@ import color from "@/config/geojson-colors.config.json";
 import type { IDetails } from "@/interfaces/details.interface";
 import { EType } from "@/enums/type.enum";
 import { cn } from "@/lib/utils";
+import { Statistics } from "../networks/Statistics";
 // Interface
 interface IProps {
   contentVisible: boolean;
@@ -112,6 +113,9 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                 )}
               </section>
             )}
+            <section className="fixed bottom-5">
+              <Statistics />
+            </section>
           </section>
         </CardContent>
       </Card>
