@@ -9,6 +9,7 @@ import { MapPinCustom } from "@/assets/icons/1x/map-pin";
 import type { Dispatch, SetStateAction } from "react";
 // App imports
 import { cn } from "@/lib/utils";
+import { EType } from "@/enums/type.enum";
 // Interface
 interface IProps {
   dataVisualization: string[];
@@ -26,14 +27,14 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
         <Checkbox
           className="bg-card"
           id="main-network"
-          defaultChecked={dataVisualization.some((item) => item === "main-network")}
+          defaultChecked={dataVisualization.some((item) => item === EType.MainNetwork)}
           onCheckedChange={(event) => {
             if (event === true) {
-              if (!dataVisualization.includes("main-network")) {
-                setDataVisualization((prev) => [...prev, "main-network"]);
+              if (!dataVisualization.includes(EType.MainNetwork)) {
+                setDataVisualization((prev) => [...prev, EType.MainNetwork]);
               }
             } else {
-              const filtered = dataVisualization.filter((item) => item !== "main-network");
+              const filtered = dataVisualization.filter((item) => item !== EType.MainNetwork);
               setDataVisualization(filtered);
             }
           }}
@@ -50,14 +51,14 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
         <Checkbox
           className="bg-card"
           id="secondary-network"
-          defaultChecked={dataVisualization.some((item) => item === "secondary-network")}
+          defaultChecked={dataVisualization.some((item) => item === EType.SecondaryNetwork)}
           onCheckedChange={(event) => {
             if (event === true) {
-              if (!dataVisualization.includes("secondary-network")) {
-                setDataVisualization((prev) => [...prev, "secondary-network"]);
+              if (!dataVisualization.includes(EType.SecondaryNetwork)) {
+                setDataVisualization((prev) => [...prev, EType.SecondaryNetwork]);
               }
             } else {
-              const filtered = dataVisualization.filter((item) => item !== "secondary-network");
+              const filtered = dataVisualization.filter((item) => item !== EType.SecondaryNetwork);
               setDataVisualization(filtered);
             }
           }}
@@ -74,14 +75,14 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
         <Checkbox
           className="bg-card"
           id="markers"
-          defaultChecked={dataVisualization.some((item) => item === "marker")}
+          defaultChecked={dataVisualization.some((item) => item === EType.Marker)}
           onCheckedChange={(event) => {
             if (event === true) {
-              if (!dataVisualization.includes("marker")) {
-                setDataVisualization((prev) => [...prev, "marker"]);
+              if (!dataVisualization.includes(EType.Marker)) {
+                setDataVisualization((prev) => [...prev, EType.Marker]);
               }
             } else {
-              const filtered = dataVisualization.filter((item) => item !== "marker");
+              const filtered = dataVisualization.filter((item) => item !== EType.Marker);
               setDataVisualization(filtered);
             }
           }}
@@ -98,14 +99,14 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
         <Checkbox
           className="bg-card"
           id="connections"
-          defaultChecked={dataVisualization.some((item) => item === "connection")}
+          defaultChecked={dataVisualization.some((item) => item === EType.Connection)}
           onCheckedChange={(event) => {
             if (event === true) {
-              if (!dataVisualization.includes("connection")) {
-                setDataVisualization((prev) => [...prev, "connection"]);
+              if (!dataVisualization.includes(EType.Connection)) {
+                setDataVisualization((prev) => [...prev, EType.Connection]);
               }
             } else {
-              const filtered = dataVisualization.filter((item) => item !== "connection");
+              const filtered = dataVisualization.filter((item) => item !== EType.Connection);
               setDataVisualization(filtered);
             }
           }}
