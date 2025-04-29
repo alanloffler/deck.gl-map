@@ -8,6 +8,7 @@ import { MapPinCustom } from "@/assets/icons/1x/map-pin";
 // App imports
 import color from "@/config/geojson-colors.config.json";
 import type { IDetails } from "@/interfaces/details.interface";
+import { EType } from "@/enums/type.enum";
 import { cn } from "@/lib/utils";
 // Interface
 interface IProps {
@@ -104,7 +105,7 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                     <MapPinCustom
                       width={18}
                       height={18}
-                      fill={color.find((c) => c.type === "marker")?.normal ?? "black"}
+                      fill={color.find((c) => c.type === EType.Marker)?.normal ?? "black"}
                     />
                     <span className="text-xs font-light text-slate-600">{`[${details.coordinates[0]}, ${details.coordinates[1]}]`}</span>
                   </div>
