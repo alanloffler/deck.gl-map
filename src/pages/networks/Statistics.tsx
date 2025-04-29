@@ -23,7 +23,7 @@ export function Statistics() {
           strokeWidth={2}
           style={{ stroke: colors.find((c) => c.type === EType.MainNetwork)?.normal }}
         />
-        <span className="leading-0 text-slate-500">Redes primarias:</span>
+        <span className="leading-0 text-slate-500 md:hidden lg:block">Redes primarias:</span>
         {networks?.total && (
           <span className="text-xs leading-0 font-light">
             {`${new Intl.NumberFormat("es-AR", {
@@ -39,7 +39,7 @@ export function Statistics() {
           strokeWidth={2}
           style={{ stroke: colors.find((c) => c.type === EType.SecondaryNetwork)?.normal }}
         />
-        <span className="leading-0 text-slate-500">Redes secundarias:</span>
+        <span className="leading-0 text-slate-500 md:hidden lg:block">Redes secundarias:</span>
         {networks?.total && (
           <span className="text-xs leading-0 font-light">
             {`${new Intl.NumberFormat("es-AR", {
@@ -51,7 +51,7 @@ export function Statistics() {
       </section>
       <section className="text-xsm flex items-center space-x-2">
         <Circle size={15} strokeWidth={0} style={{ fill: colors.find((c) => c.type === EType.Connection)?.normal }} />
-        <span className="leading-0 text-slate-500">Conexiones:</span>
+        <span className="leading-0 text-slate-500 md:hidden lg:block">Conexiones:</span>
         <span className="text-xs leading-0 font-light">{connections}</span>
       </section>
     </main>
