@@ -1,5 +1,7 @@
 // Icons
 import { Circle, Spline } from "lucide-react";
+// Components
+import { Label } from "@/components/ui/label";
 // App imports
 import colors from "@/config/geojson-colors.config.json";
 import { EType } from "@/enums/type.enum";
@@ -14,6 +16,7 @@ export function Statistics() {
 
   return (
     <main className="flex flex-col space-y-2">
+      <Label>Totales</Label>
       <section className="text-xsm flex items-center space-x-2">
         <Spline
           size={15}
@@ -47,7 +50,7 @@ export function Statistics() {
         )}
       </section>
       <section className="text-xsm flex items-center space-x-2">
-        <Circle size={15} className="fill-[#fbbf24] stroke-0" />
+        <Circle size={15} strokeWidth={0} style={{ fill: colors.find((c) => c.type === EType.Connection)?.normal }} />
         <span className="leading-0 text-slate-500">Conexiones:</span>
         <span className="text-xs leading-0 font-light">{connections}</span>
       </section>
