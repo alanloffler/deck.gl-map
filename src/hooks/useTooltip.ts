@@ -1,9 +1,11 @@
-import selectedColors from "@/config/geojson-colors.config.json";
+// Package imports
 import type { Feature, Geometry } from "geojson";
-import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import { Viewport, type PickingInfo } from "deck.gl";
 import { useCallback } from "react";
-
+// App imports
+import selectedColors from "@/config/geojson-colors.config.json";
+import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
+// Styles
 const style = {
   backgroundColor: "#ffffff",
   border: "1px solid #e2e8f0",
