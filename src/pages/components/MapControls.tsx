@@ -3,18 +3,12 @@ import { Locate, Map } from "lucide-react";
 // Components
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 // Package imports
+import { type Dispatch, type SetStateAction } from "react";
+// App imports
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import { cameraConfig } from "@/config/camera.config";
-import { type Dispatch, type SetStateAction } from "react";
 // Interface
 interface IProps {
   colorScheme: string;
@@ -24,13 +18,7 @@ interface IProps {
   setMapTypeId: Dispatch<SetStateAction<string>>;
 }
 
-export function MapControls({
-  colorScheme,
-  mapTypeId,
-  setCameraOptions,
-  setColorScheme,
-  setMapTypeId,
-}: IProps) {
+export function MapControls({ colorScheme, mapTypeId, setCameraOptions, setColorScheme, setMapTypeId }: IProps) {
   function handleColorScheme(value: string): void {
     setColorScheme(value);
     localStorage.setItem("colorScheme", value);
