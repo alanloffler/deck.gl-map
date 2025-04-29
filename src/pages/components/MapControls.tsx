@@ -41,7 +41,7 @@ export function MapControls({ colorScheme, mapTypeId, setCameraOptions, setColor
       </section>
       <section className="flex flex-row items-center space-x-3">
         <section className="flex items-center space-x-3">
-          <Label className="font-normal text-slate-500">Tema</Label>
+          <Label className="!text-xsm font-normal text-slate-500">Tema</Label>
           <Select defaultValue={colorScheme} onValueChange={handleColorScheme}>
             <SelectTrigger className="bg-card w-fit" size="sm">
               <SelectValue placeholder="Tema" />
@@ -59,7 +59,7 @@ export function MapControls({ colorScheme, mapTypeId, setCameraOptions, setColor
           </Select>
         </section>
         <section className="flex items-center space-x-3">
-          <Label className="font-normal text-slate-500">Tipo</Label>
+          <Label className="!text-xsm font-normal text-slate-500">Tipo</Label>
           <Select defaultValue={mapTypeId} onValueChange={handleMapTypeId}>
             <SelectTrigger className="bg-card w-fit" size="sm">
               <SelectValue />
