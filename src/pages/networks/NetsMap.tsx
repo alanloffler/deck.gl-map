@@ -173,7 +173,7 @@ export function NetsMap({
     <>
       <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
         <Map
-          className="relative h-[450px] w-full"
+          className="relative h-[450px] w-full 2xl:h-[650px]"
           clickableIcons={true}
           colorScheme={colorScheme as ColorScheme}
           disableDefaultUI={true}
