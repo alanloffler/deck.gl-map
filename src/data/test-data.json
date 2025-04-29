@@ -10,7 +10,7 @@
           "id": "RP/001",
           "title": "República Argentina",
           "street": "Av. República Argentina S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -68,7 +68,7 @@
           "id": "RP/002",
           "title": "San Martín",
           "street": "Av. San Martín S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -131,7 +131,7 @@
           "id": "RP/003",
           "title": "Juan Domingo Perón",
           "street": "Av. Juan Domingo Perón S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -172,7 +172,7 @@
           "id": "RS/001",
           "title": "9 de Julio",
           "street": "9 de Julio S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -211,7 +211,7 @@
           "id": "RS/002",
           "title": "Los Rosales",
           "street": "Los Rosales S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -241,7 +241,7 @@
           "id": "M/001",
           "title": "Cooperativa de Wanda",
           "street": "Av. República Argentina S/N",
-          "district": "Bo. Centro",
+          "district": "Centro",
           "icon": "map-pin.png"
         }
       },
@@ -260,7 +260,7 @@
           "id": "M/002",
           "title": "Bomba 01",
           "street": "Los Yerbales S/N",
-          "district": "Bo. APSA Sur",
+          "district": "APSA Sur",
           "icon": "map-pin.png"
         }
       },
@@ -278,8 +278,8 @@
         "details": {
           "id": "M/003",
           "title": "Bomba 02",
-          "district": "Bo. San Martín",
           "street": "Ruta Prov. Nº 19",
+          "district": "San Martín",
           "icon": "map-pin.png"
         }
       },
@@ -298,7 +298,7 @@
           "id": "M/004",
           "title": "Planta potabilizadora",
           "street": "Juan XXIII S/N",
-          "district": "Bo. Cooperativa",
+          "district": "Cooperativa",
           "icon": "map-pin.png"
         }
       },
@@ -316,7 +316,7 @@
           "id": "10347",
           "title": "Sanatorio Rolón Vargas",
           "street": "9 de Julio S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -333,7 +333,7 @@
           "id": "20311",
           "title": "Comisaria de Wanda",
           "street": "Los Helechos S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -350,7 +350,7 @@
           "id": "20298",
           "title": "Municipalidad de Wanda",
           "street": "Los Helechos S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
@@ -367,7 +367,7 @@
           "id": "20099",
           "title": "Super Andy",
           "street": "1 de Mayo S/N",
-          "district": "Bo. Centro"
+          "district": "Centro"
         }
       },
       "geometry": {
