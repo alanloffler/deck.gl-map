@@ -1,9 +1,10 @@
+// Packages imports
 import type { Feature, FeatureCollection, Geometry, Point } from "geojson";
-import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import { useEffect, useState } from "react";
-
+// App imports
+import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 // GeoJSON data
-import testData from "@/data/test-data.json";
+import testData from "@/data/networks.json";
 
 export function useMapData() {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection<Geometry, IGeoJsonData> | null>(null);
