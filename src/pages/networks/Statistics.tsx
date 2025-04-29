@@ -3,27 +3,15 @@ import { Spline } from "lucide-react";
 // App imports
 import colors from "@/config/geojson-colors.config.json";
 import { EType } from "@/enums/type.enum";
-import { cn } from "@/lib/utils";
 import { useMapData } from "@/hooks/useMapData";
 import { useTotalByNetworks } from "@/hooks/useTotalByNetworks";
-// Interface
-interface IProps {
-  isPanelVisible: boolean;
-}
 
-export function Statistics({ isPanelVisible }: IProps) {
+export function Statistics() {
   const { geoJsonData } = useMapData();
   const networks = useTotalByNetworks(geoJsonData);
 
   return (
-    <main
-      className={cn(
-        "mt-6 flex flex-col space-y-1 md:space-y-0",
-        isPanelVisible
-          ? "md:flex-col md:space-y-1 md:space-x-0 lg:flex-row lg:space-y-0 lg:space-x-6"
-          : "md:flex-row md:items-center md:space-x-6",
-      )}
-    >
+    <main className="flex flex-col space-y-2">
       <section className="text-xsm flex items-center space-x-2">
         <Spline
           size={14}
