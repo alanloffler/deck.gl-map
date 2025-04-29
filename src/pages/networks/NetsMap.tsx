@@ -1,7 +1,7 @@
 // Packages imports
 import { APIProvider, Map, type ColorScheme, type MapCameraChangedEvent } from "@vis.gl/react-google-maps";
 import { DataFilterExtension } from "@deck.gl/extensions";
-import { GeoJsonLayer, TextLayer, type PickingInfo } from "deck.gl";
+import { GeoJsonLayer, TextLayer, type PickingInfo, type Position } from "deck.gl";
 import { type Dispatch, type SetStateAction, useCallback } from "react";
 import { type Feature, type Geometry, type MultiLineString, type Point } from "geojson";
 // App immports
@@ -128,6 +128,10 @@ export function NetsMap({
 
           setDetails({
             color: selectedColors.find((c) => c.type === item.object?.properties.type)?.normal,
+            coordinates:
+              item.object?.geometry.type !== "MultiLineString"
+                ? (item.object?.geometry.coordinates as Position)
+                : undefined,
             details: item.object?.properties.details,
             distance: dist,
             name: item.object?.properties.name,
