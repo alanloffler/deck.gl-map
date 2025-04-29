@@ -8,6 +8,7 @@
         "type": "main-network",
         "details": {
           "id": "RP/001",
+          "title": "República Argentina",
           "street": "Av. República Argentina S/N",
           "district": "Bo. Centro"
         }
@@ -65,6 +66,7 @@
         "type": "main-network",
         "details": {
           "id": "RP/002",
+          "title": "San Martín",
           "street": "Av. San Martín S/N",
           "district": "Bo. Centro"
         }
@@ -127,6 +129,7 @@
         "type": "main-network",
         "details": {
           "id": "RP/003",
+          "title": "Juan Domingo Perón",
           "street": "Av. Juan Domingo Perón S/N",
           "district": "Bo. Centro"
         }
@@ -167,6 +170,7 @@
         "type": "secondary-network",
         "details": {
           "id": "RS/001",
+          "title": "9 de Julio",
           "street": "9 de Julio S/N",
           "district": "Bo. Centro"
         }
@@ -205,6 +209,7 @@
         "type": "secondary-network",
         "details": {
           "id": "RS/002",
+          "title": "Los Rosales",
           "street": "Los Rosales S/N",
           "district": "Bo. Centro"
         }
@@ -229,14 +234,15 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Cooperativa de Wanda",
+        "name": "Marcador",
         "type": "marker",
         "color": "#22c55e",
         "details": {
-          "district": "Bo. Centro",
-          "icon": "map-pin.png",
           "id": "M/001",
-          "street": "Av. República Argentina S/N"
+          "title": "Cooperativa de Wanda",
+          "street": "Av. República Argentina S/N",
+          "district": "Bo. Centro",
+          "icon": "map-pin.png"
         }
       },
       "geometry": {
@@ -247,14 +253,15 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Bomba 01",
+        "name": "Marcador",
         "type": "marker",
         "color": "#fb7185",
         "details": {
-          "district": "Bo. APSA Sur",
-          "icon": "map-pin.png",
           "id": "M/002",
-          "street": "Los Yerbales S/N"
+          "title": "Bomba 01",
+          "street": "Los Yerbales S/N",
+          "district": "Bo. APSA Sur",
+          "icon": "map-pin.png"
         }
       },
       "geometry": {
@@ -265,14 +272,15 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Bomba 02",
+        "name": "Marcador",
         "type": "marker",
         "color": "#fb7185",
         "details": {
-          "district": "Bo. San Martín",
-          "icon": "map-pin.png",
           "id": "M/003",
-          "street": "Ruta Prov. Nº 19"
+          "title": "Bomba 02",
+          "district": "Bo. San Martín",
+          "street": "Ruta Prov. Nº 19",
+          "icon": "map-pin.png"
         }
       },
       "geometry": {
@@ -283,14 +291,15 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Planta potabilizadora",
+        "name": "Marcador",
         "type": "marker",
         "color": "#fb7185",
         "details": {
-          "district": "Bo. Cooperativa",
-          "icon": "map-pin.png",
           "id": "M/004",
-          "street": "Juan XXIII S/N"
+          "title": "Planta potabilizadora",
+          "street": "Juan XXIII S/N",
+          "district": "Bo. Cooperativa",
+          "icon": "map-pin.png"
         }
       },
       "geometry": {
@@ -301,12 +310,13 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Sanatorio Rolón Vargas",
+        "name": "Conexión",
         "type": "connection",
         "details": {
-          "district": "Bo. Centro",
           "id": "10347",
-          "street": "9 de Julio S/N"
+          "title": "Sanatorio Rolón Vargas",
+          "street": "9 de Julio S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -317,12 +327,13 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Comisaria de Wanda",
+        "name": "Conexión",
         "type": "connection",
         "details": {
-          "district": "Bo. Centro",
           "id": "20311",
-          "street": "Los Helechos S/N"
+          "title": "Comisaria de Wanda",
+          "street": "Los Helechos S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -333,12 +344,13 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Municipalidad de Wanda",
+        "name": "Conexión",
         "type": "connection",
         "details": {
-          "district": "Bo. Centro",
           "id": "20298",
-          "street": "Los Helechos S/N"
+          "title": "Municipalidad de Wanda",
+          "street": "Los Helechos S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
@@ -349,12 +361,13 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Super Andy",
+        "name": "Conexión",
         "type": "connection",
         "details": {
-          "district": "Bo. Centro",
           "id": "20099",
-          "street": "1 de Mayo S/N"
+          "title": "Super Andy",
+          "street": "1 de Mayo S/N",
+          "district": "Bo. Centro"
         }
       },
       "geometry": {
