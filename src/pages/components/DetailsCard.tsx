@@ -1,11 +1,11 @@
 // Icons
-import { Milestone, Ruler, Tag, X } from "lucide-react";
+import { X } from "lucide-react";
 // Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // App imports
+import type { IDetails } from "@/interfaces/details.interface";
 import { cn } from "@/lib/utils";
-import { IDetails } from "@/interfaces/details.interface";
 // Interface
 interface IProps {
   contentVisible: boolean;
@@ -13,14 +13,6 @@ interface IProps {
   handleClose: () => void;
   isClosing: boolean;
   isPanelVisible: boolean;
-}
-
-enum ETypes {
-  "main-network" = "Red principal",
-  "secondary-network" = "Red secundaria",
-  connection = "Conexión",
-  marker = "Marcador",
-  network = "Red",
 }
 
 export function DetailsCard({ contentVisible, details, handleClose, isClosing, isPanelVisible }: IProps) {
@@ -59,22 +51,13 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
             {details && (
               <section className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-3 text-base font-semibold">
-                  {/* <span>{details.name}</span> */}
-                  <span>{details.type && (ETypes[details.type] as unknown as keyof typeof ETypes)}</span>
                   <span
-                    className={cn(
-                      details.details?.id?.charAt(0).toUpperCase() !== "R"
-                        ? "h-3 w-3 rounded-full"
-                        : "h-1.5 w-7 rounded-sm",
-                    )}
-                    style={{ background: details.color }}
-                  ></span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-xsm font-semibold text-slate-500">
-                    <small># ID:</small>
+                    style={{ color: details.color }}
+                    className="text-xsm rounded-md border border-slate-200 bg-slate-50 p-1.5 leading-none font-semibold shadow-xs"
+                  >
+                    {details.details?.id}
                   </span>
-                  <span className="text-xsm">{details.details?.id}</span>
+                  <span>{details.name}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xsm font-semibold text-slate-500">
@@ -84,7 +67,7 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xsm font-semibold text-slate-500">
-                    <small>CALLE:</small>
+                    <small>DIRECCION:</small>
                   </span>
                   <span className="text-xsm">{details.details?.street}</span>
                 </div>
@@ -93,6 +76,12 @@ export function DetailsCard({ contentVisible, details, handleClose, isClosing, i
                     <small>BARRIO:</small>
                   </span>
                   <span className="text-xsm">{details.details?.district}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xsm font-semibold text-slate-500">
+                    <small>ID:</small>
+                  </span>
+                  <span className="text-xsm">{details.details?.id}</span>
                 </div>
                 {details.distance && (
                   <div className="flex items-center space-x-2">
