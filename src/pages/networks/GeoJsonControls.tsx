@@ -18,8 +18,10 @@ interface IProps {
 
 export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisualization }: IProps) {
   return (
-    <main className="flex justify-start space-x-6 py-3 sm:justify-end">
-      <Label className={cn(isPanelVisible ? "hidden lg:inline" : "hidden sm:inline")}>Mostrar:</Label>
+    <main className="flex items-center justify-start space-x-6 py-3 sm:justify-end">
+      <Label className={cn("!text-xsm text-slate-700", isPanelVisible ? "hidden lg:inline" : "hidden sm:inline")}>
+        Mostrar:
+      </Label>
       <div className="flex items-center space-x-2">
         <Checkbox
           className="bg-card"
