@@ -8,8 +8,9 @@ import { MapPinCustom } from "@/assets/icons/1x/map-pin";
 // Packages imports
 import type { Dispatch, SetStateAction } from "react";
 // App imports
-import { cn } from "@/lib/utils";
+import colors from "@/config/geojson-colors.config.json";
 import { EType } from "@/enums/type.enum";
+import { cn } from "@/lib/utils";
 // Interface
 interface IProps {
   dataVisualization: string[];
@@ -43,7 +44,11 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
           htmlFor="main-network"
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          <Spline size={15} strokeWidth={2} className="stroke-sky-400" />
+          <Spline
+            size={15}
+            strokeWidth={2}
+            style={{ stroke: colors.find((c) => c.type === EType.MainNetwork)?.normal }}
+          />
           <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Red principal</span>
         </label>
       </div>
@@ -67,7 +72,11 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
           htmlFor="secondary-network"
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          <Spline size={15} strokeWidth={2} className="stroke-purple-400" />
+          <Spline
+            size={15}
+            strokeWidth={2}
+            style={{ stroke: colors.find((c) => c.type === EType.SecondaryNetwork)?.normal }}
+          />
           <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Red secundaria </span>
         </label>
       </div>
@@ -91,7 +100,7 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
           htmlFor="markers"
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          <MapPinCustom width={16} height={16} fill="#fb7185" />
+          <MapPinCustom width={16} height={16} fill={colors.find((c) => c.type === EType.Marker)?.normal} />
           <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Marcadores</span>
         </label>
       </div>
@@ -115,7 +124,7 @@ export function GeoJsonControls({ dataVisualization, isPanelVisible, setDataVisu
           htmlFor="connections"
           className="flex items-center space-x-1 text-xs leading-none font-light peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          <Circle size={16} className="fill-[#fbbf24] stroke-0" />
+          <Circle size={16} strokeWidth={0} style={{ fill: colors.find((c) => c.type === EType.Connection)?.normal }} />
           <span className={cn(isPanelVisible ? "hidden lg:inline" : "hidden md:inline")}>Conexiones</span>
         </label>
       </div>
