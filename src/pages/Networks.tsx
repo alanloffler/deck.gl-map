@@ -5,7 +5,6 @@ import { DetailsCard } from "@/pages/components/DetailsCard";
 import { GeoJsonControls } from "@/pages/networks/GeoJsonControls";
 import { MapControls } from "@/pages/components/MapControls";
 import { NetsMap } from "@/pages/networks/NetsMap";
-import { Statistics } from "@/pages/networks/Statistics";
 // Packages imports
 import { useEffect, useState } from "react";
 // App imports
@@ -95,7 +94,6 @@ export default function Networks() {
             setDetails={setDetails}
             setSelectedIndex={setSelectedIndex}
           />
-          <Statistics isPanelVisible={isPanelVisible} />
         </CardContent>
       </Card>
       <DetailsCard
