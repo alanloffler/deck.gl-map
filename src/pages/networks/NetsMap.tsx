@@ -10,6 +10,7 @@ import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
 import { DeckGLOverlay } from "@/pages/components/DeckGLOverlay";
+import { EType } from "@/enums/type.enum";
 import { hexToRgb } from "@/lib/helpers";
 import { useDistance } from "@/hooks/useDistance";
 import { useMapData } from "@/hooks/useMapData";
@@ -56,7 +57,7 @@ export function NetsMap({
     const isConnectionZoomVisible: boolean = cameraOptions.zoom >= 17;
     const effectiveDataVisualization: string[] = [...dataVisualization];
     const renderDataVisualization: string[] = effectiveDataVisualization.filter(
-      (type) => type !== "connection" || isConnectionZoomVisible,
+      (type) => type !== EType.Connection || isConnectionZoomVisible,
     );
 
     return [
@@ -79,7 +80,7 @@ export function NetsMap({
         // Icon
         pointType: "icon",
         getIcon: (marker: Feature<Geometry, IGeoJsonData>) => {
-          const iconPath: string = marker.properties.type === "marker" ? "map-pin.png" : "connection.svg";
+          const iconPath: string = marker.properties.type === EType.Marker ? "map-pin.png" : "connection.svg";
           return {
             url: new URL(`../../assets/icons/1x/${iconPath}`, import.meta.url).href,
             width: 120,
@@ -91,7 +92,7 @@ export function NetsMap({
         },
         getIconSize: (item: Feature<Geometry, IGeoJsonData>) => {
           const size: number = 1.73 * Math.pow(1.18, cameraOptions.zoom);
-          if (item.properties.type === "connection") return size / 2.5;
+          if (item.properties.type === EType.Connection) return size / 2.5;
           return size;
         },
         iconSizeUnits: "pixels",
@@ -135,7 +136,7 @@ export function NetsMap({
             details: item.object?.properties.details,
             distance: dist,
             name: item.object?.properties.name,
-            type: item.object?.properties.type,
+            type: EType[item.object?.properties.type as unknown as keyof typeof EType],
           });
 
           setSelectedIndex(item.index);
@@ -156,7 +157,7 @@ export function NetsMap({
       new TextLayer<{ id: string; name: string; coordinates: [number, number] }>({
         id: "connections-id-layer",
         data: textData,
-        visible: cameraOptions.zoom >= 18 && renderDataVisualization.includes("connection"),
+        visible: cameraOptions.zoom >= 18 && renderDataVisualization.includes(EType.Connection),
         getText: (f) => f.id,
         getPosition: (f) => f.coordinates,
         getSize: 11,
