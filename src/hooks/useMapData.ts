@@ -3,8 +3,9 @@ import type { Feature, FeatureCollection, Geometry, Point } from "geojson";
 import { useEffect, useState } from "react";
 // App imports
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
+import { EType } from "@/enums/type.enum";
 // GeoJSON data
-import testData from "@/data/networks.json";
+import networksData from "@/data/networks.json";
 
 export function useMapData() {
   const [geoJsonData, setGeoJsonData] = useState<FeatureCollection<Geometry, IGeoJsonData> | null>(null);
@@ -13,7 +14,7 @@ export function useMapData() {
   );
 
   useEffect(() => {
-    setGeoJsonData(testData as FeatureCollection<Geometry, IGeoJsonData>);
+    setGeoJsonData(networksData as FeatureCollection<Geometry, IGeoJsonData>);
   }, []);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export function useMapData() {
     });
 
     const filterFeatures = geoJsonData?.features.filter(
-      (feature) => feature.properties.type === "connection",
+      (feature) => feature.properties.type === EType.Connection,
     ) as Feature<Point, IGeoJsonData>[];
 
     const textFeatures = filterFeatures?.map((feat) => ({
