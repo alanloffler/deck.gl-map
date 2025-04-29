@@ -6,11 +6,7 @@ export interface IDetails {
     district?: string;
     id?: string;
     street?: string;
+    title?: string;
   };
-  type?:
-    | "connection"
-    | "marker"
-    | "network"
-    | "main-network"
-    | "secondary-network";
+  type?: "connection" | "marker" | "network" | "main-network" | "secondary-network";
 }
