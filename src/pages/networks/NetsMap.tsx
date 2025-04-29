@@ -9,7 +9,7 @@ import selectedColors from "@/config/geojson-colors.config.json";
 import type { ICameraOptions } from "@/interfaces/camera-options.interface";
 import type { IDetails } from "@/interfaces/details.interface";
 import type { IGeoJsonData } from "@/interfaces/geojson-data.interface";
-import { DeckGLOverlay } from "@/pages/components/DeckGLOverlay";
+import { DeckGLOverlay } from "../components/DeckGLOverlay";
 import { EType } from "@/enums/type.enum";
 import { hexToRgb } from "@/lib/helpers";
 import { useDistance } from "@/hooks/useDistance";
