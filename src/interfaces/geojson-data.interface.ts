@@ -1,3 +1,5 @@
+import { EType } from "@/enums/type.enum";
+
 export interface IGeoJsonData {
   id?: number;
   color: string;
@@ -9,5 +11,5 @@ export interface IGeoJsonData {
     title: string;
   };
   name: string;
-  type: "connection" | "marker" | "network" | "main-network" | "secondary-network";
+  type: EType;
 }
