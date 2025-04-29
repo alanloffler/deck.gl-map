@@ -21,7 +21,7 @@ export default function App() {
           <Link to="/redes">Mapa de redes</Link>
         </section>
       </nav>
-      <section className="mt-16">
+      <section className="mt-16 flex w-full justify-center">
         <Outlet />
       </section>
     </main>
