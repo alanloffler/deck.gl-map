@@ -1,3 +1,4 @@
+// Packages imports
 import type { Position } from "geojson";
 import type { Units } from "@turf/helpers";
 import { distance } from "@turf/distance";
