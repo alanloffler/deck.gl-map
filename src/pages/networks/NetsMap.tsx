@@ -170,23 +170,25 @@ export function NetsMap({
   }
 
   return (
-    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <Map
-        className="relative h-[450px] w-full"
-        clickableIcons={true}
-        colorScheme={colorScheme as ColorScheme}
-        disableDefaultUI={true}
-        fullscreenControl
-        gestureHandling={"greedy"}
-        mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
-        mapTypeId={mapTypeId}
-        onCameraChanged={handleCameraChange}
-        streetViewControl
-        tilt={0}
-        {...cameraOptions}
-      >
-        <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
-      </Map>
-    </APIProvider>
+    <>
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+        <Map
+          className="relative h-[450px] w-full"
+          clickableIcons={true}
+          colorScheme={colorScheme as ColorScheme}
+          disableDefaultUI={true}
+          fullscreenControl
+          gestureHandling={"greedy"}
+          mapId={import.meta.env.VITE_GOOGLE_MAPS_ID}
+          mapTypeId={mapTypeId}
+          onCameraChanged={handleCameraChange}
+          streetViewControl
+          tilt={0}
+          {...cameraOptions}
+        >
+          <DeckGLOverlay layers={getDeckGlLayers()} getTooltip={getTooltip} />
+        </Map>
+      </APIProvider>
+    </>
   );
 }
