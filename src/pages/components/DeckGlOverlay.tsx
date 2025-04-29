@@ -3,7 +3,7 @@ import { DeckProps } from "deck.gl";
 import { useEffect, useMemo } from "react";
 import { useMap } from "@vis.gl/react-google-maps";
 
-export const DeckGLOverlay = ({ layers, getTooltip }: DeckProps) => {
+export function DeckGLOverlay({ layers, getTooltip }: DeckProps) {
   const deck = useMemo(
     () =>
       new GoogleMapsOverlay({
@@ -24,4 +24,4 @@ export const DeckGLOverlay = ({ layers, getTooltip }: DeckProps) => {
   }, [deck, getTooltip, layers]);
 
   return null;
-};
+}
