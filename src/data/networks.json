@@ -234,6 +234,48 @@
     {
       "type": "Feature",
       "properties": {
+        "name": "Red secundaria",
+        "type": "secondary-network",
+        "details": {
+          "id": "RS/003",
+          "title": "17 de agosto",
+          "street": "17 de agosto S/N",
+          "district": "Centro"
+        }
+      },
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [-54.562805, -25.97231],
+            [-54.562729, -25.972935],
+            [-54.562725, -25.972969],
+            [-54.562684, -25.973471],
+            [-54.562679, -25.97351],
+            [-54.562681, -25.973552],
+            [-54.562691, -25.973601],
+            [-54.562687, -25.973634],
+            [-54.562675, -25.973658],
+            [-54.562641, -25.973701],
+            [-54.562503, -25.973805],
+            [-54.562056, -25.974101],
+            [-54.562025, -25.974123],
+            [-54.561571, -25.974438],
+            [-54.56117, -25.974716],
+            [-54.560909, -25.974898],
+            [-54.56088, -25.974921],
+            [-54.560543, -25.975123],
+            [-54.560181, -25.975341],
+            [-54.559827, -25.97556],
+            [-54.559495, -25.975767],
+            [-54.559149, -25.975983]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "name": "Marcador",
         "type": "marker",
         "color": "#22c55e",
@@ -373,6 +415,91 @@
       "geometry": {
         "type": "Point",
         "coordinates": [-54.562228, -25.972371]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Conexión",
+        "type": "connection",
+        "details": {
+          "id": "12087",
+          "title": "Galería Wanda",
+          "street": "1 de Mayo Nº 107",
+          "district": "Centro"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.561571, -25.972188]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Conexión",
+        "type": "connection",
+        "details": {
+          "id": "12084",
+          "title": "Hetereí Resto Bar",
+          "street": "1 de Mayo Nº 101",
+          "district": "Centro"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.561869, -25.97222]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Conexión",
+        "type": "connection",
+        "details": {
+          "id": "12056",
+          "title": "Correo Argentino",
+          "street": "Av. San Martín S/N",
+          "district": "Centro"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.561735, -25.97211]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Conexión",
+        "type": "connection",
+        "details": {
+          "id": "9053",
+          "title": "Maxi Color Fotografía",
+          "street": "Av. República Argentina S/N",
+          "district": "Centro"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.564453, -25.972626]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Conexión",
+        "type": "connection",
+        "details": {
+          "id": "9022",
+          "title": "Juan Fernández",
+          "street": "1 de julio Nº 233",
+          "district": "Centro"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-54.56481, -25.972715]
       }
     }
   ]
