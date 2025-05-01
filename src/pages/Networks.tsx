@@ -5,6 +5,7 @@ import { DetailsCard } from "@/pages/components/DetailsCard";
 import { GeoJsonControls } from "@/pages/networks/GeoJsonControls";
 import { MapControls } from "@/pages/components/MapControls";
 import { NetsMap } from "@/pages/networks/NetsMap";
+import { SearchInput } from "@/pages/components/SearchInput";
 // Packages imports
 import { useEffect, useState } from "react";
 // App imports
@@ -25,7 +26,7 @@ export default function Networks() {
   const [isClosing, setIsClosing] = useState<boolean>(false);
   const [mapKey, setMapKey] = useState<string>("mapKey");
   const [mapTypeId, setMapTypeId] = useState<string>(localStorage.getItem("mapTypeId") ?? "roadmap");
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>(undefined);
   const isPanelVisible = details !== null || isClosing;
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Networks() {
 
   function handleClose(): void {
     setIsClosing(true);
-    setSelectedIndex(null);
+    setSelectedIndex(undefined);
     setTimeout(() => {
       setDetails(null);
       setIsClosing(false);
@@ -66,10 +67,17 @@ export default function Networks() {
           isPanelVisible && !isClosing ? "md:w-2/3" : isClosing ? "md:w-full" : "md:w-full",
         )}
       >
-        <CardHeader>
-          <CardTitle>Redes de agua potable</CardTitle>
-          <CardDescription className="text-sm">Visualización de conexiones</CardDescription>
-        </CardHeader>
+        <div className="flex flex-col gap-6 md:flex-row md:justify-between">
+          <CardHeader className="flex-1">
+            <CardTitle>Redes de agua potable</CardTitle>
+            <CardDescription className="text-sm">Visualización de conexiones</CardDescription>
+          </CardHeader>
+          <SearchInput
+            setCameraOptions={setCameraOptions}
+            setDetails={setDetails}
+            setSelectedIndex={setSelectedIndex}
+          />
+        </div>
         <CardContent>
           <MapControls
             colorScheme={colorScheme}
