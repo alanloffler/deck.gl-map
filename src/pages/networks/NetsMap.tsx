@@ -21,10 +21,10 @@ interface IProps {
   colorScheme: string;
   dataVisualization: string[];
   mapTypeId: string;
-  selectedIndex: number | null;
+  selectedIndex: number | undefined;
   setCameraOptions: Dispatch<SetStateAction<ICameraOptions>>;
   setDetails: Dispatch<SetStateAction<IDetails | null>>;
-  setSelectedIndex: Dispatch<SetStateAction<number | null>>;
+  setSelectedIndex: Dispatch<SetStateAction<number | undefined>>;
 }
 
 export function NetsMap({
