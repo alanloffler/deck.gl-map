@@ -67,7 +67,14 @@ export default function Networks() {
           isPanelVisible && !isClosing ? "md:w-2/3" : isClosing ? "md:w-full" : "md:w-full",
         )}
       >
-        <div className="flex flex-col gap-6 md:flex-row md:justify-between">
+        <div
+          className={cn(
+            "flex flex-col gap-6",
+            isPanelVisible
+              ? "sm:flex-col md:flex-col lg:flex-row lg:justify-between"
+              : "sm:flex-row sm:justify-between",
+          )}
+        >
           <CardHeader className="flex-1">
             <CardTitle>Redes de agua potable</CardTitle>
             <CardDescription className="text-sm">Visualización de conexiones</CardDescription>
